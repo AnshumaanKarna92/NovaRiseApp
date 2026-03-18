@@ -1,0 +1,22 @@
+{
+  "users": [
+    {
+      "localId": "C3oG89LOKLSvlvb6wLzLQteAwwk2",
+      "email": "admin@novarise.com",
+      "passwordHash": "75K3eLpxWGclFw9/kD4elIdzmVFovH9UyTVAzoChgBI=",
+      "salt": ""
+    },
+    {
+      "localId": "5qk9fN1qaHQbqEIuuQcogL1ifPa2",
+      "email": "teacher1@novarise.com",
+      "passwordHash": "75K3eLpxWGclFw9/kD4elIdzmVFovH9UyTVAzoChgBI=",
+      "salt": ""
+    },
+    {
+      "localId": "aFPiSswA3yRjIjMHO1zqEtfHfcY2",
+      "email": "parent1@novarise.com",
+      "passwordHash": "75K3eLpxWGclFw9/kD4elIdzmVFovH9UyTVAzoChgBI=",
+      "salt": ""
+    }
+  ]
+}

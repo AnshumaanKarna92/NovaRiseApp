@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "172889864684",
+    "project_id": "novariseapp",
+    "storage_bucket": "novariseapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:172889864684:android:920e76bf75a0ca4289a8c9",
+        "android_client_info": {
+          "package_name": "com.example.nova_rise_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfgJ6lMceYwWlZsKEWfGakslqXOMrcqiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

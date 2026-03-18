@@ -1,0 +1,167 @@
+{"users": [
+{
+  "localId": "2AhRLJxZdhP3SsrsI7pWTTSy4Hv2",
+  "email": "parent_final@novarise.com",
+  "emailVerified": false,
+  "passwordHash": "4orFTcxRZabTDwOdapqlUbR//Zd6HBRp/8SwM8O8dNwTdHV0+6BZ1AHNyaHINxfJ2Jo4GNwjHN954qblHMF0XQ==",
+  "salt": "o+7hj0u3u2Zi6A==",
+  "lastSignedInAt": "1773598030056",
+  "createdAt": "1773598030056",
+  "providerUserInfo": []
+},
+{
+  "localId": "3m1mY3cdUsfwps0Ncs55KwosvwX2",
+  "email": "teacher@novarise.com",
+  "emailVerified": false,
+  "passwordHash": "gZQqSy0TqW1RyCoBDrlhuqiD5C5gJO1gqZHQi36OrFDsW1HJkM1rcMEoJ4fLzz/4L8O9I0MPkmg+V6qu9Y+yUQ==",
+  "salt": "oLQq9Rm+HQpXWA==",
+  "lastSignedInAt": "1773598216307",
+  "createdAt": "1773598216307",
+  "providerUserInfo": []
+},
+{
+  "localId": "5qk9fN1qaHQbqEIuuQcogL1ifPa2",
+  "email": "teacher1@novarise.com",
+  "emailVerified": false,
+  "createdAt": "1773597839876",
+  "disabled": false,
+  "providerUserInfo": []
+},
+{
+  "localId": "6RIeZL1xC0eIinluw50NPcx3Vd43",
+  "lastSignedInAt": "1773401454734",
+  "createdAt": "1773317211505",
+  "phoneNumber": "+919650991168",
+  "providerUserInfo": []
+},
+{
+  "localId": "7OBVgsLWzycONZEgszeNNNz2zPW2",
+  "email": "parent@novarise.com",
+  "emailVerified": false,
+  "passwordHash": "5nfUjjEVCMYNMm8LUmI3DxZ9ofcVHMJZMzLnJ6XezQqc2Izr7lSpNfuvg0QoxmXOmksCier+jCpTLD7kGTim+Q==",
+  "salt": "WLiDm6OgfZ57tA==",
+  "lastSignedInAt": "1773598452974",
+  "createdAt": "1773598217101",
+  "providerUserInfo": []
+},
+{
+  "localId": "BG6kzeexEbQuuyw0kxZcofI5fqo1",
+  "email": "master@novarise.com",
+  "emailVerified": false,
+  "passwordHash": "C+UtKyAu07d/RVk4pxer3OfVpgvzn5m8My+OUkGrIzo52D/cQQQ19Nh0BzP7FsdfR8ve+fJs7cec0cKlLtgw+w==",
+  "salt": "5Go8ujLk+1dkLg==",
+  "lastSignedInAt": "1773598327306",
+  "createdAt": "1773598125180",
+  "providerUserInfo": []
+},
+{
+  "localId": "C3oG89LOKLSvlvb6wLzLQteAwwk2",
+  "email": "admin@novarise.com",
+  "emailVerified": false,
+  "createdAt": "1773597839876",
+  "disabled": false,
+  "providerUserInfo": []
+},
+{
+  "localId": "FS4DSBmWldRitbAGloZyKROtezv1",
+  "email": "anshumaan@nova.com",
+  "emailVerified": false,
+  "passwordHash": "DK0pSmrQT2QvtC0KJTVtGGyy8E3Z58+Ugcri6wGESBmnXz2J+etKQsoVs4rU15qBsGP7lEXqNFMac53sD4EbyA==",
+  "salt": "Fq5g73BG4nwsQA==",
+  "displayName": "Anshumaan",
+  "lastSignedInAt": "1773419939835",
+  "createdAt": "1773419939835",
+  "providerUserInfo": []
+},
+{
+  "localId": "NtxBvHDpzvWsA0FtMCMwWOL30tn1",
+  "email": "admin@school.edu",
+  "emailVerified": false,
+  "passwordHash": "yvpbfm12ZOWoshxIie0DfdOz2nab1QFwjj1GldqB18m9iilEP1FdRB0agbTC0TehxtpXc1rMDrZSU1DGQnyh2w==",
+  "salt": "ssoj9RwY61+XHA==",
+  "lastSignedInAt": "1773320574882",
+  "createdAt": "1773315905642",
+  "disabled": false,
+  "providerUserInfo": []
+},
+{
+  "localId": "VNEs1ylQ9PhUitbZoUJefCxLxcN2",
+  "email": "anuj@novarise.com",
+  "emailVerified": false,
+  "passwordHash": "uzacnisU6PaFiMS/pk5lmAV4IREzIMMfUD5ph+HfMmqofwHWxRoHuE8NksojvtCa7ov8bommghVErqQ8PPTJEw==",
+  "salt": "1IlPO8x6QEAf4Q==",
+  "displayName": "anuj singh",
+  "lastSignedInAt": "1773598573768",
+  "createdAt": "1773598400258",
+  "providerUserInfo": []
+},
+{
+  "localId": "aFPiSswA3yRjIjMHO1zqEtfHfcY2",
+  "email": "parent1@novarise.com",
+  "emailVerified": false,
+  "createdAt": "1773597839876",
+  "disabled": false,
+  "providerUserInfo": []
+},
+{
+  "localId": "b8AvoCQjjNg7OGZslyAZqwEYCKE3",
+  "email": "aanshu@xyz.com",
+  "emailVerified": false,
+  "passwordHash": "grXF4rKzONd9QlH+inRN0gl+cc4lhe2lnz8bIqU0dZbEL17V3gM/YNENvLbzqbf5hR/2URuDRF13PVGKt+aUGA==",
+  "salt": "51m1nuKON6EN3g==",
+  "displayName": "Ansshumaan",
+  "lastSignedInAt": "1773560604440",
+  "createdAt": "1773560604440",
+  "providerUserInfo": []
+},
+{
+  "localId": "cZ6hOuaqoweLmwgURkbwdmYU1Jq1",
+  "email": "test_admin@novarise.com",
+  "emailVerified": false,
+  "passwordHash": "c1NZATss8POWPhRLyPItVEAmgoyyNiUcHLoxnedh50TR2hE/GyV8UNK/e2YBjn5xpic6vISVEbC4Up/l2d2lCA==",
+  "salt": "zrcpGpmRsIy/Zg==",
+  "lastSignedInAt": "1773421263104",
+  "createdAt": "1773421263104",
+  "providerUserInfo": []
+},
+{
+  "localId": "fUYxgDd7OnMGfitHb2XlnD0W2mS2",
+  "email": "admin_final@novarise.com",
+  "emailVerified": false,
+  "passwordHash": "faz6tgz+wNjqquoWsL7JItE4ooU9iJMAlHmO/jJ3yBAfx10W3WLs1ndnPwfUzauN3LTqa49bu8FdNzZUrf3hzQ==",
+  "salt": "CRUDxJUD0iqBag==",
+  "lastSignedInAt": "1773598028943",
+  "createdAt": "1773598028943",
+  "providerUserInfo": []
+},
+{
+  "localId": "i1tuMs0NqicY5ssMHX3PPINbAX13",
+  "email": "cashier1@novarise.com",
+  "emailVerified": false,
+  "passwordHash": "wuV/g9qSVj6AbIElhepX42cZehuM4D613cogEf2XZ3en8y0sewWR6qJ5vamot1/JmMNPCaTWFWzJEQeUw2I8/Q==",
+  "salt": "1YfJoRqzbYdijA==",
+  "createdAt": "1773313065234",
+  "disabled": false,
+  "providerUserInfo": []
+},
+{
+  "localId": "lzUXjn0k7lWx5V2ndWfR726jBY02",
+  "email": "teacher_final@novarise.com",
+  "emailVerified": false,
+  "passwordHash": "jlOXmCqR8MqLmEPtK3lJ+fZF2jz4fHOzVUKCAm+8fdN+ihIsHZSLefYvbVQg51nBEShmvWzKD6z1sg9b28IU4g==",
+  "salt": "p4ez8ArrHvEN4A==",
+  "lastSignedInAt": "1773598029507",
+  "createdAt": "1773598029507",
+  "providerUserInfo": []
+},
+{
+  "localId": "yl9OG4DMlSXezVbQuYy8eo5OQsM2",
+  "email": "anshumaan23100@iiitnr.edu.in",
+  "emailVerified": false,
+  "passwordHash": "y/YZrGFjgCZayF+4+qiUUDNlimM4zv0dXxL7e5vOlGju88u7QViEBf4n3NMDrlJY4HvmcrORtq2qZQW4aMVqOQ==",
+  "salt": "gTlDFWn3HRavrw==",
+  "displayName": "anshumaan Karna",
+  "lastSignedInAt": "1773597556854",
+  "createdAt": "1773597556854",
+  "providerUserInfo": []
+}]}

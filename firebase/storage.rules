@@ -1,0 +1,43 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function role() {
+      return request.auth.token.role;
+    }
+
+    function isAdmin() {
+      return signedIn() && role() == 'admin';
+    }
+
+    function isTeacher() {
+      return signedIn() && role() == 'teacher';
+    }
+
+    function isParent() {
+      return signedIn() && role() == 'parent';
+    }
+
+    match /schoolapp/{schoolId}/fees/{studentId}/{fileName} {
+      allow read: if isAdmin() || isParent();
+      allow write: if isAdmin() || isParent();
+    }
+
+    match /schoolapp/{schoolId}/notices/{noticeId}/{fileName} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
+    match /schoolapp/{schoolId}/messages/{classId}/{fileName} {
+      allow read: if signedIn();
+      allow write: if isTeacher() || isAdmin();
+    }
+
+    match /schoolapp/{schoolId}/imports/{fileName} {
+      allow read, write: if isAdmin();
+    }
+  }
+}
