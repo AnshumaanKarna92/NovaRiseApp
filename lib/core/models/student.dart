@@ -7,6 +7,9 @@ class Student {
     required this.parentName,
     required this.parentPhone,
     required this.status,
+    this.bloodGroup,
+    this.marksData,
+    this.profileImageUrl = "",
   });
 
   factory Student.fromMap(String id, Map<String, dynamic> data) {
@@ -18,6 +21,9 @@ class Student {
       parentName: data["parentName"] as String? ?? "",
       parentPhone: data["parentPhone"] as String? ?? "",
       status: data["status"] as String? ?? "active",
+      bloodGroup: data["bloodGroup"] as String?,
+      marksData: data["marksData"] as String?,
+      profileImageUrl: data["profileImageUrl"] as String? ?? "",
     );
   }
 
@@ -28,4 +34,7 @@ class Student {
   final String parentName;
   final String parentPhone;
   final String status;
+  final String? bloodGroup;
+  final String? marksData;
+  final String profileImageUrl;
 }

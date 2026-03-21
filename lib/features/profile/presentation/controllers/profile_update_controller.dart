@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../shared/widgets/async_value_view.dart';
 import '../../../auth/presentation/controllers/session_controller.dart';
 
 class ProfileUpdateState {
@@ -41,7 +40,8 @@ class ProfileUpdateController extends StateNotifier<ProfileUpdateState> {
       if (user == null) throw "User not logged in";
 
       final file = File(result.files.single.path!);
-      final ref = _storage.ref().child('profiles').child('${user.uid}.jpg');
+      final timestamp = DateTime.now().millisecondsSinceEpoch;
+      final ref = _storage.ref().child('profiles').child('${user.uid}_$timestamp.jpg');
       
       await ref.putFile(file);
       final downloadUrl = await ref.getDownloadURL();
@@ -54,6 +54,78 @@ class ProfileUpdateController extends StateNotifier<ProfileUpdateState> {
       state = const ProfileUpdateState(isUploading: false);
     } catch (e) {
       state = ProfileUpdateState(isUploading: false, error: e.toString());
+    }
+  }
+
+  Future<void> updateProfile({String? displayName, String? bloodGroup, String? phone}) async {
+    try {
+      final user = _ref.read(userProfileProvider).value;
+      if (user == null) throw "User not logged in";
+
+      final Map<String, dynamic> updates = {};
+      if (displayName != null) updates['displayName'] = displayName;
+      if (bloodGroup != null) updates['bloodGroup'] = bloodGroup;
+      if (phone != null) updates['phone'] = phone;
+      
+      if (updates.isEmpty) return;
+      updates['updatedAt'] = FieldValue.serverTimestamp();
+
+      await _firestore.collection('users').doc(user.uid).update(updates);
+    } catch (e) {
+      state = ProfileUpdateState(error: e.toString());
+    }
+  }
+
+  Future<void> pickAndUploadStudentPhoto(String studentId) async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      allowMultiple: false,
+    );
+
+    if (result == null || result.files.single.path == null) return;
+
+    state = const ProfileUpdateState(isUploading: true);
+    try {
+      final file = File(result.files.single.path!);
+      final timestamp = DateTime.now().millisecondsSinceEpoch;
+      final ref = _storage.ref().child('students').child('${studentId}_$timestamp.jpg');
+      
+      await ref.putFile(file);
+      final downloadUrl = await ref.getDownloadURL();
+
+      await _firestore.collection('students').doc(studentId).update({
+        'profileImageUrl': downloadUrl,
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
+
+      state = const ProfileUpdateState(isUploading: false);
+    } catch (e) {
+      state = ProfileUpdateState(isUploading: false, error: e.toString());
+    }
+  }
+
+  Future<void> updateStudentProfile({
+    required String studentId,
+    String? name,
+    String? bloodGroup,
+    String? parentName,
+    String? parentPhone,
+    String? marksData,
+  }) async {
+    try {
+      final Map<String, dynamic> updates = {};
+      if (name != null) updates['name'] = name;
+      if (bloodGroup != null) updates['bloodGroup'] = bloodGroup;
+      if (parentName != null) updates['parentName'] = parentName;
+      if (parentPhone != null) updates['parentPhone'] = parentPhone;
+      if (marksData != null) updates['marksData'] = marksData;
+      
+      if (updates.isEmpty) return;
+      updates['updatedAt'] = FieldValue.serverTimestamp();
+
+      await _firestore.collection('students').doc(studentId).update(updates);
+    } catch (e) {
+      state = ProfileUpdateState(error: e.toString());
     }
   }
 }

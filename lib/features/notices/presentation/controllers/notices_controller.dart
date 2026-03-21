@@ -75,6 +75,38 @@ class NoticeSubmissionController extends StateNotifier<NoticeSubmissionState> {
     }
   }
 
+  Future<void> update({
+    required String noticeId,
+    required String title,
+    required String body,
+    required String targetType,
+    required List<String> targetClassIds,
+  }) async {
+    state = const NoticeSubmissionState(isSubmitting: true);
+    try {
+      await _service.updateNotice(
+        noticeId: noticeId,
+        title: title,
+        body: body,
+        targetType: targetType,
+        targetClassIds: targetClassIds,
+      );
+      state = const NoticeSubmissionState(successMessage: "Notice updated successfully.");
+    } catch (error) {
+      state = NoticeSubmissionState(error: error.toString());
+    }
+  }
+
+  Future<void> delete(String noticeId) async {
+    state = const NoticeSubmissionState(isSubmitting: true);
+    try {
+      await _service.deleteNotice(noticeId);
+      state = const NoticeSubmissionState(successMessage: "Notice deleted successfully.");
+    } catch (error) {
+      state = NoticeSubmissionState(error: error.toString());
+    }
+  }
+
   void clearMessage() {
     state = const NoticeSubmissionState();
   }

@@ -34,12 +34,46 @@ class NoticeSubmissionService {
         "title": title,
         "body": body,
         "attachmentUrls": const <String>[],
-        "target": targetType,
+        "targetType": targetType,
         "targetClassIds": targetClassIds,
         "startAt": startAt,
         "expiresAt": expiresAt,
         "postedAt": FieldValue.serverTimestamp(),
       });
+    }
+  }
+
+  Future<void> updateNotice({
+    required String noticeId,
+    required String title,
+    required String body,
+    required String targetType,
+    required List<String> targetClassIds,
+  }) async {
+    try {
+      await _functions.httpsCallable("updateNotice").call({
+        "noticeId": noticeId,
+        "title": title,
+        "body": body,
+        "targetType": targetType,
+        "targetClassIds": targetClassIds,
+      });
+    } catch (e) {
+      await _firestore.collection("notices").doc(noticeId).update({
+        "title": title,
+        "body": body,
+        "targetType": targetType,
+        "targetClassIds": targetClassIds,
+        "updatedAt": FieldValue.serverTimestamp(),
+      });
+    }
+  }
+
+  Future<void> deleteNotice(String noticeId) async {
+    try {
+      await _functions.httpsCallable("deleteNotice").call({"noticeId": noticeId});
+    } catch (e) {
+      await _firestore.collection("notices").doc(noticeId).delete();
     }
   }
 }

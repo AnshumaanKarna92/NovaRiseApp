@@ -14,6 +14,31 @@ const db = admin.firestore();
 
 type UserRole = "admin" | "teacher" | "parent" | "cash_collector";
 
+/**
+ * Basic Firestore-based rate limiter for mission-critical endpoints.
+ * In a high-traffic environment, use Redis or a specialized service.
+ */
+async function checkRateLimit(uid: string, action: string, limit: number, windowSeconds: number) {
+  const now = Date.now();
+  const windowStart = now - (windowSeconds * 1000);
+  
+  const rateLimitRef = db.collection("rate_limits").doc(`${uid}_${action}`);
+  const snap = await rateLimitRef.get();
+  
+  const data = snap.data() as { attempts: number[]; lastReset: number } | undefined;
+  const attempts = (data?.attempts ?? []).filter(t => t > windowStart);
+  
+  if (attempts.length >= limit) {
+    throw new functions.https.HttpsError(
+      "resource-exhausted", 
+      "Rate limit exceeded. Please try again later."
+    );
+  }
+  
+  attempts.push(now);
+  await rateLimitRef.set({ attempts, lastReset: now }, { merge: true });
+}
+
 async function getRequestContext(context: any) {
   if (!context.auth?.uid) {
     throw new functions.https.HttpsError("unauthenticated", "Authentication required");
@@ -24,11 +49,12 @@ async function getRequestContext(context: any) {
     throw new functions.https.HttpsError("permission-denied", "User profile not found");
   }
 
-  const data = userSnapshot.data() as {role?: UserRole; schoolId?: string};
+  const data = userSnapshot.data() as {role?: UserRole; schoolId?: string; displayName?: string};
   return {
     uid: context.auth.uid,
     role: (data.role ?? "parent") as UserRole,
     schoolId: data.schoolId ?? "",
+    displayName: data.displayName ?? "Staff",
   };
 }
 
@@ -129,10 +155,14 @@ const publishNoticeSchema = z.object({
   title: z.string().min(1),
   body: z.string().min(1),
   attachmentUrls: z.array(z.string()).default([]),
-  targetType: z.enum(["all", "classes"]),
+  targetType: z.enum(["all", "classes", "teachers"]),
   targetClassIds: z.array(z.string()).default([]),
   startAt: z.string().min(1),
   expiresAt: z.string().min(1),
+});
+
+const deleteNoticeSchema = z.object({
+  noticeId: z.string().min(1),
 });
 
 const classMessageSchema = z.object({
@@ -163,8 +193,10 @@ export const ensureUserProfile = onCallV2({invoker: "public"}, async (request) =
     throw new functions.https.HttpsError("unauthenticated", "Authentication required");
   }
 
-  const payload = ensureUserProfileSchema.parse(data ?? {});
   const uid = context.auth.uid as string;
+  await checkRateLimit(uid, "ensure_profile", 5, 60); // 5 attempts per minute
+  
+  const payload = ensureUserProfileSchema.parse(data ?? {});
   const phoneFromToken = context.auth.token?.phone_number as string | undefined;
   const profileRef = db.collection("users").doc(uid);
   const existing = await profileRef.get();
@@ -245,6 +277,8 @@ export const createOrUpdateFeeReceipt = onCallV2({invoker: "public"}, async (req
   const context = {auth: requestCall.auth} as any;
   const request = await getRequestContext(context);
   requireRole(request.role, ["parent"]);
+  
+  await checkRateLimit(request.uid, "submit_fee", 10, 300); // 10 receipts per 5 minutes
 
   const payload = receiptSchema.parse(data);
   const invoiceRef = db.collection("fee_invoices").doc(payload.invoiceId);
@@ -412,6 +446,7 @@ export const submitAttendance = onCallV2({invoker: "public"}, async (requestCall
     date: payload.date,
     markedByUid: request.uid,
     markedByTeacherId: request.uid,
+    markedByName: request.displayName,
     records: payload.records,
     isEdited: false,
     editCount: 0,
@@ -457,8 +492,10 @@ export const updateAttendance = onCallV2({invoker: "public"}, async (requestCall
     records: payload.records,
     isEdited: true,
     editCount: (before?.editCount ?? 0) + 1,
+    lastMarkedByName: request.displayName,
     lastEditedAt: admin.firestore.FieldValue.serverTimestamp(),
     lastEditedByUid: request.uid,
+    markedByName: request.displayName, // Update this so current UI shows correct name
     updatedAt: admin.firestore.FieldValue.serverTimestamp(),
   });
 
@@ -482,6 +519,8 @@ export const publishNotice = onCallV2({invoker: "public"}, async (requestCall) =
   const context = {auth: requestCall.auth} as any;
   const request = await getRequestContext(context);
   requireRole(request.role, ["admin"]);
+  
+  await checkRateLimit(request.uid, "publish_notice", 5, 300); // 5 notices per 5 minutes
 
   const payload = publishNoticeSchema.parse(data);
   const ref = db.collection("notices").doc();
@@ -513,11 +552,42 @@ export const publishNotice = onCallV2({invoker: "public"}, async (requestCall) =
   return {noticeId: ref.id, status: "published"};
 });
 
+export const updateNotice = onCallV2({invoker: "public"}, async (requestCall) => {
+  const data = requestCall.data as any;
+  const context = {auth: requestCall.auth} as any;
+  const request = await getRequestContext(context);
+  requireRole(request.role, ["admin"]);
+
+  const payload = publishNoticeSchema.partial().extend({noticeId: z.string()}).parse(data);
+  const {noticeId, ...updates} = payload;
+  
+  await db.collection("notices").doc(noticeId).update({
+    ...updates,
+    updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+  });
+
+  return {noticeId, status: "updated"};
+});
+
+export const deleteNotice = onCallV2({invoker: "public"}, async (requestCall) => {
+  const data = requestCall.data as any;
+  const context = {auth: requestCall.auth} as any;
+  const request = await getRequestContext(context);
+  requireRole(request.role, ["admin"]);
+
+  const payload = deleteNoticeSchema.parse(data);
+  await db.collection("notices").doc(payload.noticeId).delete();
+
+  return {noticeId: payload.noticeId, status: "deleted"};
+});
+
 export const createClassMessage = onCallV2({invoker: "public"}, async (requestCall) => {
   const data = requestCall.data as any;
   const context = {auth: requestCall.auth} as any;
   const request = await getRequestContext(context);
   requireRole(request.role, ["teacher", "admin"]);
+  
+  await checkRateLimit(request.uid, "class_message", 20, 60); // 20 messages per minute
 
   const payload = classMessageSchema.parse(data);
   const ref = db.collection("messages").doc();
@@ -578,6 +648,15 @@ export const getDashboardSummaries = onCallV2({invoker: "public"}, async (reques
 export const importStudentsCsv = functions.https.onRequest(async (req, res) => {
   if (req.method !== "POST") {
     res.status(405).send("Method not allowed");
+    return;
+  }
+
+  // SECURE: Enforce API Key for legacy HTTP endpoints
+  const apiKey = req.headers["x-api-key"];
+  const internalSecret = process.env.INTERNAL_IMPORT_SECRET || "internal_dev_only_change_this";
+  
+  if (apiKey !== internalSecret) {
+    res.status(401).json({error: "Unauthorized: Invalid API Key"});
     return;
   }
 

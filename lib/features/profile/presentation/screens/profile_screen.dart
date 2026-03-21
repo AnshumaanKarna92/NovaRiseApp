@@ -15,6 +15,7 @@ class ProfileScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProfileProvider).valueOrNull;
     final students = ref.watch(currentStudentsProvider).valueOrNull ?? const [];
+    final classesMap = ref.watch(allClassesMapProvider);
     final isTab = !Navigator.of(context).canPop();
 
     return Scaffold(
@@ -23,6 +24,105 @@ class ProfileScreen extends ConsumerWidget {
         padding: const EdgeInsets.all(20),
         children: [
           _ProfileHeader(user: user, ref: ref),
+          const SizedBox(height: 24),
+          
+          if (user?.role == UserRole.admin) ...[
+            Text(
+              "Administrative Identity",
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 12),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    _InfoRow(label: "Full Name", value: user?.displayName ?? "Administrator"),
+                    const Divider(height: 24),
+                    _InfoRow(label: "Official Role", value: "System Superintendent"),
+                    const Divider(height: 24),
+                    _InfoRow(label: "Institution", value: "Nova Rise Academy"),
+                    const Divider(height: 24),
+                    _InfoRow(label: "Access Level", value: "FULL_SYSTEM_CONTROL"),
+                  ],
+                ),
+              ),
+            ),
+          ] else ...[
+            const SizedBox(height: 24),
+            Text(
+              "Personal Information",
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 12),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    _InfoRow(
+                      label: "Blood Group", 
+                      value: user?.bloodGroup ?? "Not set",
+                      onEdit: () => _showEditInfoSheet(context, ref, "Blood Group", user?.bloodGroup, (val) => ref.read(profileUpdateControllerProvider.notifier).updateProfile(bloodGroup: val)),
+                    ),
+                    const Divider(height: 24),
+                    _InfoRow(
+                      label: "Contact", 
+                      value: user?.phone ?? "Not set",
+                      onEdit: () => _showEditInfoSheet(context, ref, "Phone Number", user?.phone, (val) => ref.read(profileUpdateControllerProvider.notifier).updateProfile(phone: val)),
+                    ),
+                    const Divider(height: 24),
+                    _InfoRow(
+                      label: "Display Name", 
+                      value: user?.displayName ?? "User",
+                      onEdit: () => _showEditInfoSheet(context, ref, "Full Name", user?.displayName, (val) => ref.read(profileUpdateControllerProvider.notifier).updateProfile(displayName: val)),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+            Text(
+              "Academic Portfolio",
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 12),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    _InfoRow(label: "Academic Role", value: user?.role.name.toUpperCase() ?? "Unknown"),
+                    const Divider(height: 24),
+                    _InfoRow(label: "Institution", value: "Nova Rise Academy"),
+                    const Divider(height: 24),
+                    _InfoRow(label: "Registration Status", value: "VERIFIED"),
+                  ],
+                ),
+              ),
+            ),
+            if (students.isNotEmpty) ...[
+              const SizedBox(height: 24),
+              Text(
+                "Connected Students",
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 12),
+              for (final student in students)
+                Card(
+                  child: ListTile(
+                    leading: const CircleAvatar(
+                      backgroundColor: Color(0xFF003D5B),
+                      child: Icon(Icons.person, color: Colors.white),
+                    ),
+                    title: Text(student.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+                    subtitle: Text(classesMap[student.classId] ?? "Grade ${student.classId}"),
+                    trailing: const StatusChip(label: "ACTIVE", color: Color(0xFF00A86B)),
+                  ),
+                ),
+            ],
+          ],
+
           const SizedBox(height: 24),
           Text(
             "Account Security",
@@ -42,47 +142,8 @@ class ProfileScreen extends ConsumerWidget {
               ],
             ),
           ),
-          const SizedBox(height: 24),
-          Text(
-            "Academic Portfolio",
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 12),
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  _InfoRow(label: "Academic Role", value: user?.role.name.toUpperCase() ?? "Unknown"),
-                  const Divider(height: 24),
-                  _InfoRow(label: "School ID", value: user?.schoolId ?? "Not assigned"),
-                  const Divider(height: 24),
-                  _InfoRow(label: "Registration Status", value: "VERIFIED"),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 24),
-          if (students.isNotEmpty) ...[
-            Text(
-              "Connected Students",
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 12),
-            for (final student in students)
-              Card(
-                child: ListTile(
-                  leading: const CircleAvatar(
-                    backgroundColor: Color(0xFF003D5B),
-                    child: Icon(Icons.person, color: Colors.white),
-                  ),
-                  title: Text(student.name, style: const TextStyle(fontWeight: FontWeight.bold)),
-                  subtitle: Text("ID: ${student.studentId} • Class ${student.classId}"),
-                  trailing: const StatusChip(label: "ACTIVE", color: Color(0xFF00A86B)),
-                ),
-              ),
-            const SizedBox(height: 24),
-          ],
+          
+          const SizedBox(height: 32),
           SizedBox(
             width: double.infinity,
             child: OutlinedButton.icon(
@@ -113,6 +174,39 @@ class ProfileScreen extends ConsumerWidget {
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
       builder: (context) => _ChangePasswordSheet(),
+    );
+  }
+
+  void _showEditInfoSheet(BuildContext context, WidgetRef ref, String label, String? currentValue, Function(String) onSave) {
+    final controller = TextEditingController(text: currentValue);
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
+      builder: (context) => Padding(
+        padding: EdgeInsets.only(left: 24, right: 24, top: 24, bottom: MediaQuery.of(context).viewInsets.bottom + 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text("Edit $label", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 20),
+            TextField(
+              controller: controller,
+              decoration: InputDecoration(labelText: label),
+              autofocus: true,
+            ),
+            const SizedBox(height: 24),
+            FilledButton(
+              onPressed: () {
+                onSave(controller.text.trim());
+                Navigator.pop(context);
+              },
+              child: const Text("Update Information"),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -203,26 +297,33 @@ class _ProfileHeader extends StatelessWidget {
     final updateState = ref.watch(profileUpdateControllerProvider);
 
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(28),
       decoration: BoxDecoration(
-        color: const Color(0xFF003D5B),
+        color: const Color(0xFF1E293B),
         borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF1E293B).withValues(alpha: 0.2),
+            blurRadius: 16,
+            offset: const Offset(0, 8),
+          ),
+        ],
       ),
       child: Row(
         children: [
           Stack(
             children: [
               Container(
-                padding: const EdgeInsets.all(4),
-                decoration: const BoxDecoration(color: Color(0xFFD4AF37), shape: BoxShape.circle),
+                padding: const EdgeInsets.all(3),
+                decoration: const BoxDecoration(color: Color(0xFF3B82F6), shape: BoxShape.circle),
                 child: CircleAvatar(
-                  radius: 36,
+                  radius: 40,
                   backgroundColor: Colors.white,
                   backgroundImage: user?.profileImageUrl != null && user!.profileImageUrl.isNotEmpty
                       ? NetworkImage(user!.profileImageUrl)
                       : null,
                   child: (user?.profileImageUrl == null || user!.profileImageUrl.isEmpty)
-                      ? const Icon(Icons.person, size: 40, color: Color(0xFF003D5B))
+                      ? const Icon(Icons.person, size: 40, color: Color(0xFF1E293B))
                       : null,
                 ),
               ),
@@ -232,29 +333,50 @@ class _ProfileHeader extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () => ref.read(profileUpdateControllerProvider.notifier).pickAndUploadPhoto(),
                   child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: const BoxDecoration(color: Color(0xFFD4AF37), shape: BoxShape.circle),
+                    padding: const EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF3B82F6),
+                      shape: BoxShape.circle,
+                      border: Border.all(color: const Color(0xFF1E293B), width: 2),
+                    ),
                     child: updateState.isUploading
-                        ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                        : const Icon(Icons.camera_alt, size: 16, color: Colors.white),
+                        ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                        : const Icon(Icons.camera_alt, size: 14, color: Colors.white),
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(width: 20),
+          const SizedBox(width: 24),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   user?.displayName ?? "Academy User",
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white, fontWeight: FontWeight.w900),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: -0.5,
+                  ),
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  user?.role == UserRole.teacher ? "Senior Faculty" : user?.role == UserRole.parent ? "Family Contact" : "Administrator",
-                  style: const TextStyle(color: Colors.white70, fontSize: 13),
+                const SizedBox(height: 6),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Text(
+                    (user?.role == UserRole.teacher ? "Academic Faculty" : user?.role == UserRole.parent ? "Registered Family" : "Institution Admin").toUpperCase(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 1.0,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -266,17 +388,31 @@ class _ProfileHeader extends StatelessWidget {
 }
 
 class _InfoRow extends StatelessWidget {
-  const _InfoRow({required this.label, required this.value});
+  const _InfoRow({required this.label, required this.value, this.onEdit});
   final String label;
   final String value;
+  final VoidCallback? onEdit;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: const TextStyle(color: Colors.black54, fontWeight: FontWeight.w500)),
-        Text(value, style: const TextStyle(fontWeight: FontWeight.bold)),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(label, style: const TextStyle(color: Colors.black54, fontWeight: FontWeight.w500, fontSize: 13)),
+              const SizedBox(height: 2),
+              Text(value, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+            ],
+          ),
+        ),
+        if (onEdit != null)
+          IconButton(
+            onPressed: onEdit,
+            icon: const Icon(Icons.edit_outlined, size: 18, color: Color(0xFFD4AF37)),
+          ),
       ],
     );
   }

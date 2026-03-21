@@ -3,6 +3,7 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 
 import "../../../../core/models/app_user.dart";
 import "../../../../shared/widgets/async_value_view.dart";
+import "package:nova_rise_app/features/students/presentation/controllers/student_controller.dart";
 import "../../../../shared/widgets/app_surface.dart";
 import "../../../auth/presentation/controllers/session_controller.dart";
 import "../controllers/messages_controller.dart";
@@ -14,6 +15,7 @@ class MessagesScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final messages = ref.watch(messagesProvider);
     final user = ref.watch(userProfileProvider).valueOrNull;
+    final classesMap = ref.watch(allClassesMapProvider);
     final isTab = !Navigator.of(context).canPop();
 
     ref.listen<MessageSubmissionState>(messageSubmissionControllerProvider, (previous, next) {
@@ -88,7 +90,7 @@ class MessagesScreen extends ConsumerWidget {
                                 const Icon(Icons.groups_outlined, size: 16, color: Colors.black45),
                                 const SizedBox(width: 8),
                                 Text(
-                                  "Class: ${message.classId}",
+                                  classesMap[message.classId] ?? "Grade ${message.classId}",
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               ],
@@ -145,6 +147,7 @@ class _MessageEntrySheetState extends ConsumerState<_MessageEntrySheet> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(messageSubmissionControllerProvider);
+    final classesMap = ref.watch(allClassesMapProvider);
 
     return Padding(
       padding: EdgeInsets.only(
@@ -173,7 +176,7 @@ class _MessageEntrySheetState extends ConsumerState<_MessageEntrySheet> {
             value: _selectedClass,
             decoration: const InputDecoration(labelText: "Target Class"),
             items: widget.user.assignedClassIds
-                .map((id) => DropdownMenuItem(value: id, child: Text(id)))
+                .map((id) => DropdownMenuItem(value: id, child: Text(classesMap[id] ?? "Grade $id")))
                 .toList(),
             onChanged: (val) => setState(() => _selectedClass = val),
           ),

@@ -1,0 +1,388 @@
+import "package:flutter/material.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
+
+import "package:nova_rise_app/core/models/student.dart";
+import "package:nova_rise_app/core/models/fee_invoice.dart";
+import "package:nova_rise_app/core/models/app_user.dart";
+import "package:nova_rise_app/shared/widgets/async_value_view.dart";
+import "package:nova_rise_app/shared/widgets/app_surface.dart";
+import "package:nova_rise_app/features/attendance/presentation/controllers/attendance_controller.dart";
+import "package:nova_rise_app/features/fees/presentation/controllers/fees_controller.dart";
+import "package:nova_rise_app/features/auth/presentation/controllers/session_controller.dart";
+import "package:nova_rise_app/features/profile/presentation/controllers/profile_update_controller.dart";
+import "package:nova_rise_app/features/students/presentation/controllers/student_controller.dart";
+
+class StudentDetailScreen extends ConsumerWidget {
+  const StudentDetailScreen({required this.student, super.key});
+  final Student student;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final feesValue = ref.watch(feeInvoicesProvider);
+    final attendanceValue = ref.watch(attendanceSummariesProvider);
+    final user = ref.watch(userProfileProvider).valueOrNull;
+    
+    final isTeacher = user?.role == UserRole.teacher;
+    final isAdmin = user?.role == UserRole.admin;
+    final isParentOfStudent = user?.role == UserRole.parent && user!.linkedStudentIds.contains(student.studentId);
+    
+    final canEdit = isAdmin || isParentOfStudent;
+
+    return Scaffold(
+      appBar: AppBar(title: Text(student.name)),
+      body: ListView(
+        padding: const EdgeInsets.all(20),
+        children: [
+          _ProfileHeader(student: student, canEdit: canEdit),
+          const SizedBox(height: 32),
+          
+          Text(
+            "Student Information",
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  _DetailRow(
+                    label: "Blood Group", 
+                    value: student.bloodGroup ?? "Not set",
+                    onEdit: canEdit ? () => _showEditInfoSheet(context, ref, "Blood Group", student.bloodGroup, (val) => ref.read(profileUpdateControllerProvider.notifier).updateStudentProfile(studentId: student.studentId, bloodGroup: val)) : null,
+                  ),
+                  const Divider(),
+                  _DetailRow(
+                    label: "Contact", 
+                    value: student.parentPhone,
+                    onEdit: canEdit ? () => _showEditInfoSheet(context, ref, "Parent Phone", student.parentPhone, (val) => ref.read(profileUpdateControllerProvider.notifier).updateStudentProfile(studentId: student.studentId, parentPhone: val)) : null,
+                  ),
+                  const Divider(),
+                  _DetailRow(
+                    label: "Parent/Guardian", 
+                    value: student.parentName,
+                    onEdit: canEdit ? () => _showEditInfoSheet(context, ref, "Parent Name", student.parentName, (val) => ref.read(profileUpdateControllerProvider.notifier).updateStudentProfile(studentId: student.studentId, parentName: val)) : null,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          
+          const SizedBox(height: 32),
+          Text(
+            "Academic & Attendance",
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16),
+          AsyncValueView(
+            value: attendanceValue,
+            data: (summaries) {
+              return Column(
+                children: [
+                  _StatOverview(
+                    label: "Attendance",
+                    value: "92%",
+                    subtitle: "Overall presence",
+                    icon: Icons.fact_check_outlined,
+                    accent: const Color(0xFF00A86B),
+                  ),
+                  const SizedBox(height: 16),
+                  _StatOverview(
+                    label: "Academic Marks",
+                    value: student.marksData ?? "A",
+                    subtitle: "Latest evaluation",
+                    icon: Icons.grade_outlined,
+                    accent: const Color(0xFF003D5B),
+                    onTap: canEdit ? () => _showEditInfoSheet(context, ref, "Academic Marks", student.marksData, (val) => ref.read(profileUpdateControllerProvider.notifier).updateStudentProfile(studentId: student.studentId, marksData: val)) : null,
+                  ),
+                ],
+              );
+            },
+          ),
+          
+          if (!isTeacher) ...[
+            const SizedBox(height: 32),
+            Text(
+              "Financial Status",
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            AsyncValueView(
+              value: feesValue,
+              data: (invoices) {
+                final studentInvoices = invoices.where((i) => i.studentId == student.studentId).toList();
+                final totalDue = studentInvoices
+                    .where((i) => !i.paymentStatus.contains("paid") && !i.paymentStatus.contains("verified"))
+                    .fold<double>(0, (sum, i) => sum + i.amount);
+
+                return Column(
+                  children: [
+                    _StatOverview(
+                      label: "Balance",
+                      value: "₹${totalDue.toStringAsFixed(0)}",
+                      subtitle: "${studentInvoices.length} invoices",
+                      icon: Icons.account_balance_wallet_outlined,
+                      accent: const Color(0xFFD4AF37),
+                    ),
+                    const SizedBox(height: 16),
+                    if (studentInvoices.isEmpty)
+                      const Center(child: Text("No invoice history found."))
+                    else
+                      for (final invoice in studentInvoices)
+                        _InvoiceTile(invoice: invoice),
+                  ],
+                );
+              },
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  void _showEditInfoSheet(BuildContext context, WidgetRef ref, String label, String? currentValue, Function(String) onSave) {
+    final controller = TextEditingController(text: currentValue);
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
+      builder: (context) => Padding(
+        padding: EdgeInsets.only(left: 24, right: 24, top: 24, bottom: MediaQuery.of(context).viewInsets.bottom + 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text("Edit $label", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 20),
+            TextField(
+              controller: controller,
+              decoration: InputDecoration(labelText: label),
+              autofocus: true,
+            ),
+            const SizedBox(height: 24),
+            FilledButton(
+              onPressed: () {
+                onSave(controller.text.trim());
+                Navigator.pop(context);
+              },
+              child: const Text("Save Student Details"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ProfileHeader extends ConsumerWidget {
+  const _ProfileHeader({required this.student, required this.canEdit});
+  final Student student;
+  final bool canEdit;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final updateState = ref.watch(profileUpdateControllerProvider);
+    final classesMap = ref.watch(allClassesMapProvider);
+
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: const Color(0xFF003D5B),
+        borderRadius: BorderRadius.circular(32),
+      ),
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(4),
+                decoration: const BoxDecoration(color: Color(0xFFD4AF37), shape: BoxShape.circle),
+                child: CircleAvatar(
+                  radius: 40,
+                  backgroundColor: Colors.white,
+                  backgroundImage: student.profileImageUrl.isNotEmpty
+                      ? NetworkImage(student.profileImageUrl)
+                      : null,
+                  child: student.profileImageUrl.isEmpty
+                      ? Text(
+                          student.name.substring(0, 1).toUpperCase(),
+                          style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Color(0xFF003D5B)),
+                        )
+                      : null,
+                ),
+              ),
+              if (canEdit)
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: GestureDetector(
+                    onTap: () => ref.read(profileUpdateControllerProvider.notifier).pickAndUploadStudentPhoto(student.studentId),
+                    child: Container(
+                      padding: const EdgeInsets.all(6),
+                      decoration: const BoxDecoration(color: Color(0xFFD4AF37), shape: BoxShape.circle),
+                      child: updateState.isUploading
+                          ? const SizedBox(width: 12, height: 12, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                          : const Icon(Icons.camera_alt, size: 14, color: Colors.white),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Text(
+            student.name,
+            style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 4),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                "Active Student Profile",
+                style: TextStyle(color: Colors.white70, fontSize: 13),
+              ),
+              if (canEdit)
+                IconButton(
+                  onPressed: () {
+                    final controller = TextEditingController(text: student.name);
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) => Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            TextField(controller: controller, decoration: const InputDecoration(labelText: "Student Name")),
+                            const SizedBox(height: 24),
+                            FilledButton(
+                              onPressed: () {
+                                ref.read(profileUpdateControllerProvider.notifier).updateStudentProfile(studentId: student.studentId, name: controller.text.trim());
+                                Navigator.pop(context);
+                              },
+                              child: const Text("Update Name"),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.edit_outlined, color: Colors.white38, size: 16),
+                ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _HeaderInfo(label: "SECTION", value: classesMap[student.classId] ?? "Grade ${student.classId}"),
+              _HeaderInfo(label: "STATUS", value: student.status.toUpperCase()),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _HeaderInfo extends StatelessWidget {
+  const _HeaderInfo({required this.label, required this.value});
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(label, style: const TextStyle(color: Colors.white54, fontSize: 10, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 4),
+        Text(value, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+      ],
+    );
+  }
+}
+
+class _DetailRow extends StatelessWidget {
+  const _DetailRow({required this.label, required this.value, this.onEdit});
+  final String label;
+  final String value;
+  final VoidCallback? onEdit;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(label, style: const TextStyle(color: Colors.black54, fontWeight: FontWeight.w500, fontSize: 13)),
+                const SizedBox(height: 2),
+                Text(value, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+              ],
+            ),
+          ),
+          if (onEdit != null)
+            IconButton(
+              onPressed: onEdit,
+              icon: const Icon(Icons.edit_outlined, size: 18, color: Color(0xFFD4AF37)),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _StatOverview extends StatelessWidget {
+  const _StatOverview({
+    required this.label,
+    required this.value,
+    required this.subtitle,
+    required this.icon,
+    required this.accent,
+    this.onTap,
+  });
+  final String label;
+  final String value;
+  final String subtitle;
+  final IconData icon;
+  final Color accent;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: MiniStatCard(
+        label: label,
+        value: value,
+        subtitle: subtitle,
+        icon: icon,
+        accent: accent,
+      ),
+    );
+  }
+}
+
+class _InvoiceTile extends StatelessWidget {
+  const _InvoiceTile({required this.invoice});
+  final FeeInvoice invoice;
+
+  @override
+  Widget build(BuildContext context) {
+    bool isPaid = invoice.paymentStatus.contains("paid") || invoice.paymentStatus.contains("verified");
+    Color color = isPaid ? const Color(0xFF00A86B) : const Color(0xFFB34747);
+
+    return Card(
+      margin: const EdgeInsets.only(bottom: 8),
+      child: ListTile(
+        leading: Icon(isPaid ? Icons.check_circle_outline : Icons.error_outline, color: color),
+        title: Text(invoice.title, style: const TextStyle(fontWeight: FontWeight.bold)),
+        subtitle: Text("Due: ${invoice.dueDate}"),
+        trailing: Text("₹${invoice.amount.toStringAsFixed(0)}", style: const TextStyle(fontWeight: FontWeight.bold)),
+      ),
+    );
+  }
+}

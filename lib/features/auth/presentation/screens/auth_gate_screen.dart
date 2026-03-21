@@ -3,12 +3,14 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
 
 import "../../../../core/models/app_user.dart";
+import "../../../../core/models/school_class.dart";
 import "../../../../shared/widgets/app_surface.dart";
 import "../../../../shared/widgets/feature_card.dart";
 import "../../../admin_tools/presentation/controllers/admin_tools_controller.dart";
 import "../../../admin_tools/presentation/screens/admin_tools_screen.dart";
 import "../../../attendance/presentation/controllers/attendance_controller.dart";
 import "../../../attendance/presentation/screens/attendance_screen.dart";
+import "../../../diary/presentation/screens/diary_screen.dart";
 import "../../../fees/presentation/controllers/fees_controller.dart";
 import "../../../fees/presentation/screens/fees_screen.dart";
 import "../../../messages/presentation/controllers/messages_controller.dart";
@@ -17,8 +19,8 @@ import "../../../notices/presentation/controllers/notices_controller.dart";
 import "../../../notices/presentation/screens/notices_screen.dart";
 import "../../../profile/presentation/screens/profile_screen.dart";
 import "../../../students/presentation/controllers/student_controller.dart";
-import "../../../transport/presentation/controllers/transport_controller.dart";
-import "../../../transport/presentation/screens/transport_screen.dart";
+import "../../../students/presentation/screens/students_screen.dart";
+
 import "../controllers/session_controller.dart";
 import "sign_in_screen.dart";
 
@@ -160,13 +162,28 @@ class _AuthenticatedLayoutState extends ConsumerState<_AuthenticatedLayout> {
     final profile = widget.profile;
     final tabs = _getTabsForRole(profile.role);
 
+    final isAdmin = profile.role == UserRole.admin || profile.role == UserRole.cashCollector;
+
+    final showDrawer = isAdmin;
+
     return Scaffold(
       appBar: AppBar(
+        leading: showDrawer
+            ? Builder(
+                builder: (context) => IconButton(
+                  icon: const Icon(Icons.menu),
+                  onPressed: () => Scaffold.of(context).openDrawer(),
+                ),
+              )
+            : null,
         title: InkWell(
           onTap: () => setState(() => _selectedIndex = 0),
-          borderRadius: BorderRadius.circular(8),
-          child: Padding(
-            padding: const EdgeInsets.all(4),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.5),
+              borderRadius: BorderRadius.circular(16),
+            ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -185,24 +202,74 @@ class _AuthenticatedLayoutState extends ConsumerState<_AuthenticatedLayout> {
           ),
         ],
       ),
+      drawer: showDrawer
+          ? Drawer(
+              child: Column(
+                children: [
+                  DrawerHeader(
+                    decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset("assets/images/logo.png", height: 60),
+                          const SizedBox(height: 12),
+                          const Text(
+                            "Nova Rise Admin",
+                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: tabs.length,
+                      itemBuilder: (context, index) {
+                        final t = tabs[index];
+                        return ListTile(
+                          leading: Icon(index == _selectedIndex ? t.activeIcon : t.icon),
+                          title: Text(t.label),
+                          selected: index == _selectedIndex,
+                          onTap: () {
+                            setState(() => _selectedIndex = index);
+                            Navigator.pop(context);
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                  const Divider(),
+                  ListTile(
+                    leading: const Icon(Icons.logout),
+                    title: const Text("Sign Out"),
+                    onTap: () => ref.read(authServiceProvider).signOut(),
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              ),
+            )
+          : null,
       body: IndexedStack(
         index: _selectedIndex,
         children: tabs.map((t) => t.body).toList(),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: (index) => setState(() => _selectedIndex = index),
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Theme.of(context).colorScheme.primary,
-        unselectedItemColor: Colors.black45,
-        items: tabs
-            .map((t) => BottomNavigationBarItem(
-                  icon: Icon(t.icon),
-                  activeIcon: Icon(t.activeIcon),
-                  label: t.label,
-                ))
-            .toList(),
-      ),
+      bottomNavigationBar: isAdmin
+          ? null
+          : BottomNavigationBar(
+              currentIndex: _selectedIndex,
+              onTap: (index) => setState(() => _selectedIndex = index),
+              type: BottomNavigationBarType.fixed,
+              selectedItemColor: Theme.of(context).colorScheme.primary,
+              unselectedItemColor: Colors.black45,
+              items: tabs
+                  .map((t) => BottomNavigationBarItem(
+                        icon: Icon(t.icon),
+                        activeIcon: Icon(t.activeIcon),
+                        label: t.label,
+                      ))
+                  .toList(),
+            ),
     );
   }
 
@@ -234,10 +301,10 @@ class _AuthenticatedLayoutState extends ConsumerState<_AuthenticatedLayout> {
             body: NoticesScreen(),
           ),
           const _TabInfo(
-            label: "Transport",
-            icon: Icons.directions_bus_outlined,
-            activeIcon: Icons.directions_bus,
-            body: TransportScreen(),
+            label: "Diary",
+            icon: Icons.auto_stories_outlined,
+            activeIcon: Icons.auto_stories,
+            body: DiaryScreen(),
           ),
           const _TabInfo(
             label: "Profile",
@@ -260,10 +327,10 @@ class _AuthenticatedLayoutState extends ConsumerState<_AuthenticatedLayout> {
             body: AttendanceScreen(),
           ),
           const _TabInfo(
-            label: "Messages",
-            icon: Icons.forum_outlined,
-            activeIcon: Icons.forum,
-            body: MessagesScreen(),
+            label: "Diary",
+            icon: Icons.auto_stories_outlined,
+            activeIcon: Icons.auto_stories,
+            body: DiaryScreen(),
           ),
           const _TabInfo(
             label: "Profile",
@@ -280,6 +347,12 @@ class _AuthenticatedLayoutState extends ConsumerState<_AuthenticatedLayout> {
             body: _DashboardView(profile: widget.profile),
           ),
           const _TabInfo(
+            label: "Attendance",
+            icon: Icons.fact_check_outlined,
+            activeIcon: Icons.fact_check,
+            body: AttendanceScreen(),
+          ),
+          const _TabInfo(
             label: "Operations",
             icon: Icons.admin_panel_settings_outlined,
             activeIcon: Icons.admin_panel_settings,
@@ -291,11 +364,23 @@ class _AuthenticatedLayoutState extends ConsumerState<_AuthenticatedLayout> {
             activeIcon: Icons.payments,
             body: FeesScreen(),
           ),
+          _TabInfo(
+            label: "Directory",
+            icon: Icons.groups_outlined,
+            activeIcon: Icons.groups,
+            body: StudentsScreen(),
+          ),
           const _TabInfo(
-            label: "Transport",
-            icon: Icons.directions_bus_outlined,
-            activeIcon: Icons.directions_bus,
-            body: TransportScreen(),
+            label: "Notices",
+            icon: Icons.campaign_outlined,
+            activeIcon: Icons.campaign,
+            body: NoticesScreen(),
+          ),
+          const _TabInfo(
+            label: "Diary",
+            icon: Icons.auto_stories_outlined,
+            activeIcon: Icons.auto_stories,
+            body: DiaryScreen(),
           ),
           const _TabInfo(
             label: "Profile",
@@ -349,10 +434,12 @@ class _DashboardView extends ConsumerWidget {
     final notices = ref.watch(noticesProvider).valueOrNull ?? const [];
     final messages = ref.watch(messagesProvider).valueOrNull ?? const [];
     final attendance = ref.watch(attendanceSummariesProvider).valueOrNull ?? const [];
-    final routes = ref.watch(routesProvider).valueOrNull ?? const [];
     final adminSummary = ref.watch(adminSummaryProvider).valueOrNull;
+    final stats = _getStatsForRole(profile, students, fees, notices, messages, attendance, adminSummary, ref);
 
-    final stats = _getStatsForRole(profile, students, fees, notices, messages, attendance, routes, adminSummary);
+    final teacherClasses = profile.role == UserRole.teacher 
+        ? ref.watch(teacherClassesProvider).valueOrNull ?? []
+        : <SchoolClass>[];
 
     return ListView(
       padding: const EdgeInsets.all(20),
@@ -364,20 +451,48 @@ class _DashboardView extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Namaste, ${profile.displayName.split(' ').first}",
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w900),
+                    "Namaste, ${profile.displayName.isNotEmpty ? profile.displayName.split(' ').first : 'Admin'}",
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: -0.5,
+                        ),
                   ),
-                  Text(
-                    _roleLabel(profile.role),
-                    style: TextStyle(color: _accentForRole(profile.role), fontWeight: FontWeight.bold, letterSpacing: 1.2, fontSize: 12),
+                  const SizedBox(height: 2),
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: _accentForRole(profile.role).withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Text(
+                          _roleLabel(profile.role).toUpperCase(),
+                          style: TextStyle(
+                            color: _accentForRole(profile.role),
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 1.0,
+                            fontSize: 10,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
-            CircleAvatar(
-              radius: 24,
-              backgroundColor: _accentForRole(profile.role).withValues(alpha: 0.1),
-              child: Icon(_iconForRole(profile.role), color: _accentForRole(profile.role)),
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: const Color(0xFFE2E8F0)),
+              ),
+              child: CircleAvatar(
+                radius: 20,
+                backgroundColor: _accentForRole(profile.role).withValues(alpha: 0.08),
+                child: Icon(_iconForRole(profile.role), color: _accentForRole(profile.role), size: 20),
+              ),
             ),
           ],
         ),
@@ -387,6 +502,52 @@ class _DashboardView extends ConsumerWidget {
           stats: stats,
           notices: notices,
         ),
+        if (profile.role == UserRole.teacher) ...[
+          const SizedBox(height: 32),
+          Text(
+            "Academic Responsibility",
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16),
+          if (teacherClasses.isEmpty)
+            Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: Colors.grey[100],
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(color: Colors.grey[300]!),
+              ),
+              child: const Column(
+                children: [
+                  Icon(Icons.assignment_ind_outlined, size: 40, color: Colors.black26),
+                  SizedBox(height: 16),
+                  Text(
+                    "No Class Assignments Yet",
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54),
+                  ),
+                  Text(
+                    "Contact the administrator to assign you to a Grade or Subject.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.black38, fontSize: 13),
+                  ),
+                ],
+              ),
+            )
+          else ...[
+            if (teacherClasses.any((c) => c.classTeacherId == profile.uid)) ...[
+              const SizedBox(height: 16),
+              const Text("Class Teacher", style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black54)),
+              const SizedBox(height: 12),
+              ...teacherClasses.where((c) => c.classTeacherId == profile.uid).map((cls) => _AssignmentCard(cls: cls, profile: profile)),
+            ],
+            if (teacherClasses.any((c) => c.classTeacherId != profile.uid)) ...[
+              const SizedBox(height: 16),
+              const Text("Subject Teacher", style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black54)),
+              const SizedBox(height: 12),
+              ...teacherClasses.where((c) => c.classTeacherId != profile.uid).map((cls) => _AssignmentCard(cls: cls, profile: profile)),
+            ],
+          ],
+        ],
         const SizedBox(height: 32),
         Text(
           "Management Tools",
@@ -397,9 +558,9 @@ class _DashboardView extends ConsumerWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           crossAxisCount: 2,
-          mainAxisSpacing: 12,
-          crossAxisSpacing: 12,
-          childAspectRatio: 1.3,
+          mainAxisSpacing: 16,
+          crossAxisSpacing: 16,
+          childAspectRatio: 1.15,
           children: cards.map((card) {
             return FeatureCard(
               title: card.$1,
@@ -409,97 +570,272 @@ class _DashboardView extends ConsumerWidget {
             );
           }).toList(),
         ),
-        const SizedBox(height: 40),
-        const _HelpSection(),
+        if (profile.role == UserRole.admin || profile.role == UserRole.cashCollector) ...[
+          const SizedBox(height: 32),
+          Text(
+            "Quick School Overview",
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16),
+          _SchoolOverviewGrid(adminSummary: adminSummary),
+        ],
+        if (profile.role != UserRole.admin && profile.role != UserRole.cashCollector) ...[
+          const SizedBox(height: 48),
+          const _HelpSection(),
+        ],
         const SizedBox(height: 24),
       ],
     );
   }
+}
 
-  String _roleLabel(UserRole role) {
-    return switch (role) {
-      UserRole.parent => "PARENT PORTAL",
-      UserRole.teacher => "ACADEMIC STAFF",
-      UserRole.admin => "ADMINISTRATION",
-      _ => "GUEST",
-    };
+class _SchoolOverviewGrid extends StatelessWidget {
+  const _SchoolOverviewGrid({this.adminSummary});
+  final Map<String, int>? adminSummary;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _OverviewItem(
+          title: "Student Roster",
+          value: "${adminSummary?["students"] ?? 0} active",
+          icon: Icons.groups_3_outlined,
+          color: const Color(0xFF003D5B),
+          onTap: () => context.push("/students"),
+        ),
+        const SizedBox(height: 12),
+        _OverviewItem(
+          title: "Class Sections",
+          value: "${adminSummary?["classes"] ?? 0} grades",
+          icon: Icons.class_outlined,
+          color: const Color(0xFFD4AF37),
+          onTap: () => context.push("/students"),
+        ),
+        const SizedBox(height: 12),
+        _OverviewItem(
+          title: "Academic Staff",
+          value: "${adminSummary?["staff"] ?? 0} members",
+          icon: Icons.badge_outlined,
+          color: const Color(0xFF00A86B),
+          onTap: () => context.push("/students"),
+        ),
+      ],
+    );
   }
+}
 
-  List<(String, String, String, IconData, Color)> _getStatsForRole(
-    AppUser profile,
-    List students,
-    List fees,
-    List notices,
-    List messages,
-    List attendance,
-    List routes,
-    Map? adminSummary,
-  ) {
-    return switch (profile.role) {
-      UserRole.parent => [
-          ("Students", "${students.length}", "Linked children", Icons.family_restroom, const Color(0xFF003D5B)),
-          ("Fees", "${fees.length}", "Pending items", Icons.receipt_long, const Color(0xFFD4AF37)),
-          ("Transport", "${routes.length}", "Active routes", Icons.directions_bus, const Color(0xFF00A86B)),
-        ],
-      UserRole.teacher => [
-          ("Classes", "${profile.assignedClassIds.length}", "Assigned focus", Icons.class_outlined, const Color(0xFF003D5B)),
-          ("Students", "${students.length}", "Roster size", Icons.groups_2, const Color(0xFF00A86B)),
-          ("Attendance", "${attendance.length}", "Daily records", Icons.fact_check, const Color(0xFFD4AF37)),
-        ],
-      UserRole.admin || UserRole.cashCollector => [
-          ("Queue", "${adminSummary?["pendingFees"] ?? 0}", "Verification", Icons.payments, const Color(0xFFD4AF37)),
-          ("Notices", "${adminSummary?["notices"] ?? notices.length}", "School feed", Icons.campaign, const Color(0xFF003D5B)),
-          ("Comm Vol", "${adminSummary?["messages"] ?? messages.length}", "Entries", Icons.forum, const Color(0xFF00A86B)),
-        ],
-      _ => [("Active", "1", "Status OK", Icons.person, const Color(0xFF003D5B))],
-    };
+class _OverviewItem extends StatelessWidget {
+  const _OverviewItem({
+    required this.title,
+    required this.value,
+    required this.icon,
+    required this.color,
+    required this.onTap,
+  });
+
+  final String title;
+  final String value;
+  final IconData icon;
+  final Color color;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(16),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            border: Border.all(color: const Color(0xFFE2E8F0)),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: color.withValues(alpha: 0.08),
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: Icon(icon, color: color, size: 24),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title, 
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w800,
+                        color: const Color(0xFF1E293B),
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      value, 
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: color,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(Icons.arrow_forward_ios, size: 14, color: Color(0xFFCBD5E1)),
+            ],
+          ),
+        ),
+      ),
+    );
   }
+}
 
-  List<(String, String, String, IconData)> _cardsForRole(UserRole role) {
-    switch (role) {
-      case UserRole.parent:
-        return [
-          ("Fees", "Pay invoices", "/fees", Icons.receipt_long_outlined),
-          ("Notices", "School feed", "/notices", Icons.campaign_outlined),
-          ("Transport", "Bus tracking", "/transport", Icons.directions_bus_outlined),
-          ("Homework", "Class news", "/messages", Icons.forum_outlined),
-        ];
-      case UserRole.teacher:
-        return [
-          ("Attendance", "Mark daily", "/attendance", Icons.fact_check_outlined),
-          ("Students", "Class roster", "/students", Icons.groups_2_outlined),
-          ("Homework", "Post task", "/messages", Icons.edit_note_outlined),
-          ("Notices", "Read alerts", "/notices", Icons.notifications_active_outlined),
-        ];
-      case UserRole.admin:
-      case UserRole.cashCollector:
-        return [
-          ("Operations", "Verify queue", "/admin-tools", Icons.admin_panel_settings_outlined),
-          ("Financials", "Fee records", "/fees", Icons.payments_outlined),
-          ("Transport", "Bus routes", "/transport", Icons.directions_bus_outlined),
-          ("Directory", "Search all", "/students", Icons.groups_outlined),
-        ];
-      case UserRole.unknown:
-        return [("Profile", "My records", "/profile", Icons.person_outline)];
-    }
+String _roleLabel(UserRole role) {
+  return switch (role) {
+    UserRole.parent => "PARENT PORTAL",
+    UserRole.teacher => "ACADEMIC STAFF",
+    UserRole.admin => "ADMINISTRATION",
+    _ => "GUEST",
+  };
+}
+
+List<(String, String, String, IconData, Color)> _getStatsForRole(
+  AppUser profile,
+  List students,
+  List fees,
+  List notices,
+  List messages,
+  List attendance,
+  Map? adminSummary,
+  WidgetRef ref,
+) {
+  return switch (profile.role) {
+    UserRole.parent => [
+        ("Students", "${students.length}", "Linked children", Icons.family_restroom, const Color(0xFF003D5B)),
+        ("Fees", "${fees.length}", "Pending items", Icons.receipt_long, const Color(0xFFD4AF37)),
+        ("Notices", "${notices.length}", "School alerts", Icons.campaign, const Color(0xFF00A86B)),
+      ],
+    UserRole.teacher => [
+        ("Classes", "${ref.watch(teacherClassesProvider).valueOrNull?.length ?? 0}", "Assigned focus", Icons.class_outlined, const Color(0xFF003D5B)),
+        ("Logs", "OPEN", "/diary", Icons.auto_stories_outlined, const Color(0xFF00A86B)),
+        ("Attendance", "${attendance.length}", "Daily records", Icons.fact_check, const Color(0xFFD4AF37)),
+      ],
+    UserRole.admin || UserRole.cashCollector => [
+        ("Students", "${adminSummary?["students"] ?? 0}", "Active records", Icons.groups, const Color(0xFF003D5B)),
+        ("Classes", "${adminSummary?["classes"] ?? 0}", "Active sections", Icons.class_outlined, const Color(0xFF00A86B)),
+        ("Staff", "${adminSummary?["staff"] ?? 0}", "Teaching team", Icons.badge_outlined, const Color(0xFFD4AF37)),
+      ],
+    _ => [
+        ("Students", "${adminSummary?["students"] ?? 0}", "Active records", Icons.groups, const Color(0xFF003D5B)),
+        ("Classes", "${adminSummary?["classes"] ?? 0}", "Active sections", Icons.class_outlined, const Color(0xFF00A86B)),
+        ("Pending", "${adminSummary?["pendingFees"] ?? 0}", "Verification", Icons.hourglass_top, const Color(0xFFD4AF37)),
+      ],
+  };
+}
+
+List<(String, String, String, IconData)> _cardsForRole(UserRole role) {
+  switch (role) {
+    case UserRole.parent:
+      return [
+        ("Daily Diary", "Lesson logs", "/diary", Icons.auto_stories_outlined),
+        ("Attendance", "View records", "/attendance", Icons.fact_check_outlined),
+        ("Notices", "School feed", "/notices", Icons.campaign_outlined),
+        ("Fees", "Pay invoices", "/fees", Icons.receipt_long_outlined),
+      ];
+    case UserRole.teacher:
+      return [
+        ("Attendance", "Mark daily", "/attendance", Icons.fact_check_outlined),
+        ("Daily Diary", "Log lesson", "/diary", Icons.edit_note_outlined),
+        ("Students", "Class roster", "/students", Icons.groups_2_outlined),
+      ];
+    case UserRole.admin:
+    case UserRole.cashCollector:
+      return [
+        ("Operations", "Verify queue", "/admin-tools", Icons.admin_panel_settings_outlined),
+        ("Daily Diary", "View reports", "/diary", Icons.auto_stories_outlined),
+        ("Financials", "Fee records", "/fees", Icons.payments_outlined),
+        ("Directory", "Search all", "/students", Icons.groups_outlined),
+      ];
+    case UserRole.unknown:
+      return [("Profile", "My records", "/profile", Icons.person_outline)];
   }
+}
 
-  IconData _iconForRole(UserRole role) {
-    return switch (role) {
-      UserRole.parent => Icons.family_restroom,
-      UserRole.teacher => Icons.cast_for_education_outlined,
-      UserRole.admin || UserRole.cashCollector => Icons.space_dashboard_outlined,
-      UserRole.unknown => Icons.person_outline,
-    };
-  }
+IconData _iconForRole(UserRole role) {
+  return switch (role) {
+    UserRole.parent => Icons.family_restroom,
+    UserRole.teacher => Icons.cast_for_education_outlined,
+    UserRole.admin || UserRole.cashCollector => Icons.space_dashboard_outlined,
+    UserRole.unknown => Icons.person_outline,
+  };
+}
 
-  Color _accentForRole(UserRole role) {
-    return switch (role) {
-      UserRole.parent => const Color(0xFF003D5B),
-      UserRole.teacher => const Color(0xFF00A86B),
-      UserRole.admin || UserRole.cashCollector => const Color(0xFFD4AF37),
-      UserRole.unknown => const Color(0xFF003D5B),
-    };
+Color _accentForRole(UserRole role) {
+  return switch (role) {
+    UserRole.parent => const Color(0xFF1E293B),
+    UserRole.teacher => const Color(0xFF10B981),
+    UserRole.admin || UserRole.cashCollector => const Color(0xFF3B82F6),
+    UserRole.unknown => const Color(0xFF1E293B),
+  };
+}
+
+class _AssignmentCard extends ConsumerWidget {
+  const _AssignmentCard({required this.cls, required this.profile});
+  final SchoolClass cls;
+  final AppUser profile;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isClassTeacher = cls.classTeacherId == profile.uid;
+    final taughtSubjects = cls.subjects.entries
+        .where((e) => e.value == profile.uid)
+        .map((e) => e.key)
+        .join(", ");
+
+    return Card(
+      elevation: 0,
+      margin: const EdgeInsets.only(bottom: 12),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: const BorderSide(color: Color(0xFFE2E8F0)),
+      ),
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        leading: Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: (isClassTeacher ? const Color(0xFF10B981) : const Color(0xFF3B82F6)).withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(
+            isClassTeacher ? Icons.workspace_premium_outlined : Icons.book_outlined,
+            color: isClassTeacher ? const Color(0xFF10B981) : const Color(0xFF3B82F6),
+            size: 20,
+          ),
+        ),
+        title: Text(
+          cls.displayName, 
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
+        ),
+        subtitle: Text(
+          isClassTeacher ? "Class Teacher" : "Subject Teacher: $taughtSubjects",
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: isClassTeacher ? const Color(0xFF10B981) : const Color(0xFF64748B),
+                fontWeight: isClassTeacher ? FontWeight.w700 : FontWeight.w500,
+              ),
+        ),
+        trailing: const Icon(Icons.arrow_forward_ios, size: 14, color: Color(0xFFCBD5E1)),
+        onTap: () {
+          ref.read(diaryClassFilterProvider.notifier).state = cls.id;
+        },
+      ),
+    );
   }
 }
 
@@ -524,14 +860,22 @@ class _SmartBanner extends StatelessWidget {
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         color: accent,
-        borderRadius: BorderRadius.circular(32),
+        borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: accent.withValues(alpha: 0.3),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
+            color: accent.withValues(alpha: 0.25),
+            blurRadius: 16,
+            offset: const Offset(0, 8),
           ),
         ],
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            accent,
+            accent.withValues(alpha: 0.8),
+          ],
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -554,25 +898,44 @@ class _SmartBanner extends StatelessWidget {
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: stats.map((s) => _StatusItem(label: s.$1, value: s.$2)).toList(),
+            children: stats.map((s) {
+              final label = s.$1;
+              return Expanded(
+                child: _StatusItem(
+                  label: label,
+                  value: s.$2,
+                  icon: s.$4,
+                  onTap: () {
+                    if (label == "Students" || label == "Classes" || label == "Staff") {
+                      context.push("/students");
+                    } else if (s.$3.startsWith("/")) {
+                      context.push(s.$3);
+                    }
+                  },
+                ),
+              );
+            }).toList(),
           ),
           const Divider(height: 48, color: Colors.white24),
-          Row(
-            children: [
-              const Icon(Icons.tips_and_updates, color: Color(0xFFD4AF37), size: 20),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  latestNotice != null
-                      ? "Latest: ${latestNotice.title}"
-                      : "No unread school announcements today.",
-                  style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+          InkWell(
+            onTap: () => context.push("/notices"),
+            child: Row(
+              children: [
+                const Icon(Icons.tips_and_updates, color: Color(0xFFD4AF37), size: 20),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    latestNotice != null
+                        ? "Latest: ${latestNotice.title}"
+                        : "No unread school announcements today.",
+                    style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
-              const Icon(Icons.arrow_forward, color: Colors.white38, size: 16),
-            ],
+                const Icon(Icons.arrow_forward, color: Colors.white38, size: 16),
+              ],
+            ),
           ),
         ],
       ),
@@ -581,24 +944,50 @@ class _SmartBanner extends StatelessWidget {
 }
 
 class _StatusItem extends StatelessWidget {
-  const _StatusItem({required this.label, required this.value});
+  const _StatusItem({required this.label, required this.value, required this.icon, this.onTap});
   final String label;
   final String value;
+  final IconData icon;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          value,
-          style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w900),
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(icon, color: Colors.white.withValues(alpha: 0.6), size: 14),
+                const SizedBox(width: 6),
+                Text(
+                  label.toUpperCase(),
+                  style: TextStyle(color: Colors.white.withValues(alpha: 0.6), fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 0.5),
+                ),
+              ],
+            ),
+            const SizedBox(height: 6),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                Text(
+                  value,
+                  style: const TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.w900),
+                ),
+                if (onTap != null) ...[
+                  const SizedBox(width: 4),
+                  Icon(Icons.chevron_right, color: Colors.white.withValues(alpha: 0.3), size: 16),
+                ],
+              ],
+            ),
+          ],
         ),
-        Text(
-          label.toUpperCase(),
-          style: TextStyle(color: Colors.white.withValues(alpha: 0.6), fontSize: 10, fontWeight: FontWeight.bold),
-        ),
-      ],
+      ),
     );
   }
 }
@@ -609,30 +998,37 @@ class _HelpSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.black.withValues(alpha: 0.03),
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: Colors.black.withValues(alpha: 0.05)),
+        color: const Color(0xFFF8FAFC),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
       ),
       child: Column(
         children: [
-          const Row(
+          Row(
             children: [
-              Icon(Icons.help_center_outlined, color: Colors.black45),
-              SizedBox(width: 12),
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF1E293B).withValues(alpha: 0.05),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.help_center_outlined, color: Color(0xFF64748B), size: 20),
+              ),
+              const SizedBox(width: 12),
               Text(
                 "Academic Support",
-                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w800),
               ),
             ],
           ),
           const SizedBox(height: 16),
-          const Text(
-            "For technical issues or record corrections, please visit the school office.",
-            style: TextStyle(fontSize: 12, color: Colors.black54),
+          Text(
+            "Facing issues with records or technical features? Our school office is here to help.",
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(height: 1.5),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 20),
           Row(
             children: [
               Expanded(
@@ -642,12 +1038,8 @@ class _HelpSection extends StatelessWidget {
                       const SnackBar(content: Text("Connecting to school office: 011-23456789")),
                     );
                   },
-                  icon: const Icon(Icons.call, size: 18),
+                  icon: const Icon(Icons.call, size: 16),
                   label: const Text("Call Office"),
-                  style: FilledButton.styleFrom(
-                    backgroundColor: Colors.black87,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                  ),
                 ),
               ),
               const SizedBox(width: 8),
@@ -655,14 +1047,11 @@ class _HelpSection extends StatelessWidget {
                 child: OutlinedButton.icon(
                   onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Opening school mail composer: help@novarise.com")),
+                      const SnackBar(content: Text("Opening school mail: help@novarise.com")),
                     );
                   },
-                  icon: const Icon(Icons.mail_outline, size: 18),
+                  icon: const Icon(Icons.mail_outline, size: 16),
                   label: const Text("Email Us"),
-                  style: OutlinedButton.styleFrom(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                  ),
                 ),
               ),
             ],
@@ -673,32 +1062,4 @@ class _HelpSection extends StatelessWidget {
   }
 }
 
-class _DebugTile extends StatelessWidget {
-  const _DebugTile({
-    required this.label,
-    required this.icon,
-    required this.onTap,
-    this.isDestructive = false,
-  });
 
-  final String label;
-  final IconData icon;
-  final VoidCallback onTap;
-  final bool isDestructive;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(icon, color: isDestructive ? Colors.red : null),
-      title: Text(
-        label,
-        style: TextStyle(
-          color: isDestructive ? Colors.red : null,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-      onTap: onTap,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-    );
-  }
-}

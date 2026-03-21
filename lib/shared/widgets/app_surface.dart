@@ -22,26 +22,25 @@ class ScreenIntroCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(28),
+        color: const Color(0xFF1E293B), // Slate 800 for contrast
+        borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: color.withValues(alpha: 0.08),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
+            color: const Color(0xFF1E293B).withValues(alpha: 0.2),
+            blurRadius: 16,
+            offset: const Offset(0, 8),
           ),
         ],
-        border: Border.all(color: color.withValues(alpha: 0.1)),
       ),
       child: Stack(
         children: [
           Positioned(
-            right: -20,
-            top: -20,
+            right: -10,
+            top: -10,
             child: Icon(
               icon,
-              size: 100,
-              color: color.withValues(alpha: 0.04),
+              size: 80,
+              color: Colors.white.withValues(alpha: 0.05),
             ),
           ),
           Column(
@@ -51,34 +50,39 @@ class ScreenIntroCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
-                    color: color.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.white.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(
                     eyebrow!.toUpperCase(),
-                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          color: color,
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: 1.1,
-                        ),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 1.2,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 12),
               ],
               Text(
                 title,
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: -0.5,
-                    ),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: -0.5,
+                ),
               ),
               const SizedBox(height: 8),
               Text(
                 description,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      height: 1.5,
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
+                style: TextStyle(
+                  height: 1.5,
+                  fontSize: 14,
+                  color: Colors.white.withValues(alpha: 0.7),
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ],
           ),
@@ -144,6 +148,8 @@ class MiniStatCard extends StatelessWidget {
                   fontWeight: FontWeight.w800,
                   fontSize: 22,
                 ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: 4),
           Text(
@@ -152,6 +158,8 @@ class MiniStatCard extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                   fontSize: 13,
                 ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
           if (subtitle != null) ...[
             const SizedBox(height: 6),
@@ -161,6 +169,8 @@ class MiniStatCard extends StatelessWidget {
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                     fontSize: 11,
                   ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
           ],
         ],

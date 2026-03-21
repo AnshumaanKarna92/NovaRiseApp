@@ -4,6 +4,7 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 
 import "../../../../core/models/app_user.dart";
 import "../../../../core/models/fee_invoice.dart";
+import "../../../../core/models/student.dart";
 import "../../../../shared/widgets/async_value_view.dart";
 import "../../../../shared/widgets/app_surface.dart";
 import "../../../auth/presentation/controllers/session_controller.dart";
@@ -33,20 +34,23 @@ class FeesScreen extends ConsumerWidget {
           if (items.isEmpty) {
             return const Center(child: Text("No fee invoices found."));
           }
+          final isParent = user?.role == UserRole.parent;
+
+          if (!isParent) {
+            return _AdminFeesView(items: items, students: students, studentNames: studentNames);
+          }
+
           final pending = items.where((item) => item.paymentStatus.contains("pending")).length;
           final totalAmount = items.fold<double>(0, (sum, item) => sum + item.amount);
-          final canUpload = user?.role == UserRole.parent;
 
           return ListView(
             padding: const EdgeInsets.all(20),
             children: [
-              ScreenIntroCard(
+              const ScreenIntroCard(
                 title: "School Fee Center",
-                description: canUpload
-                    ? "Review your child's outstanding invoices, upload proof of payment, and track verification status."
-                    : "Review fee records across classes and follow the latest payment collection status.",
+                description: "Review your child's outstanding invoices, upload proof of payment, and track verification status.",
                 icon: Icons.receipt_long_outlined,
-                accent: const Color(0xFFD4AF37),
+                accent: Color(0xFFD4AF37),
               ),
               const SizedBox(height: 24),
               SingleChildScrollView(
@@ -112,7 +116,7 @@ class FeesScreen extends ConsumerWidget {
                               ),
                             ),
                             StatusChip(
-                              label: invoice.paymentStatus.replaceAll("_", " ").toUpperCase(),
+                              label: _statusLabel(invoice.paymentStatus),
                               color: _statusColor(invoice.paymentStatus),
                             ),
                           ],
@@ -129,7 +133,7 @@ class FeesScreen extends ConsumerWidget {
                             ),
                           ],
                         ),
-                        if (canUpload) ...[
+                        if (!invoice.paymentStatus.contains("paid") && !invoice.paymentStatus.contains("verified") && !invoice.paymentStatus.contains("pending")) ...[
                           const SizedBox(height: 14),
                           SizedBox(
                             width: double.infinity,
@@ -158,7 +162,7 @@ class FeesScreen extends ConsumerWidget {
   }
 
   Color _statusColor(String status) {
-    if (status.contains("verified")) {
+    if (status.contains("paid")) {
       return const Color(0xFF00A86B);
     }
     if (status.contains("pending")) {
@@ -168,6 +172,14 @@ class FeesScreen extends ConsumerWidget {
       return const Color(0xFFB34747);
     }
     return const Color(0xFF003D5B);
+  }
+
+  String _statusLabel(String status) {
+    if (status.contains("paid")) return "PAYMENT SUCCESSFUL";
+    if (status.contains("pending")) return "WAITING VERIFICATION";
+    if (status.contains("rejected")) return "PAYMENT REJECTED";
+    if (status.isEmpty || status.contains("unpaid")) return "UNPAID";
+    return status.replaceAll("_", " ").toUpperCase();
   }
 
   Future<void> _showUploadSheet({
@@ -432,6 +444,145 @@ class _FileSelector extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _AdminFeesView extends ConsumerStatefulWidget {
+  const _AdminFeesView({required this.items, required this.students, required this.studentNames});
+  final List<FeeInvoice> items;
+  final List<dynamic> students;
+  final Map<String, String> studentNames;
+
+  @override
+  ConsumerState<_AdminFeesView> createState() => _AdminFeesViewState();
+}
+
+class _AdminFeesViewState extends ConsumerState<_AdminFeesView> {
+  String? _selectedClass;
+  String _selectedStatus = 'All';
+
+  @override
+  Widget build(BuildContext context) {
+    final classesMap = ref.watch(allClassesMapProvider);
+    var mappedStudents = widget.students.cast<dynamic>();
+    final classIds = mappedStudents.map((s) => s.classId as String).toSet().toList()..sort();
+    
+    final filtered = widget.items.where((inv) {
+      final st = inv.paymentStatus.toLowerCase();
+      
+      if (_selectedStatus != 'All') {
+        if (_selectedStatus == 'Paid') {
+          if (!st.contains('paid') && !st.contains('verified')) return false;
+        } else if (_selectedStatus == 'Unpaid') {
+          if (st.contains('paid') || st.contains('verified') || st.contains('pending')) return false;
+        } else if (_selectedStatus == 'Pending') {
+          if (!st.contains('pending')) return false;
+        }
+      }
+      
+      if (_selectedClass != null) {
+        final student = mappedStudents.firstWhere((s) => s.studentId == inv.studentId, orElse: () => null);
+        if (student?.classId != _selectedClass) return false;
+      }
+      return true;
+    }).toList();
+
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              const ScreenIntroCard(
+                title: "Financial Overview",
+                description: "View and filter student fee invoices. Use operations tab for bulk generation.",
+                icon: Icons.analytics_outlined,
+                accent: Color(0xFFD4AF37),
+              ),
+              const SizedBox(height: 20),
+              Wrap(
+                spacing: 12,
+                runSpacing: 12,
+                children: [
+                  SizedBox(
+                    width: (MediaQuery.of(context).size.width - 52) / 2,
+                    child: DropdownButtonFormField<String?>(
+                      value: _selectedClass,
+                      isExpanded: true,
+                      decoration: const InputDecoration(
+                        labelText: "Class", 
+                        prefixIcon: Icon(Icons.class_outlined, size: 20),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      ),
+                      items: [
+                        const DropdownMenuItem(value: null, child: Text("All Classes", style: TextStyle(fontSize: 13))),
+                        ...classIds.map((c) => DropdownMenuItem(value: c, child: Text(classesMap[c] ?? "Grade $c", style: const TextStyle(fontSize: 13))))
+                      ],
+                      onChanged: (val) => setState(() => _selectedClass = val),
+                    ),
+                  ),
+                  SizedBox(
+                    width: (MediaQuery.of(context).size.width - 52) / 2,
+                    child: DropdownButtonFormField<String>(
+                      value: _selectedStatus,
+                      isExpanded: true,
+                      decoration: const InputDecoration(
+                        labelText: "Status", 
+                        prefixIcon: Icon(Icons.filter_list, size: 20),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      ),
+                      items: ['All', 'Paid', 'Unpaid', 'Pending']
+                          .map((s) => DropdownMenuItem(value: s, child: Text(s, style: const TextStyle(fontSize: 13))))
+                          .toList(),
+                      onChanged: (val) => setState(() => _selectedStatus = val!),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        Expanded(
+          child: filtered.isEmpty
+              ? const Center(child: Text("No records match the selected filters."))
+              : ListView.builder(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                  itemCount: filtered.length,
+                  itemBuilder: (context, index) {
+                    final invoice = filtered[index];
+                    final student = mappedStudents.firstWhere((s) => s.studentId == invoice.studentId, orElse: () => null);
+                    
+                    bool isPaid = invoice.paymentStatus.contains('paid') || invoice.paymentStatus.contains('verified');
+                    bool isPending = invoice.paymentStatus.contains('pending');
+                    
+                    Color statusColor = isPaid ? const Color(0xFF00A86B) : (isPending ? const Color(0xFFD4AF37) : const Color(0xFFB34747));
+                    String statusText = isPaid ? "VERIFIED" : (isPending ? "PENDING REVIEW" : "UNPAID");
+                    
+                    return Card(
+                      margin: const EdgeInsets.only(bottom: 12),
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor: statusColor.withValues(alpha: 0.1),
+                          child: Icon(isPaid ? Icons.check : (isPending ? Icons.hourglass_top : Icons.warning_amber), color: statusColor, size: 20),
+                        ),
+                        title: Text(widget.studentNames[invoice.studentId] ?? invoice.studentId, style: const TextStyle(fontWeight: FontWeight.bold)),
+                        subtitle: Text("${invoice.title} • ${classesMap[student?.classId] ?? (student?.classId ?? '-')}\nDue: ${invoice.dueDate}"),
+                        trailing: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text("₹${invoice.amount.toStringAsFixed(0)}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                            Text(statusText, style: TextStyle(color: statusColor, fontSize: 10, fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                        isThreeLine: true,
+                      ),
+                    );
+                  },
+                ),
+        ),
+      ],
     );
   }
 }

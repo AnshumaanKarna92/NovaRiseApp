@@ -16,18 +16,22 @@ class NoticeSubmissionState {
 }
 
 final noticeSubmissionServiceProvider = Provider<NoticeSubmissionService>((ref) {
-  return NoticeSubmissionService(ref.watch(firebaseFunctionsProvider));
+  return NoticeSubmissionService(
+    ref.watch(firebaseFunctionsProvider),
+    ref.watch(firebaseFirestoreProvider),
+  );
 });
 
 final noticeSubmissionControllerProvider =
     StateNotifierProvider<NoticeSubmissionController, NoticeSubmissionState>((ref) {
-  return NoticeSubmissionController(ref.watch(noticeSubmissionServiceProvider));
+  return NoticeSubmissionController(ref.watch(noticeSubmissionServiceProvider), ref);
 });
 
 class NoticeSubmissionController extends StateNotifier<NoticeSubmissionState> {
-  NoticeSubmissionController(this._service) : super(const NoticeSubmissionState());
+  NoticeSubmissionController(this._service, this._ref) : super(const NoticeSubmissionState());
 
   final NoticeSubmissionService _service;
+  final Ref _ref;
 
   Future<void> publish({
     required String title,
@@ -39,7 +43,9 @@ class NoticeSubmissionController extends StateNotifier<NoticeSubmissionState> {
   }) async {
     state = const NoticeSubmissionState(isSubmitting: true);
     try {
+      final user = _ref.read(userProfileProvider).value;
       await _service.publishNotice(
+        schoolId: user?.schoolId ?? "school_001",
         title: title,
         body: body,
         targetType: targetType,

@@ -30,6 +30,7 @@ class AuthService {
     required UserRole role,
     List<String> assignedClassIds = const [],
     List<String> linkedStudentIds = const [],
+    String? primarySubject,
   }) async {
     final credential = await _auth.createUserWithEmailAndPassword(
       email: email,
@@ -40,20 +41,22 @@ class AuthService {
     if (user != null) {
       await user.updateDisplayName(displayName);
       // Create the user profile in Firestore
-      await _ensureLocalProfileWithRole(user, role, displayName, assignedClassIds: assignedClassIds, linkedStudentIds: linkedStudentIds);
+      await _ensureLocalProfileWithRole(user, role, displayName, assignedClassIds: assignedClassIds, linkedStudentIds: linkedStudentIds, primarySubject: primarySubject);
     }
   }
 
-  Future<void> _ensureLocalProfileWithRole(User user, UserRole role, String displayName, {List<String> assignedClassIds = const [], List<String> linkedStudentIds = const []}) async {
+  Future<void> _ensureLocalProfileWithRole(User user, UserRole role, String displayName, {List<String> assignedClassIds = const [], List<String> linkedStudentIds = const [], String? primarySubject}) async {
     final profileRef = _firestore.collection('users').doc(user.uid);
     await profileRef.set({
       'uid': user.uid,
       'schoolId': 'school_001', // Default school ID
       'role': role.name,
       'displayName': displayName,
+      'email': user.email ?? '',
       'phone': user.phoneNumber ?? '',
       'linkedStudentIds': linkedStudentIds,
       'assignedClassIds': assignedClassIds,
+      if (primarySubject != null && primarySubject.isNotEmpty) 'primarySubject': primarySubject,
       'status': 'active',
       'preferredLanguage': 'en',
       'createdAt': FieldValue.serverTimestamp(),

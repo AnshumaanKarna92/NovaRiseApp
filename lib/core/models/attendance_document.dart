@@ -5,9 +5,30 @@ class AttendanceDocument {
     required this.date,
     required this.records,
     required this.isEdited,
+    this.markedByUid,
+    this.markedByName,
+    this.createdAt,
   });
 
   factory AttendanceDocument.fromMap(String id, Map<String, dynamic> data) {
+    String? timeStr;
+    if (data["createdAt"] != null) {
+      if (data["createdAt"] is String) {
+        timeStr = data["createdAt"];
+      } else {
+        // Handle Firestore Timestamp
+        try {
+          final dyn = data["createdAt"];
+          if (dyn is DateTime) {
+            timeStr = dyn.toLocal().toString().split(".")[0];
+          } else {
+            final ms = dyn.millisecondsSinceEpoch;
+            timeStr = DateTime.fromMillisecondsSinceEpoch(ms).toLocal().toString().split(".")[0];
+          }
+        } catch (_) {}
+      }
+    }
+
     return AttendanceDocument(
       attendanceId: id,
       classId: data["classId"] as String? ?? "",
@@ -18,6 +39,9 @@ class AttendanceDocument {
         ),
       ),
       isEdited: data["isEdited"] as bool? ?? false,
+      markedByUid: data["markedByUid"] as String?,
+      markedByName: data["markedByName"] as String?,
+      createdAt: timeStr,
     );
   }
 
@@ -26,6 +50,9 @@ class AttendanceDocument {
   final String date;
   final List<AttendanceRecord> records;
   final bool isEdited;
+  final String? markedByUid;
+  final String? markedByName;
+  final String? createdAt;
 }
 
 class AttendanceRecord {

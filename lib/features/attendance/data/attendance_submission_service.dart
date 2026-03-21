@@ -12,6 +12,8 @@ class AttendanceSubmissionService {
     required String date,
     required List<Map<String, String>> records,
     required String schoolId,
+    required String markedByUid,
+    required String markedByName,
   }) async {
     try {
       await _functions.httpsCallable("submitAttendance").call({
@@ -19,6 +21,8 @@ class AttendanceSubmissionService {
         "date": date,
         "records": records,
         "submissionMode": "initial",
+        "markedByUid": markedByUid,
+        "markedByName": markedByName,
       });
     } catch (e) {
       // Direct Firestore Fallback
@@ -37,6 +41,8 @@ class AttendanceSubmissionService {
         "absentCount": absentCount,
         "records": records,
         "isEdited": false,
+        "markedByUid": markedByUid,
+        "markedByName": markedByName,
         "createdAt": FieldValue.serverTimestamp(),
         "updatedAt": FieldValue.serverTimestamp(),
       });
@@ -49,12 +55,16 @@ class AttendanceSubmissionService {
     required String attendanceId,
     required List<Map<String, String>> records,
     required String reason,
+    required String markedByUid,
+    required String markedByName,
   }) async {
     try {
       await _functions.httpsCallable("updateAttendance").call({
         "attendanceId": attendanceId,
         "records": records,
         "reason": reason,
+        "markedByUid": markedByUid,
+        "markedByName": markedByName,
       });
     } catch (e) {
       // Direct Firestore Fallback
@@ -67,6 +77,8 @@ class AttendanceSubmissionService {
         "absentCount": absentCount,
         "isEdited": true,
         "lastEditReason": reason,
+        "lastMarkedByUid": markedByUid,
+        "lastMarkedByName": markedByName,
         "updatedAt": FieldValue.serverTimestamp(),
       });
     }

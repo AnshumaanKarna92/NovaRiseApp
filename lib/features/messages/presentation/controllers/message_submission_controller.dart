@@ -16,18 +16,22 @@ class MessageSubmissionState {
 }
 
 final messageSubmissionServiceProvider = Provider<MessageSubmissionService>((ref) {
-  return MessageSubmissionService(ref.watch(firebaseFunctionsProvider));
+  return MessageSubmissionService(
+    ref.watch(firebaseFunctionsProvider),
+    ref.watch(firebaseFirestoreProvider),
+  );
 });
 
 final messageSubmissionControllerProvider =
     StateNotifierProvider<MessageSubmissionController, MessageSubmissionState>((ref) {
-  return MessageSubmissionController(ref.watch(messageSubmissionServiceProvider));
+  return MessageSubmissionController(ref.watch(messageSubmissionServiceProvider), ref);
 });
 
 class MessageSubmissionController extends StateNotifier<MessageSubmissionState> {
-  MessageSubmissionController(this._service) : super(const MessageSubmissionState());
+  MessageSubmissionController(this._service, this._ref) : super(const MessageSubmissionState());
 
   final MessageSubmissionService _service;
+  final Ref _ref;
 
   Future<void> create({
     required String classId,
@@ -37,7 +41,10 @@ class MessageSubmissionController extends StateNotifier<MessageSubmissionState> 
   }) async {
     state = const MessageSubmissionState(isSubmitting: true);
     try {
+      final user = _ref.read(userProfileProvider).value;
       await _service.createMessage(
+        schoolId: user?.schoolId ?? "school_001",
+        teacherId: user?.uid ?? "unknown",
         classId: classId,
         type: type,
         text: text,

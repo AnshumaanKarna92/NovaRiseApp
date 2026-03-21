@@ -33,15 +33,19 @@ service cloud.firestore {
     match /users/{uid} {
       allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
       allow write: if isAdmin();
-      // Allow profile update for own photo
       allow update: if signedIn() && request.auth.uid == uid && 
-        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['profileImageUrl', 'updatedAt']);
+        request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['profileImageUrl', 'displayName', 'phone', 'bloodGroup', 'updatedAt']);
     }
 
     match /students/{studentId} {
       allow read: if signedIn() && (
         isAdmin() || 
-        isTeacher() || 
+        (isTeacher() && resource.data.classId in getUserData().assignedClassIds) ||
+        (isParent() && request.auth.uid in resource.data.parentUserIds)
+      );
+      allow update: if signedIn() && (
+        isAdmin() || 
         (isParent() && request.auth.uid in resource.data.parentUserIds)
       );
       allow write: if isAdmin();
@@ -58,8 +62,12 @@ service cloud.firestore {
     }
 
     match /messages/{messageId} {
-      allow read: if signedIn();
-      allow write: if isAdmin() || isTeacher();
+      allow read: if signedIn() && (
+        isAdmin() || 
+        (isTeacher() && resource.data.classId in getUserData().assignedClassIds) ||
+        (isParent() && request.auth.uid in get(/databases/$(database)/documents/classes/$(resource.data.classId)).data.parentUserIds) // Optional deep check
+      );
+      allow write: if isAdmin() || (isTeacher() && request.resource.data.classId in getUserData().assignedClassIds);
     }
 
     match /fee_invoices/{invoiceId} {
@@ -80,18 +88,46 @@ service cloud.firestore {
     }
 
     match /attendance/{attendanceId} {
-      allow read: if signedIn();
-      allow write: if isAdmin() || isTeacher();
+      allow read: if signedIn() && (
+        isAdmin() || 
+        (isTeacher() && resource.data.classId in getUserData().assignedClassIds) ||
+        isParent() // Parents need to see attendance for their kids' classes
+      );
+      allow write: if isAdmin() || (isTeacher() && request.resource.data.classId in getUserData().assignedClassIds);
     }
 
     match /classes/{classId} {
       allow read: if signedIn();
       allow write: if isAdmin();
     }
+
+    match /lesson_records/{recordId} {
+      allow read: if signedIn() && (
+        isAdmin() || 
+        (isTeacher() && resource.data.classId in getUserData().assignedClassIds) ||
+        isParent()
+      );
+      allow write: if isAdmin() || (isTeacher() && request.resource.data.classId in getUserData().assignedClassIds);
+    }
     
     match /import_jobs/{jobId} {
       allow read: if isAdmin();
       allow write: if false;
+    }
+
+    match /notification_jobs/{jobId} {
+      allow read: if isAdmin();
+      allow write: if isAdmin();
+    }
+
+    match /audit_logs/{logId} {
+      allow read: if isAdmin();
+      allow write: if false; // Only written via Admin SDK in Cloud Functions
+    }
+
+    match /rate_limits/{limitId} {
+      allow read: if false;
+      allow write: if false; // Managed exclusively by Cloud Functions
     }
   }
 }

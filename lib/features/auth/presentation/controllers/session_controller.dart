@@ -103,18 +103,12 @@ class LoginController extends StateNotifier<LoginState> {
     state = state.copyWith(isSubmitting: true, error: null);
     try {
       final email = identifier.contains("@") ? identifier : "$identifier@novarise.com";
-      print('DEBUG: Attempting sign in for $email');
       await _authService.signInWithEmail(email: email, password: password);
-      print('DEBUG: Firebase Auth success. Fetching token...');
       
       final fcmToken = await ref.read(notificationServiceProvider).getToken();
-      
-      print('DEBUG: Ensuring profile with token: ${fcmToken != null}');
       await _authService.ensureUserProfile(fcmToken: fcmToken);
-      print('DEBUG: Profile ensured. Success.');
       state = const LoginState();
     } catch (error) {
-      print('DEBUG: Login failed: $error');
       state = state.copyWith(isSubmitting: false, error: _formatError(error));
     }
   }
