@@ -1,15 +1,18 @@
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-import "../../../../core/models/app_user.dart";
-import "../../../../core/models/notice_item.dart";
-import "../../../../core/models/school_class.dart";
+import "package:nova_rise_app/core/models/app_user.dart";
+import "package:nova_rise_app/core/models/notice_item.dart";
+import "package:nova_rise_app/core/models/school_class.dart";
 import "../../../../shared/widgets/async_value_view.dart";
 import "../../../../shared/widgets/app_surface.dart";
 import "../../../auth/presentation/controllers/session_controller.dart";
 import "../../../students/presentation/controllers/student_controller.dart";
+import "package:nova_rise_app/core/providers/school_providers.dart";
 import "../../../admin_tools/presentation/controllers/admin_tools_controller.dart";
 import "../controllers/notices_controller.dart";
+import "package:nova_rise_app/shared/widgets/filter_bar.dart";
+import "package:nova_rise_app/core/providers/filter_providers.dart";
 
 class NoticesScreen extends ConsumerWidget {
   const NoticesScreen({super.key});
@@ -29,7 +32,7 @@ class NoticesScreen extends ConsumerWidget {
       }
     });
 
-    final isAdmin = user?.role == UserRole.admin;
+    final isAdmin = user?.role == UserRole.admin || user?.role == UserRole.cashCollector;
 
     return Scaffold(
       appBar: isTab ? null : AppBar(title: const Text("Notices")),
@@ -40,33 +43,53 @@ class NoticesScreen extends ConsumerWidget {
               icon: const Icon(Icons.campaign),
             )
           : null,
-      body: AsyncValueView(
-        value: notices,
-        data: (items) {
-          return ListView(
-            padding: const EdgeInsets.all(20),
-            children: [
-              const ScreenIntroCard(
-                title: "Academy Notice Board",
-                description: "Stay informed with official announcements and academic circulars.",
-                icon: Icons.campaign_outlined,
-                accent: Color(0xFF003D5B),
-              ),
-              const SizedBox(height: 24),
-              if (items.isEmpty)
-                const Center(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 40),
-                    child: Text("No official notices published yet."),
-                  ),
-                )
-              else
-                for (final notice in items)
-                  _NoticeCard(notice: notice, isAdmin: isAdmin),
-              const SizedBox(height: 80),
-            ],
-          );
-        },
+      body: Column(
+        children: [
+          if (isAdmin) const GlobalFilterBar(),
+          Expanded(
+            child: AsyncValueView(
+              value: notices,
+              data: (itemsRaw) {
+                final filter = ref.watch(globalSchoolFilterProvider);
+                final allClasses = ref.watch(schoolClassesProvider).valueOrNull ?? [];
+                
+                final items = itemsRaw.where((notice) {
+                  if (notice.targetType == "all" || notice.targetType == "teachers") return true;
+                  return notice.targetClassIds.any((id) {
+                    final cls = allClasses.firstWhere((c) => c.id == id, orElse: () => SchoolClass(id: id, schoolId: "unknown", name: id, branchIdFromData: "unknown", subjects: {}));
+                    final genderMatch = filter.gender == GenderFilter.all || cls.branchId == (filter.gender == GenderFilter.boys ? "boys" : "girls");
+                    final levelMatch = filter.level == LevelFilter.all || (filter.level == LevelFilter.junior ? cls.isJunior : !cls.isJunior);
+                    return genderMatch && levelMatch;
+                  });
+                }).toList();
+
+                return ListView(
+                  padding: const EdgeInsets.all(20),
+                  children: [
+                    const ScreenIntroCard(
+                      title: "Academy Notice Board",
+                      description: "Stay informed with official announcements and academic circulars.",
+                      icon: Icons.campaign_outlined,
+                      accent: Color(0xFF003D5B),
+                    ),
+                    const SizedBox(height: 24),
+                    if (items.isEmpty)
+                      const Center(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 40),
+                          child: Text("No official notices found matching your filters."),
+                        ),
+                      )
+                    else
+                      for (final notice in items)
+                        _NoticeCard(notice: notice, isAdmin: isAdmin),
+                    const SizedBox(height: 80),
+                  ],
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -116,7 +139,7 @@ class _NoticeCard extends ConsumerWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+                        color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(

@@ -1,15 +1,18 @@
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-import "../../../../core/models/attendance_document.dart";
-import "../../../../core/models/app_user.dart";
-import "../../../../core/models/student.dart";
-import "../../../../shared/widgets/async_value_view.dart";
-import "../../../../shared/widgets/app_surface.dart";
-import "../../../auth/presentation/controllers/session_controller.dart";
+import "package:nova_rise_app/core/models/attendance_document.dart";
+import "package:nova_rise_app/core/models/app_user.dart";
+import "package:nova_rise_app/core/models/student.dart";
+import "package:nova_rise_app/shared/widgets/async_value_view.dart";
+import "package:nova_rise_app/shared/widgets/app_surface.dart";
+import "package:nova_rise_app/features/auth/presentation/controllers/session_controller.dart";
 import "package:nova_rise_app/features/admin_tools/presentation/controllers/admin_tools_controller.dart";
-import "../../../students/presentation/controllers/student_controller.dart";
-import "../controllers/attendance_controller.dart";
+import "package:nova_rise_app/features/students/presentation/controllers/student_controller.dart";
+import "package:nova_rise_app/core/providers/school_providers.dart";
+import "package:nova_rise_app/features/attendance/presentation/controllers/attendance_controller.dart";
+import "package:nova_rise_app/core/providers/filter_providers.dart";
+import "package:nova_rise_app/shared/widgets/filter_bar.dart";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Main Screen
@@ -265,7 +268,7 @@ class _ParentAttendanceView extends ConsumerWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF003D5B).withValues(alpha: 0.08),
+                      color: Color(0xFF003D5B).withOpacity(0.08),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
@@ -296,7 +299,7 @@ class _ParentAttendanceView extends ConsumerWidget {
                 child: LinearProgressIndicator(
                   value: attendancePercent,
                   minHeight: 10,
-                  backgroundColor: const Color(0xFFB34747).withValues(alpha: 0.15),
+                  backgroundColor: Color(0xFFB34747).withOpacity(0.15),
                   valueColor: AlwaysStoppedAnimation<Color>(
                     attendancePercent >= 0.75
                         ? const Color(0xFF00A86B)
@@ -454,9 +457,9 @@ class _TeacherAttendanceViewState extends ConsumerState<_TeacherAttendanceView> 
                 Container(
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF00A86B).withValues(alpha: 0.08),
+                    color: Color(0xFF00A86B).withOpacity(0.08),
                     borderRadius: BorderRadius.circular(14),
-                    border: Border.all(color: const Color(0xFF00A86B).withValues(alpha: 0.2)),
+                    border: Border.all(color: Color(0xFF00A86B).withOpacity(0.2)),
                   ),
                   child: Row(
                     children: [
@@ -729,300 +732,324 @@ class _AdminAttendanceViewState extends ConsumerState<_AdminAttendanceView> {
     final classesValue = ref.watch(schoolClassesProvider);
     final selectedClass = ref.watch(selectedAttendanceClassProvider);
     final selectedDate = ref.watch(selectedAttendanceDateProvider);
-    final students = ref.watch(currentStudentsProvider);
+    final studentsValue = ref.watch(currentStudentsProvider);
+    final filteredItems = ref.watch(filteredStudentsProvider);
+    final filter = ref.watch(globalSchoolFilterProvider);
     final activeAttendance = ref.watch(activeAttendanceDocumentProvider);
     final attendanceSummaries = ref.watch(attendanceSummariesProvider);
     final submission = ref.watch(attendanceSubmissionControllerProvider);
+    final classesMapValue = ref.watch(allClassesMapProvider);
 
-    final classesMap = ref.watch(allClassesMapProvider);
+    return AsyncValueView(
+      value: classesValue,
+      data: (allClassesRaw) {
+        final classesMap = classesMapValue; // Use local final to ensure scope
+        final allClasses = allClassesRaw.toList()
+          ..sort((a, b) => a.classWeight.compareTo(b.classWeight));
+        
+        final filteredClasses = allClasses.where((c) {
+          final genderMatch = filter.gender == GenderFilter.all || c.branchId == (filter.gender == GenderFilter.boys ? "boys" : "girls");
+          final levelMatch = filter.level == LevelFilter.all || (filter.level == LevelFilter.junior ? c.isJunior : !c.isJunior);
+          return genderMatch && levelMatch;
+        }).toList();
 
+        final filteredClassIds = filteredClasses.map((c) => c.id).toList();
 
-    return ListView(
-      padding: const EdgeInsets.all(20),
-      children: [
-        ScreenIntroCard(
-          title: "Attendance Management",
-          description: "View and edit attendance records for any class and date.",
-          icon: Icons.admin_panel_settings_outlined,
-          accent: const Color(0xFFD4AF37),
-        ),
-        const SizedBox(height: 24),
-
-        // Summary stats
-        AsyncValueView(
-          value: attendanceSummaries,
-          data: (items) {
-            final latest = items.isEmpty ? null : items.first;
-            final totalPresent = items.fold<int>(0, (sum, item) => sum + item.presentCount);
-            return SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  _StatBox(
-                    label: "Classes",
-                    value: "${classIds.length}",
-                    subtitle: "Monitored",
-                    icon: Icons.class_outlined,
-                    accent: const Color(0xFF003D5B),
-                  ),
-                  _StatBox(
-                    label: "Last Record",
-                    value: latest?.date ?? "-",
-                    subtitle: "Latest date",
-                    icon: Icons.today_outlined,
-                    accent: const Color(0xFFD4AF37),
-                  ),
-                  _StatBox(
-                    label: "Present (all)",
-                    value: "$totalPresent",
-                    subtitle: "All records",
-                    icon: Icons.check_circle_outline,
-                    accent: const Color(0xFF00A86B),
-                  ),
-                ],
+        return Column(
+          children: [
+            const GlobalFilterBar(),
+        Expanded(
+          child: ListView(
+            padding: const EdgeInsets.all(20),
+            children: [
+              ScreenIntroCard(
+                title: "Attendance Management",
+                description: "View and edit attendance records for any class and date.",
+                icon: Icons.admin_panel_settings_outlined,
+                accent: const Color(0xFFD4AF37),
               ),
-            );
-          },
-        ),
-        const SizedBox(height: 24),
+              const SizedBox(height: 24),
 
-        // Edit panel
-        Card(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Edit / View Attendance",
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                const SizedBox(height: 16),
-                // Class selector
-                if (classIds.length > 1)
-                  DropdownButtonFormField<String>(
-                    value: selectedClass,
-                    decoration: const InputDecoration(
-                      labelText: "Select Class",
-                      prefixIcon: Icon(Icons.class_outlined),
+              // Summary stats
+              AsyncValueView(
+                value: attendanceSummaries,
+                data: (items) {
+                  final latest = items.isEmpty ? null : items.first;
+                  final totalPresent = items.fold<int>(0, (sum, item) => sum + item.presentCount);
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        _StatBox(
+                          label: "Classes",
+                          value: "${classIds.length}",
+                          subtitle: "Monitored",
+                          icon: Icons.class_outlined,
+                          accent: const Color(0xFF003D5B),
+                        ),
+                        _StatBox(
+                          label: "Last Record",
+                          value: latest?.date ?? "-",
+                          subtitle: "Latest date",
+                          icon: Icons.today_outlined,
+                          accent: const Color(0xFFD4AF37),
+                        ),
+                        _StatBox(
+                          label: "Present (all)",
+                          value: "$totalPresent",
+                          subtitle: "All records",
+                          icon: Icons.check_circle_outline,
+                          accent: const Color(0xFF00A86B),
+                        ),
+                      ],
                     ),
-                    items: classIds
-                        .map((cId) => DropdownMenuItem<String>(
-                              value: cId,
-                              child: Text(classesMap[cId] ?? "Grade $cId"),
-                            ))
-                        .toList(),
-                    onChanged: (value) {
-                      ref.read(selectedAttendanceClassProvider.notifier).state = value;
-                    },
-                  )
-                else if (classIds.isNotEmpty)
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.class_outlined, color: Color(0xFF003D5B)),
-                    title: Text(classesMap[classIds.first] ?? "Grade ${classIds.first}",
-                        style: const TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: const Text("The selected class"),
-                  ),
-                const SizedBox(height: 12),
-                // Date picker
-                TextFormField(
-                  controller: _dateController,
-                  readOnly: true,
-                  decoration: const InputDecoration(
-                    labelText: "Select Date",
-                    prefixIcon: Icon(Icons.calendar_month_outlined),
-                    hintText: "Tap to pick a date",
-                  ),
-                  onTap: () async {
-                    final picked = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.tryParse(selectedDate) ?? DateTime.now(),
-                      firstDate: DateTime(2020),
-                      lastDate: DateTime.now(),
-                    );
-                    if (picked != null) {
-                      final dateStr =
-                          "${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}";
-                      _dateController.text = dateStr;
-                      ref.read(selectedAttendanceDateProvider.notifier).state = dateStr;
-                    }
-                  },
-                ),
-                const SizedBox(height: 20),
-                // Student list
-                AsyncValueView(
-                  value: students,
-                  data: (allStudents) {
-                    final classStudents = _studentsForClass(allStudents, selectedClass);
-                    return AsyncValueView(
-                      value: activeAttendance,
-                      data: (document) {
-                        _syncRoster(classStudents, document);
-                        if (classStudents.isEmpty) {
-                          return const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 20),
-                            child: Center(child: Text("No students in this class.")),
+                  );
+                },
+              ),
+              const SizedBox(height: 24),
+
+              // Edit panel
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Edit / View Attendance",
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(height: 16),
+                      // Class selector
+                      if (filteredClassIds.length > 1)
+                        DropdownButtonFormField<String>(
+                          value: selectedClass,
+                          decoration: const InputDecoration(
+                            labelText: "Select Class",
+                            prefixIcon: Icon(Icons.class_outlined),
+                          ),
+                          items: filteredClassIds
+                              .map((cId) => DropdownMenuItem<String>(
+                                    value: cId,
+                                    child: Text(classesMap[cId] ?? "Grade $cId"),
+                                  ))
+                              .toList(),
+                          onChanged: (value) {
+                            ref.read(selectedAttendanceClassProvider.notifier).state = value;
+                          },
+                        )
+                      else if (filteredClassIds.isNotEmpty)
+                        ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          leading: const Icon(Icons.class_outlined, color: Color(0xFF003D5B)),
+                          title: Text(classesMap[filteredClassIds.first] ?? "Grade ${filteredClassIds.first}",
+                              style: const TextStyle(fontWeight: FontWeight.bold)),
+                          subtitle: const Text("The selected class"),
+                        ),
+                      const SizedBox(height: 12),
+                      // Date picker
+                      TextFormField(
+                        controller: _dateController,
+                        readOnly: true,
+                        decoration: const InputDecoration(
+                          labelText: "Select Date",
+                          prefixIcon: Icon(Icons.calendar_month_outlined),
+                          hintText: "Tap to pick a date",
+                        ),
+                        onTap: () async {
+                          final picked = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.tryParse(selectedDate) ?? DateTime.now(),
+                            firstDate: DateTime(2020),
+                            lastDate: DateTime.now(),
                           );
-                        }
-                        return Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("${classStudents.length} Students"),
-                                TextButton.icon(
-                                  onPressed: _markAllPresent,
-                                  icon: const Icon(Icons.done_all, size: 18),
-                                  label: const Text("All Present"),
-                                  style: TextButton.styleFrom(foregroundColor: const Color(0xFF00A86B)),
-                                ),
-                              ],
-                            ),
-                            const Divider(),
-                            for (final student in classStudents)
-                              _AttendanceTile(
-                                student: student,
-                                isPresent: _presentByStudentId[student.studentId] ?? true,
-                                onChanged: (val) => setState(
-                                    () => _presentByStudentId[student.studentId] = val),
-                              ),
-                            const SizedBox(height: 16),
-                            if (document != null)
-                              Container(
-                                margin: const EdgeInsets.only(bottom: 12),
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFD4AF37).withValues(alpha: 0.1),
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                      color: const Color(0xFFD4AF37).withValues(alpha: 0.3)),
-                                ),
-                                child: Row(
-                                  children: [
-                                    const Icon(Icons.info_outline,
-                                        color: Color(0xFFD4AF37), size: 16),
-                                    const SizedBox(width: 8),
-                                      Expanded(
-                                        child: Builder(
-                                          builder: (context) {
-                                            final staffMap = ref.watch(staffMapProvider);
-                                            final name = document.markedByName ?? staffMap[document.markedByUid] ?? document.markedByUid?.substring(0, 5) ?? 'Staff';
-                                            return Text(
-                                              document.isEdited
-                                                  ? "Edited by $name at ${document.createdAt}"
-                                                  : "Marked by $name at ${document.createdAt}",
-                                              style: const TextStyle(fontSize: 12, color: Color(0xFFD4AF37)),
-                                            );
-                                          }
-                                        ),
+                          if (picked != null) {
+                            final dateStr =
+                                "${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}";
+                            _dateController.text = dateStr;
+                            ref.read(selectedAttendanceDateProvider.notifier).state = dateStr;
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      // Student list
+                      AsyncValueView(
+                        value: studentsValue,
+                        data: (allStudents) {
+                          final classStudents = _studentsForClass(filteredItems, selectedClass);
+                          return AsyncValueView(
+                            value: activeAttendance,
+                            data: (document) {
+                              _syncRoster(classStudents, document);
+                              if (classStudents.isEmpty) {
+                                return const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 20),
+                                  child: Center(child: Text("No students in this class.")),
+                                );
+                              }
+                              return Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("${classStudents.length} Students"),
+                                      TextButton.icon(
+                                        onPressed: _markAllPresent,
+                                        icon: const Icon(Icons.done_all, size: 18),
+                                        label: const Text("All Present"),
+                                        style: TextButton.styleFrom(foregroundColor: const Color(0xFF00A86B)),
                                       ),
-                                  ],
-                                ),
-                              ),
-                            SizedBox(
-                              width: double.infinity,
-                              child: FilledButton.icon(
-                                onPressed: submission.isSubmitting
-                                    ? null
-                                    : () => _submitAttendance(
-                                          classStudents: classStudents,
-                                          existing: document,
-                                        ),
-                                icon: Icon(
-                                  document == null
-                                      ? Icons.check_circle_outline
-                                      : Icons.edit_outlined,
-                                  size: 20,
-                                ),
-                                label: Text(
-                                  submission.isSubmitting
-                                      ? "Saving..."
-                                      : document == null
-                                          ? "Submit Attendance"
-                                          : "Save Changes",
-                                ),
-                                style: FilledButton.styleFrom(
-                                  backgroundColor: const Color(0xFFD4AF37),
-                                ),
+                                    ],
+                                  ),
+                                  const Divider(),
+                                  for (final student in classStudents)
+                                    _AttendanceTile(
+                                      student: student,
+                                      isPresent: _presentByStudentId[student.studentId] ?? true,
+                                      onChanged: (val) => setState(
+                                          () => _presentByStudentId[student.studentId] = val),
+                                    ),
+                                  const SizedBox(height: 16),
+                                  if (document != null)
+                                    Container(
+                                      margin: const EdgeInsets.only(bottom: 12),
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFD4AF37).withOpacity(0.1),
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                            color: Color(0xFFD4AF37).withOpacity(0.3)),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          const Icon(Icons.info_outline,
+                                              color: Color(0xFFD4AF37), size: 16),
+                                          const SizedBox(width: 8),
+                                            Expanded(
+                                              child: Builder(
+                                                builder: (context) {
+                                                  final staffMap = ref.watch(staffMapProvider);
+                                                  final name = document.markedByName ?? staffMap[document.markedByUid] ?? document.markedByUid?.substring(0, 5) ?? 'Staff';
+                                                  return Text(
+                                                    document.isEdited
+                                                        ? "Edited by $name at ${document.createdAt}"
+                                                        : "Marked by $name at ${document.createdAt}",
+                                                    style: const TextStyle(fontSize: 12, color: Color(0xFFD4AF37)),
+                                                  );
+                                                }
+                                              ),
+                                            ),
+                                        ],
+                                      ),
+                                    ),
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: FilledButton.icon(
+                                      onPressed: submission.isSubmitting
+                                          ? null
+                                          : () => _submitAttendance(
+                                                classStudents: classStudents,
+                                                existing: document,
+                                              ),
+                                      icon: Icon(
+                                        document == null
+                                            ? Icons.check_circle_outline
+                                            : Icons.edit_outlined,
+                                        size: 20,
+                                      ),
+                                      label: Text(
+                                        submission.isSubmitting
+                                            ? "Saving..."
+                                            : document == null
+                                                ? "Submit Attendance"
+                                                : "Save Changes",
+                                      ),
+                                      style: FilledButton.styleFrom(
+                                        backgroundColor: const Color(0xFFD4AF37),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+
+              // Daily Status Board
+              Text(
+                "Today's Attendance Compliance",
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 12),
+              AsyncValueView(
+                value: ref.watch(dailyAttendanceOverviewProvider),
+                data: (overview) {
+                  if (overview.isEmpty) {
+                    return const Card(
+                      child: Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Center(child: Text("No academic classes registered.")),
+                      ),
+                    );
+                  }
+                  return Card(
+                    child: Column(
+                      children: [
+                        for (final item in overview)
+                          ListTile(
+                            leading: CircleAvatar(
+                              backgroundColor: (item.isMarked ? const Color(0xFF00A86B) : const Color(0xFFB34747)).withOpacity(0.1),
+                              child: Icon(
+                                item.isMarked ? Icons.check_circle_outline : Icons.error_outline,
+                                color: item.isMarked ? const Color(0xFF00A86B) : const Color(0xFFB34747),
+                                size: 20,
                               ),
                             ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                ),
-              ],
-            ),
+                            title: Text(
+                              item.className,
+                              style: const TextStyle(fontWeight: FontWeight.w600),
+                            ),
+                            subtitle: Text(
+                              item.isMarked ? "Attendance Verified Today" : "Submission Missing",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: item.isMarked ? Colors.black54 : const Color(0xFFB34747),
+                              ),
+                            ),
+                            trailing: !item.isMarked
+                                ? TextButton(
+                                    onPressed: () {
+                                      final now = DateTime.now();
+                                      final todayStr = "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
+                                      ref.read(selectedAttendanceDateProvider.notifier).state = todayStr;
+                                      ref.read(selectedAttendanceClassProvider.notifier).state = item.classId;
+                                      _dateController.text = todayStr;
+                                      // The UI will update the above Edit panel
+                                    },
+                                    child: const Text("Action Required"),
+                                  )
+                                : const Icon(Icons.verified, size: 16, color: Color(0xFF00A86B)),
+                          ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 24),
+            ],
           ),
         ),
-        const SizedBox(height: 24),
-
-        // Daily Status Board
-        Text(
-          "Today's Attendance Compliance",
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 12),
-        AsyncValueView(
-          value: ref.watch(dailyAttendanceOverviewProvider),
-          data: (overview) {
-            if (overview.isEmpty) {
-              return const Card(
-                child: Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Center(child: Text("No academic classes registered.")),
-                ),
-              );
-            }
-            return Card(
-              child: Column(
-                children: [
-                  for (final item in overview)
-                    ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: (item.isMarked ? const Color(0xFF00A86B) : const Color(0xFFB34747)).withValues(alpha: 0.1),
-                        child: Icon(
-                          item.isMarked ? Icons.check_circle_outline : Icons.error_outline,
-                          color: item.isMarked ? const Color(0xFF00A86B) : const Color(0xFFB34747),
-                          size: 20,
-                        ),
-                      ),
-                      title: Text(
-                        item.className,
-                        style: const TextStyle(fontWeight: FontWeight.w600),
-                      ),
-                      subtitle: Text(
-                        item.isMarked ? "Attendance Verified Today" : "Submission Missing",
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: item.isMarked ? Colors.black54 : const Color(0xFFB34747),
-                        ),
-                      ),
-                      trailing: !item.isMarked
-                          ? TextButton(
-                              onPressed: () {
-                                final now = DateTime.now();
-                                final todayStr = "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
-                                ref.read(selectedAttendanceDateProvider.notifier).state = todayStr;
-                                ref.read(selectedAttendanceClassProvider.notifier).state = item.classId;
-                                _dateController.text = todayStr;
-                                // The UI will update the above Edit panel
-                              },
-                              child: const Text("Action Required"),
-                            )
-                          : const Icon(Icons.verified, size: 16, color: Color(0xFF00A86B)),
-                    ),
-                ],
-              ),
-            );
-          },
-        ),
-        const SizedBox(height: 24),
       ],
     );
-  }
+  },
+);
+}
 
   List<Student> _studentsForClass(List<Student> students, String? classId) {
     if (classId == null) return const [];
@@ -1111,7 +1138,31 @@ class _AttendanceTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      title: Text(student.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+      leading: Icon(
+        student.branchId == "girls" ? Icons.female : Icons.male,
+        size: 18,
+        color: student.branchId == "girls" ? Colors.pink : const Color(0xFF003D5B),
+      ),
+      title: Row(
+        children: [
+          Expanded(child: Text(student.name, style: const TextStyle(fontWeight: FontWeight.bold))),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+            decoration: BoxDecoration(
+              color: (student.isJunior ? Colors.orange : Colors.indigo).withOpacity(0.1),
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: Text(
+              student.isJunior ? "JNR" : "SNR",
+              style: TextStyle(
+                fontSize: 9,
+                fontWeight: FontWeight.bold,
+                color: student.isJunior ? Colors.orange : Colors.indigo,
+              ),
+            ),
+          ),
+        ],
+      ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -1160,7 +1211,7 @@ class _StatusToggle extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           border: Border.all(color: isActive ? activeColor : Colors.black12),
           boxShadow: isActive
-              ? [BoxShadow(color: activeColor.withValues(alpha: 0.3), blurRadius: 6, offset: const Offset(0, 2))]
+              ? [BoxShadow(color: activeColor.withOpacity(0.3), blurRadius: 6, offset: const Offset(0, 2))]
               : [],
         ),
         child: Center(
@@ -1194,8 +1245,8 @@ class _AttendanceSummaryTile extends StatelessWidget {
       leading: CircleAvatar(
         radius: 20,
         backgroundColor: pct >= 0.75
-            ? const Color(0xFF00A86B).withValues(alpha: 0.12)
-            : const Color(0xFFB34747).withValues(alpha: 0.12),
+            ? Color(0xFF00A86B).withOpacity(0.12)
+            : Color(0xFFB34747).withOpacity(0.12),
         child: Text(
           "${(pct * 100).toStringAsFixed(0)}%",
           style: TextStyle(

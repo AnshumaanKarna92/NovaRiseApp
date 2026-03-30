@@ -1,10 +1,10 @@
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-import "../../../../core/models/message_item.dart";
-import "../../../students/presentation/controllers/student_controller.dart";
-
-import "../../../auth/presentation/controllers/session_controller.dart";
-import "../../data/message_submission_service.dart";
+import "package:nova_rise_app/core/models/message_item.dart";
+import "package:nova_rise_app/features/students/presentation/controllers/student_controller.dart";
+import "package:nova_rise_app/core/providers/school_providers.dart";
+import "package:nova_rise_app/features/auth/presentation/controllers/session_controller.dart";
+import "package:nova_rise_app/features/messages/data/message_submission_service.dart";
 
 final messagesProvider = StreamProvider<List<MessageItem>>((ref) {
   final classIds = ref.watch(currentClassIdsProvider);

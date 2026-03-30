@@ -28,7 +28,7 @@ class FeatureCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
-        splashColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.05),
+        splashColor: Theme.of(context).colorScheme.primary.withOpacity(0.05),
         highlightColor: Colors.transparent,
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -39,7 +39,7 @@ class FeatureCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.08),
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.08),
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: Icon(

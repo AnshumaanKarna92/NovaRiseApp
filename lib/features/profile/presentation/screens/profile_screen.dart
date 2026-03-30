@@ -4,8 +4,9 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 import "../../../../shared/widgets/app_surface.dart";
 import "../../../auth/presentation/controllers/session_controller.dart";
 import "../../../students/presentation/controllers/student_controller.dart";
+import "package:nova_rise_app/core/providers/school_providers.dart";
 
-import "../../../../core/models/app_user.dart";
+import "package:nova_rise_app/core/models/app_user.dart";
 import "../controllers/profile_update_controller.dart";
 
 class ProfileScreen extends ConsumerWidget {
@@ -303,7 +304,7 @@ class _ProfileHeader extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF1E293B).withValues(alpha: 0.2),
+            color: Color(0xFF1E293B).withOpacity(0.2),
             blurRadius: 16,
             offset: const Offset(0, 8),
           ),
@@ -365,7 +366,7 @@ class _ProfileHeader extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.1),
+                    color: Colors.white.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(

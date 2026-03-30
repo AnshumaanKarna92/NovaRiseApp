@@ -11,6 +11,7 @@ import "package:nova_rise_app/features/fees/presentation/controllers/fees_contro
 import "package:nova_rise_app/features/auth/presentation/controllers/session_controller.dart";
 import "package:nova_rise_app/features/profile/presentation/controllers/profile_update_controller.dart";
 import "package:nova_rise_app/features/students/presentation/controllers/student_controller.dart";
+import "package:nova_rise_app/core/providers/school_providers.dart";
 
 class StudentDetailScreen extends ConsumerWidget {
   const StudentDetailScreen({required this.student, super.key});
@@ -47,6 +48,12 @@ class StudentDetailScreen extends ConsumerWidget {
               child: Column(
                 children: [
                   _DetailRow(
+                    label: "Branch / Gender", 
+                    value: student.branchId.toUpperCase(),
+                    icon: student.branchId == "girls" ? Icons.female : Icons.male,
+                  ),
+                  const Divider(),
+                  _DetailRow(
                     label: "Blood Group", 
                     value: student.bloodGroup ?? "Not set",
                     onEdit: canEdit ? () => _showEditInfoSheet(context, ref, "Blood Group", student.bloodGroup, (val) => ref.read(profileUpdateControllerProvider.notifier).updateStudentProfile(studentId: student.studentId, bloodGroup: val)) : null,
@@ -68,73 +75,63 @@ class StudentDetailScreen extends ConsumerWidget {
             ),
           ),
           
+          Text(
+            "Fees & Enrollment",
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  _DetailRow(
+                    label: "Roll Number", 
+                    value: student.rollNo ?? "N/A",
+                  ),
+                  const Divider(),
+                  _DetailRow(
+                    label: "Monthly School Fees", 
+                    value: "₹${student.monthlyFees.toStringAsFixed(0)}",
+                    icon: Icons.currency_rupee,
+                    onEdit: isAdmin ? () => _showEditInfoSheet(context, ref, "Monthly Fees", student.monthlyFees.toString(), (val) => ref.read(profileUpdateControllerProvider.notifier).updateStudentProfile(studentId: student.studentId, monthlyFees: double.tryParse(val))) : null,
+                  ),
+                  const Divider(),
+                  _DetailRow(
+                    label: "Admission Date", 
+                    value: student.admissionDate ?? "N/A",
+                    icon: Icons.calendar_today_outlined,
+                  ),
+                  const Divider(),
+                  _DetailRow(
+                    label: "Student Type", 
+                    value: student.studentType.toUpperCase(),
+                    icon: Icons.badge_outlined,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          
           const SizedBox(height: 32),
           Text(
-            "Academic & Attendance",
+            "Attendance Overview",
             style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
           AsyncValueView(
             value: attendanceValue,
             data: (summaries) {
-              return Column(
-                children: [
-                  _StatOverview(
-                    label: "Attendance",
-                    value: "92%",
-                    subtitle: "Overall presence",
-                    icon: Icons.fact_check_outlined,
-                    accent: const Color(0xFF00A86B),
-                  ),
-                  const SizedBox(height: 16),
-                  _StatOverview(
-                    label: "Academic Marks",
-                    value: student.marksData ?? "A",
-                    subtitle: "Latest evaluation",
-                    icon: Icons.grade_outlined,
-                    accent: const Color(0xFF003D5B),
-                    onTap: canEdit ? () => _showEditInfoSheet(context, ref, "Academic Marks", student.marksData, (val) => ref.read(profileUpdateControllerProvider.notifier).updateStudentProfile(studentId: student.studentId, marksData: val)) : null,
-                  ),
-                ],
+              return _StatOverview(
+                label: "Attendance",
+                value: "92%",
+                subtitle: "Overall presence",
+                icon: Icons.fact_check_outlined,
+                accent: const Color(0xFF00A86B),
               );
             },
           ),
-          
-          if (!isTeacher) ...[
-            const SizedBox(height: 32),
-            Text(
-              "Financial Status",
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            AsyncValueView(
-              value: feesValue,
-              data: (invoices) {
-                final studentInvoices = invoices.where((i) => i.studentId == student.studentId).toList();
-                final totalDue = studentInvoices
-                    .where((i) => !i.paymentStatus.contains("paid") && !i.paymentStatus.contains("verified"))
-                    .fold<double>(0, (sum, i) => sum + i.amount);
-
-                return Column(
-                  children: [
-                    _StatOverview(
-                      label: "Balance",
-                      value: "₹${totalDue.toStringAsFixed(0)}",
-                      subtitle: "${studentInvoices.length} invoices",
-                      icon: Icons.account_balance_wallet_outlined,
-                      accent: const Color(0xFFD4AF37),
-                    ),
-                    const SizedBox(height: 16),
-                    if (studentInvoices.isEmpty)
-                      const Center(child: Text("No invoice history found."))
-                    else
-                      for (final invoice in studentInvoices)
-                        _InvoiceTile(invoice: invoice),
-                  ],
-                );
-              },
-            ),
-          ],
+          const SizedBox(height: 32),
         ],
       ),
     );
@@ -234,6 +231,11 @@ class _ProfileHeader extends ConsumerWidget {
             style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 4),
+          Text(
+            "ID: ${student.studentId}",
+            style: const TextStyle(color: Color(0xFFD4AF37), fontSize: 13, fontWeight: FontWeight.bold, letterSpacing: 1.1),
+          ),
+          const SizedBox(height: 8),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -302,9 +304,10 @@ class _HeaderInfo extends StatelessWidget {
 }
 
 class _DetailRow extends StatelessWidget {
-  const _DetailRow({required this.label, required this.value, this.onEdit});
+  const _DetailRow({required this.label, required this.value, this.icon, this.onEdit});
   final String label;
   final String value;
+  final IconData? icon;
   final VoidCallback? onEdit;
 
   @override
@@ -318,7 +321,15 @@ class _DetailRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(label, style: const TextStyle(color: Colors.black54, fontWeight: FontWeight.w500, fontSize: 13)),
+                Row(
+                  children: [
+                    if (icon != null) ...[
+                      Icon(icon, size: 14, color: Colors.black45),
+                      const SizedBox(width: 6),
+                    ],
+                    Text(label, style: const TextStyle(color: Colors.black54, fontWeight: FontWeight.w500, fontSize: 13)),
+                  ],
+                ),
                 const SizedBox(height: 2),
                 Text(value, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
               ],

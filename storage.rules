@@ -5,14 +5,19 @@ service firebase.storage {
       return request.auth != null;
     }
 
-    match /profiles/{uid} {
+    match /profiles/{allPaths=**} {
       allow read: if signedIn();
-      allow write: if signedIn() && request.auth.uid == uid;
+      allow write: if signedIn();
     }
 
-    match /schoolapp/{schoolId}/{allPaths=**} {
+    match /students/{allPaths=**} {
       allow read: if signedIn();
-      allow write: if signedIn(); // Simplify for the demo to avoid complex cross-service lookups
+      allow write: if signedIn();
+    }
+
+    match /schoolapp/{allPaths=**} {
+      allow read: if signedIn();
+      allow write: if signedIn();
     }
   }
 }

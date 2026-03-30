@@ -1,21 +1,31 @@
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-import "../../../../core/models/student.dart";
-import "../../../../core/services/school_data_service.dart";
-import "../../../auth/presentation/controllers/session_controller.dart";
-import "../../../../core/models/app_user.dart";
-import "../../../admin_tools/presentation/controllers/admin_tools_controller.dart";
+import "package:nova_rise_app/core/models/student.dart";
+import "package:nova_rise_app/core/models/school_class.dart";
+import "package:nova_rise_app/core/providers/school_providers.dart";
+import "package:nova_rise_app/core/services/school_data_service.dart";
+import "package:nova_rise_app/features/auth/presentation/controllers/session_controller.dart";
+import "package:nova_rise_app/core/models/app_user.dart";
 
-final schoolDataServiceProvider = Provider<SchoolDataService>((ref) {
-  return SchoolDataService(ref.watch(firebaseFirestoreProvider));
-});
+// schoolDataServiceProvider moved to lib/core/providers/school_providers.dart
 
-final currentStudentsProvider = StreamProvider<List<Student>>((ref) {
-  final user = ref.watch(userProfileProvider).valueOrNull;
-  if (user == null) {
-    return Stream.value(const []);
-  }
-  return ref.watch(schoolDataServiceProvider).watchStudentsForUser(user);
+import "package:nova_rise_app/core/providers/filter_providers.dart";
+
+final filteredStudentsProvider = Provider<List<Student>>((ref) {
+  final students = ref.watch(currentStudentsProvider).valueOrNull ?? [];
+  final filter = ref.watch(globalSchoolFilterProvider);
+
+  return students.where((s) {
+    final matchesGender = filter.gender == GenderFilter.all || 
+        (filter.gender == GenderFilter.boys && s.branchId == "boys") ||
+        (filter.gender == GenderFilter.girls && s.branchId == "girls");
+    
+    final matchesLevel = filter.level == LevelFilter.all ||
+        (filter.level == LevelFilter.junior && s.isJunior) ||
+        (filter.level == LevelFilter.senior && !s.isJunior);
+
+    return matchesGender && matchesLevel;
+  }).toList();
 });
 
 final currentStaffProvider = StreamProvider<List<AppUser>>((ref) {
@@ -26,27 +36,7 @@ final currentStaffProvider = StreamProvider<List<AppUser>>((ref) {
   return ref.watch(schoolDataServiceProvider).watchStaff(user.schoolId);
 });
 
-final currentClassIdsProvider = Provider<List<String>>((ref) {
-  final user = ref.watch(userProfileProvider).valueOrNull;
-  if (user == null) return const [];
-  
-  if (user.role == UserRole.teacher) {
-    final classesValue = ref.watch(teacherClassesProvider);
-    return classesValue.maybeWhen(
-      data: (classes) => classes.map((c) => c.id).toList(),
-      orElse: () => user.assignedClassIds,
-    );
-  }
-
-  final students = ref.watch(currentStudentsProvider).valueOrNull ?? const <Student>[];
-  if (user.role == UserRole.parent) {
-    return students.map((student) => student.classId).toSet().toList();
-  }
-  
-  return user.assignedClassIds.isNotEmpty 
-      ? user.assignedClassIds 
-      : students.map((student) => student.classId).toSet().toList();
-});
+// currentClassIdsProvider moved to lib/core/providers/school_providers.dart
 
 final allClassesMapProvider = Provider<Map<String, String>>((ref) {
   final classes = ref.watch(schoolClassesProvider).valueOrNull ?? const [];

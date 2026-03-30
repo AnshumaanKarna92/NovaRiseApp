@@ -2,11 +2,12 @@ import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 // import "package:url_launcher/url_launcher.dart";
 
-import "../../../../core/models/app_user.dart";
-import "../../../../core/models/transport_route.dart";
+import "package:nova_rise_app/core/models/app_user.dart";
+import "package:nova_rise_app/core/models/transport_route.dart";
 import "../../../../shared/widgets/async_value_view.dart";
 import "../../../../shared/widgets/app_surface.dart";
 import "../../../auth/presentation/controllers/session_controller.dart";
+import "../../../../core/providers/school_providers.dart";
 import "../controllers/transport_controller.dart";
 
 class TransportScreen extends ConsumerWidget {
@@ -154,7 +155,7 @@ class _RouteCard extends ConsumerWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: statusColor.withValues(alpha: 0.1),
+                  color: statusColor.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(

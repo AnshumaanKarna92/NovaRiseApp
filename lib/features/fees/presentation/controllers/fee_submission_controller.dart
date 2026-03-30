@@ -2,8 +2,9 @@ import "package:file_picker/file_picker.dart";
 import "package:firebase_storage/firebase_storage.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-import "../../../../core/models/app_user.dart";
+import "package:nova_rise_app/core/models/app_user.dart";
 import "../../../auth/presentation/controllers/session_controller.dart";
+import "../../../../core/providers/school_providers.dart";
 import "../../data/fee_submission_service.dart";
 
 class FeeSubmissionState {
@@ -30,9 +31,7 @@ class FeeSubmissionState {
   }
 }
 
-final firebaseStorageProvider = Provider<FirebaseStorage>((ref) {
-  return FirebaseStorage.instance;
-});
+// firebaseStorageProvider moved to lib/core/providers/school_providers.dart
 
 final feeSubmissionServiceProvider = Provider<FeeSubmissionService>((ref) {
   return FeeSubmissionService(

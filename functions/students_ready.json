@@ -1,0 +1,6012 @@
+[
+  {
+    "studentId": "NRAJ-14-2026",
+    "name": "ABDUL AZIZ",
+    "branchId": "boys",
+    "classId": "LKG",
+    "rollNo": "14",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 31, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-215-2026",
+    "name": "ABDUL HAMID ANSARI",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "48",
+    "monthlyFees": 800.0,
+    "admissionDate": "January 7, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-150-2026",
+    "name": "ABDUL HASAN",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "23",
+    "monthlyFees": 700.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-240-2026",
+    "name": "ABDUL NAYEM SK",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "57",
+    "monthlyFees": 2300.0,
+    "admissionDate": "February 2, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-36-2026",
+    "name": "ABDUL RIHAN",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "12",
+    "monthlyFees": 700.0,
+    "admissionDate": "December 31, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-233-2026",
+    "name": "ABDULLA",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "28",
+    "monthlyFees": 500.0,
+    "admissionDate": "February 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-63-2026",
+    "name": "ABDULLA FAIJAL",
+    "branchId": "boys",
+    "classId": "UKG",
+    "rollNo": "7",
+    "monthlyFees": 500.0,
+    "admissionDate": "November 28, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-40-2026",
+    "name": "ABDULLAH HOSSAIN",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "1",
+    "monthlyFees": 2500.0,
+    "admissionDate": "November 17, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-216-2026",
+    "name": "ABDUR RAKIB",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "49",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 13, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-124-2026",
+    "name": "ABDUS SAIF",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "32",
+    "monthlyFees": 600.0,
+    "admissionDate": "January 6, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-122-2026",
+    "name": "ABID RAHAMAN",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "38",
+    "monthlyFees": 600.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-1-2026",
+    "name": "ABU SHOYIAB",
+    "branchId": "boys",
+    "classId": "II",
+    "rollNo": "60",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 17, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-83-2026",
+    "name": "ABU SIYAM",
+    "branchId": "boys",
+    "classId": "UKG",
+    "rollNo": "34",
+    "monthlyFees": 0.0,
+    "admissionDate": "January 3, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-98-2026",
+    "name": "ABU SUFIYAN",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "9",
+    "monthlyFees": 600.0,
+    "admissionDate": "December 23, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-230-2026",
+    "name": "ABU ZUFAR",
+    "branchId": "boys",
+    "classId": "UKG",
+    "rollNo": "39",
+    "monthlyFees": 0.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-32-2026",
+    "name": "ADIL ZAMAN",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "8",
+    "monthlyFees": 1400.0,
+    "admissionDate": "December 18, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-224-2026",
+    "name": "AFIA SULTANA",
+    "branchId": "girls",
+    "classId": "I",
+    "rollNo": "46",
+    "monthlyFees": 600.0,
+    "admissionDate": "January 21, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-85-2026",
+    "name": "AFIFA SULTANA",
+    "branchId": "girls",
+    "classId": "UKG",
+    "rollNo": "31",
+    "monthlyFees": 500.0,
+    "admissionDate": "November 15, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-104-2026",
+    "name": "AFIFA SULTANA 16",
+    "branchId": "girls",
+    "classId": "I",
+    "rollNo": "16",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 31, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-117-2026",
+    "name": "AFIFA SULTANA 26",
+    "branchId": "girls",
+    "classId": "UKG",
+    "rollNo": "26",
+    "monthlyFees": 550.0,
+    "admissionDate": "January 2, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-157-2026",
+    "name": "AFIYA ASLAM",
+    "branchId": "girls",
+    "classId": "II",
+    "rollNo": "17",
+    "monthlyFees": 600.0,
+    "admissionDate": "December 26, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-2-2026",
+    "name": "AFIYA FAHAMIDA",
+    "branchId": "girls",
+    "classId": "LKG",
+    "rollNo": "31",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-111-2026",
+    "name": "AFIYA SIDDIKA",
+    "branchId": "girls",
+    "classId": "I",
+    "rollNo": "22",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 29, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-8-2026",
+    "name": "AFROJA KHATUN",
+    "branchId": "girls",
+    "classId": "LKG",
+    "rollNo": "8",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 17, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-55-2026",
+    "name": "AFSANA KHATUN",
+    "branchId": "girls",
+    "classId": "LKG",
+    "rollNo": "1",
+    "monthlyFees": 0.0,
+    "admissionDate": "January 14, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-211-2026",
+    "name": "AFSANA KHATUN",
+    "branchId": "girls",
+    "classId": "III",
+    "rollNo": "31",
+    "monthlyFees": 650.0,
+    "admissionDate": "January 19, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-248-2026",
+    "name": "AFSANA KHATUN",
+    "branchId": "girls",
+    "classId": "I",
+    "rollNo": "31",
+    "monthlyFees": 600.0,
+    "admissionDate": "February 11, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-250-2026",
+    "name": "AHAMED",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "54",
+    "monthlyFees": 2800.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-200-2026",
+    "name": "AHAMMAD ANSARI",
+    "branchId": "boys",
+    "classId": "UKG",
+    "rollNo": "37",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-61-2026",
+    "name": "AHAN ASIM",
+    "branchId": "boys",
+    "classId": "UKG",
+    "rollNo": "5",
+    "monthlyFees": 500.0,
+    "admissionDate": "November 20, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-72-2026",
+    "name": "AHIL HOSSAIN",
+    "branchId": "boys",
+    "classId": "UKG",
+    "rollNo": "18",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 22, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-225-2026",
+    "name": "AHMED",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "62",
+    "monthlyFees": 0.0,
+    "admissionDate": "January 22, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-108-2026",
+    "name": "AJIMA SULTANA",
+    "branchId": "girls",
+    "classId": "I",
+    "rollNo": "20",
+    "monthlyFees": 600.0,
+    "admissionDate": "January 2, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-41-2026",
+    "name": "AJIMUL SK",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "2",
+    "monthlyFees": 2500.0,
+    "admissionDate": "November 17, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-242-2026",
+    "name": "ALHAJ HOSSAIN",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "59",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-119-2026",
+    "name": "ALIMA SULTANA",
+    "branchId": "girls",
+    "classId": "I",
+    "rollNo": "35",
+    "monthlyFees": 550.0,
+    "admissionDate": "January 2, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-144-2026",
+    "name": "ALISHA NAAZ",
+    "branchId": "girls",
+    "classId": "IV",
+    "rollNo": "17",
+    "monthlyFees": 2500.0,
+    "admissionDate": "December 20, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-152-2026",
+    "name": "ALNAJ HOSSAIN",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "29",
+    "monthlyFees": 2500.0,
+    "admissionDate": "December 31, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-62-2026",
+    "name": "ANAS MAMUD",
+    "branchId": "boys",
+    "classId": "UKG",
+    "rollNo": "6",
+    "monthlyFees": 500.0,
+    "admissionDate": "November 28, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-142-2026",
+    "name": "ANIFA KHATUN",
+    "branchId": "girls",
+    "classId": "II",
+    "rollNo": "14",
+    "monthlyFees": 650.0,
+    "admissionDate": "December 29, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-163-2026",
+    "name": "ANIK ABEDIN",
+    "branchId": "boys",
+    "classId": "II",
+    "rollNo": "23",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 31, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-189-2026",
+    "name": "ANISHA AFRIN",
+    "branchId": "girls",
+    "classId": "IV",
+    "rollNo": "53",
+    "monthlyFees": 1700.0,
+    "admissionDate": "December 27, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-187-2026",
+    "name": "ANISHA AJMIN",
+    "branchId": "girls",
+    "classId": "IV",
+    "rollNo": "41",
+    "monthlyFees": 2800.0,
+    "admissionDate": "January 7, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-236-2026",
+    "name": "ARAB ARJU",
+    "branchId": "boys",
+    "classId": "LKG",
+    "rollNo": "20",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 31, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-75-2026",
+    "name": "ARBAZ RAHAMAN",
+    "branchId": "boys",
+    "classId": "UKG",
+    "rollNo": "21",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 24, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-179-2026",
+    "name": "ARHAN NAIM",
+    "branchId": "boys",
+    "classId": "II",
+    "rollNo": "30",
+    "monthlyFees": 650.0,
+    "admissionDate": "January 7, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-254-2026",
+    "name": "ARIFA KHAN",
+    "branchId": "girls",
+    "classId": "I",
+    "rollNo": "47",
+    "monthlyFees": 0.0,
+    "admissionDate": "February 16, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-140-2026",
+    "name": "ARIJA AFRIN",
+    "branchId": "girls",
+    "classId": "II",
+    "rollNo": "12",
+    "monthlyFees": 650.0,
+    "admissionDate": "December 24, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-13-2026",
+    "name": "ARIYAN",
+    "branchId": "boys",
+    "classId": "LKG",
+    "rollNo": "13",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 28, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-27-2026",
+    "name": "ARIYAN SK",
+    "branchId": "girls",
+    "classId": "III",
+    "rollNo": "3",
+    "monthlyFees": 2000.0,
+    "admissionDate": "December 7, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-64-2026",
+    "name": "ARMAN SAIKH",
+    "branchId": "boys",
+    "classId": "UKG",
+    "rollNo": "8",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 10, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-97-2026",
+    "name": "AROBI HASAN",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "8",
+    "monthlyFees": 600.0,
+    "admissionDate": "December 20, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-181-2026",
+    "name": "ARSAD AHAMED KHAN",
+    "branchId": "boys",
+    "classId": "II",
+    "rollNo": "38",
+    "monthlyFees": 600.0,
+    "admissionDate": "January 7, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-155-2026",
+    "name": "ASIF IQBAL",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "32",
+    "monthlyFees": 700.0,
+    "admissionDate": "December 25, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-80-2026",
+    "name": "ASIFA KHATUN",
+    "branchId": "girls",
+    "classId": "UKG",
+    "rollNo": "25",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 28, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-143-2026",
+    "name": "ASIFA KHATUN",
+    "branchId": "girls",
+    "classId": "II",
+    "rollNo": "15",
+    "monthlyFees": 550.0,
+    "admissionDate": "December 26, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-48-2026",
+    "name": "ASIK RAHAMAN",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "10",
+    "monthlyFees": 700.0,
+    "admissionDate": "December 9, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-158-2026",
+    "name": "ASIYA ASLAMI",
+    "branchId": "boys",
+    "classId": "II",
+    "rollNo": "16",
+    "monthlyFees": 700.0,
+    "admissionDate": "December 26, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-89-2026",
+    "name": "ASIYA KHATUN",
+    "branchId": "girls",
+    "classId": "UKG",
+    "rollNo": "36",
+    "monthlyFees": 300.0,
+    "admissionDate": "January 8, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-29-2026",
+    "name": "ASLAM HOQUE",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "5",
+    "monthlyFees": 2800.0,
+    "admissionDate": "December 18, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-68-2026",
+    "name": "ASLIHAN KHATUN",
+    "branchId": "girls",
+    "classId": "UKG",
+    "rollNo": "13",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 17, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-87-2026",
+    "name": "ATIF IQBAL",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "12",
+    "monthlyFees": 300.0,
+    "admissionDate": "December 25, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-28-2026",
+    "name": "ATIF ISLAM",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "4",
+    "monthlyFees": 2800.0,
+    "admissionDate": "December 17, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-208-2026",
+    "name": "ATIF ISLAM",
+    "branchId": "boys",
+    "classId": "II",
+    "rollNo": "39",
+    "monthlyFees": 600.0,
+    "admissionDate": "January 19, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-197-2026",
+    "name": "ATIFA PARVIN",
+    "branchId": "girls",
+    "classId": "LKG",
+    "rollNo": "34",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 16, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-227-2026",
+    "name": "ATTAMIM ISLAM",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "45",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 22, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-82-2026",
+    "name": "AYAN SK",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "27",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 14, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-22-2026",
+    "name": "AYESHA SULTANA",
+    "branchId": "girls",
+    "classId": "LKG",
+    "rollNo": "26",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 10, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-94-2026",
+    "name": "CHAND PRINCE",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "5",
+    "monthlyFees": 600.0,
+    "admissionDate": "December 9, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-203-2026",
+    "name": "EHAN HASAN",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "43",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-44-2026",
+    "name": "ESOB ALI",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "6",
+    "monthlyFees": 1500.0,
+    "admissionDate": "November 29, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-151-2026",
+    "name": "ESTAB ALI",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "25",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-127-2026",
+    "name": "ESTAFI HASAN",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "39",
+    "monthlyFees": 450.0,
+    "admissionDate": "December 25, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-93-2026",
+    "name": "FAHID KHAN",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "4",
+    "monthlyFees": 600.0,
+    "admissionDate": "December 2, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-53-2026",
+    "name": "FAHIM BIN  NUR",
+    "branchId": "girls",
+    "classId": "LKG",
+    "rollNo": "29",
+    "monthlyFees": 400.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-229-2026",
+    "name": "FAHIMA HOQUE",
+    "branchId": "girls",
+    "classId": "UKG",
+    "rollNo": "20",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 28, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-105-2026",
+    "name": "FAHIMIDA YEASMIN",
+    "branchId": "girls",
+    "classId": "I",
+    "rollNo": "17",
+    "monthlyFees": 400.0,
+    "admissionDate": "December 31, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-183-2026",
+    "name": "FAHISUN NESHA",
+    "branchId": "girls",
+    "classId": "IV",
+    "rollNo": "36",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 10, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-175-2026",
+    "name": "FAHMIDA SULTANA",
+    "branchId": "girls",
+    "classId": "II",
+    "rollNo": "35",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-86-2026",
+    "name": "FAIZ AHMED",
+    "branchId": "boys",
+    "classId": "UKG",
+    "rollNo": "32",
+    "monthlyFees": 400.0,
+    "admissionDate": "January 3, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-57-2026",
+    "name": "FAIZAL KHAN",
+    "branchId": "boys",
+    "classId": "UKG",
+    "rollNo": "1",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 6, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-100-2026",
+    "name": "FARHAD SK",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "11",
+    "monthlyFees": 600.0,
+    "admissionDate": "December 26, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-5-2026",
+    "name": "FARHIN SULTANA",
+    "branchId": "girls",
+    "classId": "LKG",
+    "rollNo": "5",
+    "monthlyFees": 500.0,
+    "admissionDate": "November 25, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-161-2026",
+    "name": "FARIHA ZAHIN",
+    "branchId": "girls",
+    "classId": "II",
+    "rollNo": "20",
+    "monthlyFees": 650.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-19-2026",
+    "name": "FARJANA YASMIN",
+    "branchId": "girls",
+    "classId": "LKG",
+    "rollNo": "33",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 7, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-120-2026",
+    "name": "HAFIZA SULTANA",
+    "branchId": "girls",
+    "classId": "I",
+    "rollNo": "36",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 3, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-135-2026",
+    "name": "HAPPY PRINCE",
+    "branchId": "boys",
+    "classId": "II",
+    "rollNo": "7",
+    "monthlyFees": 650.0,
+    "admissionDate": "December 9, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-10-2026",
+    "name": "HASIB SEKH",
+    "branchId": "boys",
+    "classId": "LKG",
+    "rollNo": "10",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 26, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-102-2026",
+    "name": "IBRAHIM HOSSAIN",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "14",
+    "monthlyFees": 550.0,
+    "admissionDate": "December 30, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-16-2026",
+    "name": "IHAN HASAN",
+    "branchId": "boys",
+    "classId": "LKG",
+    "rollNo": "16",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-202-2026",
+    "name": "IMRAN AKTAR",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "44",
+    "monthlyFees": 1800.0,
+    "admissionDate": "January 12, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-23-2026",
+    "name": "IMRAN SEIKH",
+    "branchId": "boys",
+    "classId": "LKG",
+    "rollNo": "18",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 11, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-38-2026",
+    "name": "IMTIAJ AHAMMED",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "14",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 19, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-112-2026",
+    "name": "IMTIAZ RAHAMAN",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "24",
+    "monthlyFees": 600.0,
+    "admissionDate": "January 3, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-34-2026",
+    "name": "INTARUL ALI",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "10",
+    "monthlyFees": 2750.0,
+    "admissionDate": "December 29, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-60-2026",
+    "name": "ISRAT JAHAN",
+    "branchId": "girls",
+    "classId": "UKG",
+    "rollNo": "4",
+    "monthlyFees": 500.0,
+    "admissionDate": "November 18, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-228-2026",
+    "name": "ISTIAK HOSSAIN",
+    "branchId": "boys",
+    "classId": "LKG",
+    "rollNo": "35",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 27, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-58-2026",
+    "name": "IZHAAN ABDULLAH",
+    "branchId": "boys",
+    "classId": "UKG",
+    "rollNo": "2",
+    "monthlyFees": 500.0,
+    "admissionDate": "November 9, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-46-2026",
+    "name": "JAMIRUDDIN",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "8",
+    "monthlyFees": 800.0,
+    "admissionDate": "December 8, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-71-2026",
+    "name": "JANNAT KHATUN",
+    "branchId": "girls",
+    "classId": "UKG",
+    "rollNo": "17",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 22, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-220-2026",
+    "name": "JANNATUN NISHA",
+    "branchId": "girls",
+    "classId": "IV",
+    "rollNo": "44",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 9, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-219-2026",
+    "name": "JEMIMA ISLAM",
+    "branchId": "girls",
+    "classId": "IV",
+    "rollNo": "52",
+    "monthlyFees": 800.0,
+    "admissionDate": "January 19, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-78-2026",
+    "name": "JISHAN AHAMMED",
+    "branchId": "boys",
+    "classId": "UKG",
+    "rollNo": "27",
+    "monthlyFees": 400.0,
+    "admissionDate": "December 30, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-141-2026",
+    "name": "JOBAIR RAHAMAN",
+    "branchId": "boys",
+    "classId": "II",
+    "rollNo": "13",
+    "monthlyFees": 650.0,
+    "admissionDate": "December 26, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-173-2026",
+    "name": "JUNAID AHAMED",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "27",
+    "monthlyFees": 1600.0,
+    "admissionDate": "January 3, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-11-2026",
+    "name": "KAINAT KHANAM",
+    "branchId": "girls",
+    "classId": "LKG",
+    "rollNo": "11",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 27, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-204-2026",
+    "name": "KHATIJA KHATUN",
+    "branchId": "girls",
+    "classId": "I",
+    "rollNo": "23",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 29, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-167-2026",
+    "name": "MAFISA KHATUN",
+    "branchId": "girls",
+    "classId": "II",
+    "rollNo": "26",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 31, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-149-2026",
+    "name": "MAHADIYA SIDDIQA",
+    "branchId": "girls",
+    "classId": "IV",
+    "rollNo": "22",
+    "monthlyFees": 600.0,
+    "admissionDate": "December 31, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-246-2026",
+    "name": "MAHAFUJ ISLAM",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "33",
+    "monthlyFees": 600.0,
+    "admissionDate": "November 29, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-106-2026",
+    "name": "MAHAFUJA SIDDIQA",
+    "branchId": "girls",
+    "classId": "I",
+    "rollNo": "18",
+    "monthlyFees": 600.0,
+    "admissionDate": "December 31, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-67-2026",
+    "name": "MAHAMUDA SULTANA",
+    "branchId": "girls",
+    "classId": "UKG",
+    "rollNo": "12",
+    "monthlyFees": 400.0,
+    "admissionDate": "December 16, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-6-2026",
+    "name": "MAHEK KHATUN",
+    "branchId": "girls",
+    "classId": "LKG",
+    "rollNo": "6",
+    "monthlyFees": 500.0,
+    "admissionDate": "November 29, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-96-2026",
+    "name": "MAHER SK",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "7",
+    "monthlyFees": 600.0,
+    "admissionDate": "December 20, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-184-2026",
+    "name": "MAHINUR NISHA",
+    "branchId": "girls",
+    "classId": "II",
+    "rollNo": "33",
+    "monthlyFees": 650.0,
+    "admissionDate": "January 10, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-4-2026",
+    "name": "MAHIR SK",
+    "branchId": "boys",
+    "classId": "LKG",
+    "rollNo": "4",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 13, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-24-2026",
+    "name": "MARUF SK",
+    "branchId": "boys",
+    "classId": "LKG",
+    "rollNo": "17",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 10, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-132-2026",
+    "name": "MASIUR RAHAMAN",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "27",
+    "monthlyFees": 2500.0,
+    "admissionDate": "November 27, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-128-2026",
+    "name": "MASUM SEKH -41",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "41",
+    "monthlyFees": 600.0,
+    "admissionDate": "January 10, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-90-2026",
+    "name": "MASUM SK-1",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "1",
+    "monthlyFees": 500.0,
+    "admissionDate": "November 29, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-188-2026",
+    "name": "MASUMA KHATUN",
+    "branchId": "girls",
+    "classId": "IV",
+    "rollNo": "43",
+    "monthlyFees": 550.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-234-2026",
+    "name": "MAUN SK",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "37",
+    "monthlyFees": 2800.0,
+    "admissionDate": "January 31, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-217-2026",
+    "name": "MD ABDUL AJIJ",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "50",
+    "monthlyFees": 2800.0,
+    "admissionDate": "January 13, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-145-2026",
+    "name": "MD ABDULLAH AMEEN",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "18",
+    "monthlyFees": 750.0,
+    "admissionDate": "December 26, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-103-2026",
+    "name": "MD ALAMIN RAHMAN",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "15",
+    "monthlyFees": 700.0,
+    "admissionDate": "December 26, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-113-2026",
+    "name": "MD ALTAF HOSSAIN",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "17",
+    "monthlyFees": 700.0,
+    "admissionDate": "January 2, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-47-2026",
+    "name": "MD AMIR HAMJA",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "9",
+    "monthlyFees": 700.0,
+    "admissionDate": "December 8, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-30-2026",
+    "name": "MD ARIYAN ANSARI",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "6",
+    "monthlyFees": 700.0,
+    "admissionDate": "December 19, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-51-2026",
+    "name": "MD ARMAN",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "14",
+    "monthlyFees": 2500.0,
+    "admissionDate": "December 21, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-118-2026",
+    "name": "MD ASHIQ RAHMAN",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "20",
+    "monthlyFees": 700.0,
+    "admissionDate": "December 26, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-164-2026",
+    "name": "MD AYAAN KHAN",
+    "branchId": "boys",
+    "classId": "II",
+    "rollNo": "25",
+    "monthlyFees": 600.0,
+    "admissionDate": "December 27, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-70-2026",
+    "name": "MD AYAN ANSARI",
+    "branchId": "boys",
+    "classId": "UKG",
+    "rollNo": "15",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 19, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-235-2026",
+    "name": "MD AYAZ ALAM",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "55",
+    "monthlyFees": 2800.0,
+    "admissionDate": "January 30, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-7-2026",
+    "name": "MD FAHIM AHMED",
+    "branchId": "boys",
+    "classId": "LKG",
+    "rollNo": "7",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 16, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-116-2026",
+    "name": "MD ISHAN ALI",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "19",
+    "monthlyFees": 350.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-190-2026",
+    "name": "MD ISRAFIL",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "37",
+    "monthlyFees": 2800.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-107-2026",
+    "name": "MD JUBIYAR SK",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "19",
+    "monthlyFees": 600.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-176-2026",
+    "name": "MD MASUD RANA",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "24",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-31-2026",
+    "name": "MD MEHEDI HASAN",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "7",
+    "monthlyFees": 700.0,
+    "admissionDate": "December 26, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-245-2026",
+    "name": "MD MIRAJ",
+    "branchId": "boys",
+    "classId": "LKG",
+    "rollNo": "22",
+    "monthlyFees": 500.0,
+    "admissionDate": "November 29, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-12-2026",
+    "name": "MD NIHAN",
+    "branchId": "boys",
+    "classId": "LKG",
+    "rollNo": "12",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 27, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-232-2026",
+    "name": "MD REJUON SHAIKH",
+    "branchId": "boys",
+    "classId": "II",
+    "rollNo": "42",
+    "monthlyFees": 600.0,
+    "admissionDate": "February 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-56-2026",
+    "name": "MD ROHIT HOSSAIN",
+    "branchId": "boys",
+    "classId": "LKG",
+    "rollNo": "25",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-134-2026",
+    "name": "MD SALAUDDIN",
+    "branchId": "boys",
+    "classId": "II",
+    "rollNo": "6",
+    "monthlyFees": 650.0,
+    "admissionDate": "December 4, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-243-2026",
+    "name": "MD SAMIM HOQUE",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "34",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-249-2026",
+    "name": "MD SARFARAZ",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "40",
+    "monthlyFees": 500.0,
+    "admissionDate": "February 13, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-99-2026",
+    "name": "MD SIYAN BARI",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "10",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 24, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-169-2026",
+    "name": "MEHEBUBA KHATUN",
+    "branchId": "girls",
+    "classId": "IV",
+    "rollNo": "5",
+    "monthlyFees": 0.0,
+    "admissionDate": "November 29, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-101-2026",
+    "name": "MEHEDI HASAN",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "13",
+    "monthlyFees": 600.0,
+    "admissionDate": "December 30, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-237-2026",
+    "name": "MEHEK NASERI",
+    "branchId": "girls",
+    "classId": "UKG",
+    "rollNo": "19",
+    "monthlyFees": 500.0,
+    "admissionDate": "February 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-9-2026",
+    "name": "MIJAN SK",
+    "branchId": "boys",
+    "classId": "LKG",
+    "rollNo": "9",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 22, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-209-2026",
+    "name": "MIJANUR KABIR",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "33",
+    "monthlyFees": 600.0,
+    "admissionDate": "January 19, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-165-2026",
+    "name": "MINHAJ ANSARI",
+    "branchId": "boys",
+    "classId": "II",
+    "rollNo": "22",
+    "monthlyFees": 600.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-166-2026",
+    "name": "MINHAJ SK",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "25",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-25-2026",
+    "name": "MOBARAK SK",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "1",
+    "monthlyFees": 2800.0,
+    "admissionDate": "December 29, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-218-2026",
+    "name": "MOHIRUDDIN SK",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "30",
+    "monthlyFees": 800.0,
+    "admissionDate": "January 16, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-92-2026",
+    "name": "MOKAMMIL HAQUE",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "3",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-147-2026",
+    "name": "MONTAJUL ISLAM",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "20",
+    "monthlyFees": 2500.0,
+    "admissionDate": "December 26, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-50-2026",
+    "name": "MOSTAFIZUR RAHAMAN",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "12",
+    "monthlyFees": 2300.0,
+    "admissionDate": "December 17, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-121-2026",
+    "name": "MOWAJ SHAIKH",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "37",
+    "monthlyFees": 600.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-59-2026",
+    "name": "MUNIYARA KHATUN",
+    "branchId": "girls",
+    "classId": "UKG",
+    "rollNo": "3",
+    "monthlyFees": 0.0,
+    "admissionDate": "January 14, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-146-2026",
+    "name": "MURSHEDA KHATUN",
+    "branchId": "girls",
+    "classId": "IV",
+    "rollNo": "19",
+    "monthlyFees": 700.0,
+    "admissionDate": "December 26, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-129-2026",
+    "name": "NAFISA KHATUN",
+    "branchId": "girls",
+    "classId": "II",
+    "rollNo": "1",
+    "monthlyFees": 0.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-185-2026",
+    "name": "NAHID AKTAR",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "39",
+    "monthlyFees": 2800.0,
+    "admissionDate": "February 8, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-247-2026",
+    "name": "NAHIDA YASMIN",
+    "branchId": "girls",
+    "classId": "II",
+    "rollNo": "4",
+    "monthlyFees": 600.0,
+    "admissionDate": "February 6, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-76-2026",
+    "name": "NAIL PARVEJ",
+    "branchId": "boys",
+    "classId": "UKG",
+    "rollNo": "22",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 27, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-231-2026",
+    "name": "NAISHA PARVIN",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "29",
+    "monthlyFees": 600.0,
+    "admissionDate": "February 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-88-2026",
+    "name": "NASRIN KHATUN",
+    "branchId": "girls",
+    "classId": "UKG",
+    "rollNo": "35",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 6, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-159-2026",
+    "name": "NILUFA YEASMIN",
+    "branchId": "girls",
+    "classId": "II",
+    "rollNo": "18",
+    "monthlyFees": 2500.0,
+    "admissionDate": "December 30, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-226-2026",
+    "name": "NOBI ALI",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "36",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 24, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-115-2026",
+    "name": "NUR HASSAN",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "18",
+    "monthlyFees": 2500.0,
+    "admissionDate": "December 26, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-206-2026",
+    "name": "NUR NABI",
+    "branchId": "boys",
+    "classId": "II",
+    "rollNo": "41",
+    "monthlyFees": 600.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-178-2026",
+    "name": "NUSRAT JAHAN",
+    "branchId": "girls",
+    "classId": "II",
+    "rollNo": "37",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 6, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-42-2026",
+    "name": "NUSRAT PARVIN",
+    "branchId": "girls",
+    "classId": "IV",
+    "rollNo": "37",
+    "monthlyFees": 2750.0,
+    "admissionDate": "November 20, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-137-2026",
+    "name": "RAHAD SK",
+    "branchId": "boys",
+    "classId": "UKG",
+    "rollNo": "29",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 16, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-136-2026",
+    "name": "RAHAT ANJUM",
+    "branchId": "girls",
+    "classId": "II",
+    "rollNo": "8",
+    "monthlyFees": 600.0,
+    "admissionDate": "December 15, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-170-2026",
+    "name": "RAHAT PARVEZ",
+    "branchId": "boys",
+    "classId": "II",
+    "rollNo": "28",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-77-2026",
+    "name": "RAHAT SEKH",
+    "branchId": "boys",
+    "classId": "UKG",
+    "rollNo": "23",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 27, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-35-2026",
+    "name": "RAHIL AHAMMED",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "11",
+    "monthlyFees": 0.0,
+    "admissionDate": "December 28, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-252-2026",
+    "name": "RAIHAN AKTAR",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "60",
+    "monthlyFees": 1000.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-79-2026",
+    "name": "RAIHAN SAIKH",
+    "branchId": "boys",
+    "classId": "UKG",
+    "rollNo": "24",
+    "monthlyFees": 600.0,
+    "admissionDate": "December 28, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-182-2026",
+    "name": "RAJ SK",
+    "branchId": "boys",
+    "classId": "II",
+    "rollNo": "29",
+    "monthlyFees": 650.0,
+    "admissionDate": "January 8, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-33-2026",
+    "name": "RAMIJUR RAHAMAN",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "9",
+    "monthlyFees": 2000.0,
+    "admissionDate": "December 28, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-138-2026",
+    "name": "REJWAN SK",
+    "branchId": "boys",
+    "classId": "II",
+    "rollNo": "10",
+    "monthlyFees": 2500.0,
+    "admissionDate": "December 21, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-199-2026",
+    "name": "RIHA KHATUN",
+    "branchId": "girls",
+    "classId": "LKG",
+    "rollNo": "23",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 7, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-210-2026",
+    "name": "RIMKA NASRIN",
+    "branchId": "girls",
+    "classId": "III",
+    "rollNo": "26",
+    "monthlyFees": 700.0,
+    "admissionDate": "January 15, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-239-2026",
+    "name": "RIZWANUR RAHAMAN",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "56",
+    "monthlyFees": 2200.0,
+    "admissionDate": "February 2, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-194-2026",
+    "name": "ROCKY SK",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "29",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 10, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-172-2026",
+    "name": "RODIA SULTANA",
+    "branchId": "girls",
+    "classId": "IV",
+    "rollNo": "28",
+    "monthlyFees": 800.0,
+    "admissionDate": "January 3, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-110-2026",
+    "name": "ROHAN SEKH",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "16",
+    "monthlyFees": 600.0,
+    "admissionDate": "January 2, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-168-2026",
+    "name": "ROHAN SK",
+    "branchId": "boys",
+    "classId": "II",
+    "rollNo": "27",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-20-2026",
+    "name": "ROHIT SK",
+    "branchId": "boys",
+    "classId": "LKG",
+    "rollNo": "28",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 8, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-123-2026",
+    "name": "RONY SK",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "30",
+    "monthlyFees": 1300.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-84-2026",
+    "name": "RUHAN HOSSAIN",
+    "branchId": "boys",
+    "classId": "UKG",
+    "rollNo": "30",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 14, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-130-2026",
+    "name": "RUKSAR KHATUN",
+    "branchId": "girls",
+    "classId": "II",
+    "rollNo": "2",
+    "monthlyFees": 0.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-73-2026",
+    "name": "RUSHDA HOSSAIN",
+    "branchId": "girls",
+    "classId": "UKG",
+    "rollNo": "19",
+    "monthlyFees": 400.0,
+    "admissionDate": "December 25, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-193-2026",
+    "name": "SABNAM SULTANA",
+    "branchId": "girls",
+    "classId": "III",
+    "rollNo": "28",
+    "monthlyFees": 550.0,
+    "admissionDate": "December 25, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-244-2026",
+    "name": "SADIYA SULTANA",
+    "branchId": "girls",
+    "classId": "LKG",
+    "rollNo": "21",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 3, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-95-2026",
+    "name": "SAHARAJ KAHN",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "6",
+    "monthlyFees": 600.0,
+    "admissionDate": "December 17, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-192-2026",
+    "name": "SAHEBA SULTANA",
+    "branchId": "girls",
+    "classId": "III",
+    "rollNo": "38",
+    "monthlyFees": 2600.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-109-2026",
+    "name": "SAHIL KARIM",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "21",
+    "monthlyFees": 450.0,
+    "admissionDate": "January 2, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-156-2026",
+    "name": "SAHIN ALAM",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "33",
+    "monthlyFees": 350.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-126-2026",
+    "name": "SAIF RAHAMAN",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "40",
+    "monthlyFees": 600.0,
+    "admissionDate": "January 10, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-222-2026",
+    "name": "SAJI D ALAM",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "1300",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-221-2026",
+    "name": "SAJID ALAM",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "13",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-213-2026",
+    "name": "SAMIM AKTAR",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "25",
+    "monthlyFees": 650.0,
+    "admissionDate": "January 13, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-251-2026",
+    "name": "SAMIN YEASAR",
+    "branchId": "boys",
+    "classId": "UKG",
+    "rollNo": "16",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-212-2026",
+    "name": "SAMIRUL ISLAM",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "35",
+    "monthlyFees": 1800.0,
+    "admissionDate": "January 19, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-43-2026",
+    "name": "SAMREEN MAMUD",
+    "branchId": "girls",
+    "classId": "IV",
+    "rollNo": "4",
+    "monthlyFees": 800.0,
+    "admissionDate": "November 28, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-45-2026",
+    "name": "SANI SK",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "7",
+    "monthlyFees": 2800.0,
+    "admissionDate": "December 7, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-131-2026",
+    "name": "SANJIDA NOURIN",
+    "branchId": "girls",
+    "classId": "II",
+    "rollNo": "3",
+    "monthlyFees": 600.0,
+    "admissionDate": "November 27, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-66-2026",
+    "name": "SANJIDA SULTANA",
+    "branchId": "girls",
+    "classId": "UKG",
+    "rollNo": "11",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 13, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-177-2026",
+    "name": "SARFARAZ SEKH",
+    "branchId": "boys",
+    "classId": "II",
+    "rollNo": "39",
+    "monthlyFees": 1800.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-3-2026",
+    "name": "SARMIN PARVIN",
+    "branchId": "girls",
+    "classId": "LKG",
+    "rollNo": "2",
+    "monthlyFees": 500.0,
+    "admissionDate": "November 15, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-207-2026",
+    "name": "SARVIL SK",
+    "branchId": "boys",
+    "classId": "II",
+    "rollNo": "41",
+    "monthlyFees": 600.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-148-2026",
+    "name": "SARWARE ALAM",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "21",
+    "monthlyFees": 1800.0,
+    "admissionDate": "December 31, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-171-2026",
+    "name": "SEKH ASIR",
+    "branchId": "boys",
+    "classId": "II",
+    "rollNo": "32",
+    "monthlyFees": 650.0,
+    "admissionDate": "January 2, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-162-2026",
+    "name": "SHANIN SARA",
+    "branchId": "girls",
+    "classId": "II",
+    "rollNo": "21",
+    "monthlyFees": 600.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-52-2026",
+    "name": "SHEENAZ KHATUN",
+    "branchId": "girls",
+    "classId": "IV",
+    "rollNo": "16",
+    "monthlyFees": 800.0,
+    "admissionDate": "December 23, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-65-2026",
+    "name": "SHIFAN KHAN",
+    "branchId": "boys",
+    "classId": "UKG",
+    "rollNo": "10",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 2, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-15-2026",
+    "name": "SHIHAB ABEDIN",
+    "branchId": "boys",
+    "classId": "LKG",
+    "rollNo": "15",
+    "monthlyFees": 400.0,
+    "admissionDate": "December 31, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-186-2026",
+    "name": "SIYA SULTANA",
+    "branchId": "girls",
+    "classId": "IV",
+    "rollNo": "40",
+    "monthlyFees": 2600.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-191-2026",
+    "name": "SMAT SABIYA",
+    "branchId": "girls",
+    "classId": "III",
+    "rollNo": "22",
+    "monthlyFees": 1500.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-39-2026",
+    "name": "SOHEL ANOWER",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "15",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 2, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-17-2026",
+    "name": "SUHANA PARVIN",
+    "branchId": "girls",
+    "classId": "LKG",
+    "rollNo": "30",
+    "monthlyFees": 400.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-69-2026",
+    "name": "SUHANA PARVIN",
+    "branchId": "girls",
+    "classId": "UKG",
+    "rollNo": "14",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 19, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-153-2026",
+    "name": "SUHANA PARVIN",
+    "branchId": "girls",
+    "classId": "IV",
+    "rollNo": "30",
+    "monthlyFees": 1800.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-238-2026",
+    "name": "SUHANA SULTANA",
+    "branchId": "girls",
+    "classId": "II",
+    "rollNo": "9",
+    "monthlyFees": 2200.0,
+    "admissionDate": "February 2, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-26-2026",
+    "name": "SUMAIYA KHATUN",
+    "branchId": "girls",
+    "classId": "III",
+    "rollNo": "2",
+    "monthlyFees": 2500.0,
+    "admissionDate": "December 1, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-195-2026",
+    "name": "SUPRIYA KHATUN",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "45",
+    "monthlyFees": 2600.0,
+    "admissionDate": "January 9, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-214-2026",
+    "name": "SURIYA KHATUN",
+    "branchId": "girls",
+    "classId": "IV",
+    "rollNo": "47",
+    "monthlyFees": 0.0,
+    "admissionDate": "January 11, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-160-2026",
+    "name": "TAHMINA KHATUN",
+    "branchId": "girls",
+    "classId": "II",
+    "rollNo": "36",
+    "monthlyFees": 300.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-241-2026",
+    "name": "TAMANNA  FAWJIYA",
+    "branchId": "girls",
+    "classId": "IV",
+    "rollNo": "58",
+    "monthlyFees": 2800.0,
+    "admissionDate": "February 5, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-154-2026",
+    "name": "TAMIM HOSSAIN",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "31",
+    "monthlyFees": 600.0,
+    "admissionDate": "December 31, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-74-2026",
+    "name": "TAMIM SK",
+    "branchId": "boys",
+    "classId": "UKG",
+    "rollNo": "33",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 6, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-253-2026",
+    "name": "TANBIR AHMAD",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "61",
+    "monthlyFees": 2700.0,
+    "admissionDate": "February 25, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-180-2026",
+    "name": "TANBIR HAQUE",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "26",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 3, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-125-2026",
+    "name": "TANBIR RAHAMAN",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "42",
+    "monthlyFees": 600.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-91-2026",
+    "name": "TANBIR SEKH",
+    "branchId": "boys",
+    "classId": "I",
+    "rollNo": "2",
+    "monthlyFees": 500.0,
+    "admissionDate": "November 29, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-114-2026",
+    "name": "TANISA PARVIN",
+    "branchId": "girls",
+    "classId": "I",
+    "rollNo": "25",
+    "monthlyFees": 350.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-18-2026",
+    "name": "TANISA SULTANA",
+    "branchId": "girls",
+    "classId": "LKG",
+    "rollNo": "32",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-37-2026",
+    "name": "TANIYA PARVIN",
+    "branchId": "girls",
+    "classId": "III",
+    "rollNo": "13",
+    "monthlyFees": 700.0,
+    "admissionDate": "December 31, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-174-2026",
+    "name": "TANVIIR HOQUE",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "35",
+    "monthlyFees": 1800.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-223-2026",
+    "name": "TANVIR ALAM",
+    "branchId": "boys",
+    "classId": "III",
+    "rollNo": "32",
+    "monthlyFees": 1800.0,
+    "admissionDate": "February 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-133-2026",
+    "name": "TANVIR SAIKH",
+    "branchId": "boys",
+    "classId": "II",
+    "rollNo": "5",
+    "monthlyFees": 2000.0,
+    "admissionDate": "November 29, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-201-2026",
+    "name": "TAWHID",
+    "branchId": "boys",
+    "classId": "UKG",
+    "rollNo": "38",
+    "monthlyFees": 400.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-139-2026",
+    "name": "UMAEID SK",
+    "branchId": "boys",
+    "classId": "II",
+    "rollNo": "11",
+    "monthlyFees": 500.0,
+    "admissionDate": "December 22, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-49-2026",
+    "name": "UMAR FARUQUE",
+    "branchId": "boys",
+    "classId": "IV",
+    "rollNo": "11",
+    "monthlyFees": 2600.0,
+    "admissionDate": "January 12, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-21-2026",
+    "name": "YAQUB ALI",
+    "branchId": "boys",
+    "classId": "LKG",
+    "rollNo": "27",
+    "monthlyFees": 500.0,
+    "admissionDate": "January 10, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-54-2026",
+    "name": "YEAKUB ALI",
+    "branchId": "boys",
+    "classId": "LKG",
+    "rollNo": "3",
+    "monthlyFees": 0.0,
+    "admissionDate": "January 14, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-205-2026",
+    "name": "YOUFAJ HASAN",
+    "branchId": "boys",
+    "classId": "II",
+    "rollNo": "40",
+    "monthlyFees": 600.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRAJ-81-2026",
+    "name": "YOUSUF Ali",
+    "branchId": "boys",
+    "classId": "UKG",
+    "rollNo": "26",
+    "monthlyFees": 50.0,
+    "admissionDate": "December 30, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "Reg.ID",
+    "name": "Name",
+    "branchId": "boys",
+    "classId": "CLASS",
+    "rollNo": "Roll No.",
+    "monthlyFees": 0.0,
+    "admissionDate": "DOA",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-3-2026",
+    "name": "ABDUL AHIL",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "23",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-99-2026",
+    "name": "ABDUL AWWAL",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "3",
+    "monthlyFees": 3200.0,
+    "admissionDate": "November 24, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-338-2026",
+    "name": "ABDUL GAFFAR SK",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "48",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 24, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-326-2026",
+    "name": "ABDUL HAMID",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "46",
+    "monthlyFees": 2600.0,
+    "admissionDate": "February 2, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-255-2026",
+    "name": "ABDUL MEHER",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "33",
+    "monthlyFees": 1800.0,
+    "admissionDate": "January 7, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-30-2026",
+    "name": "ABDULLAH SK",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "13",
+    "monthlyFees": 2900.0,
+    "admissionDate": "December 25, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-264-2026",
+    "name": "ABDUN NAFE",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "37",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 16, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-315-2026",
+    "name": "ABID AL FAYEJ",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "45",
+    "monthlyFees": 1500.0,
+    "admissionDate": "January 28, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-346-2026",
+    "name": "ABIR HASAN",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "47",
+    "monthlyFees": 3000.0,
+    "admissionDate": "February 15, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-119-2026",
+    "name": "ABU HASAN SK",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "24",
+    "monthlyFees": 3500.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-146-2026",
+    "name": "ABU JAID",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "20",
+    "monthlyFees": 2650.0,
+    "admissionDate": "November 24, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-53-2026",
+    "name": "ABU RAHAT",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "1",
+    "monthlyFees": 3100.0,
+    "admissionDate": "November 23, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-200-2026",
+    "name": "ABU SUFIYAN",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "29",
+    "monthlyFees": 2650.0,
+    "admissionDate": "November 24, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-266-2026",
+    "name": "ABUL HASAN",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "39",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 16, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-249-2026",
+    "name": "ADIB PARWANA",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "25",
+    "monthlyFees": 1900.0,
+    "admissionDate": "December 29, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-155-2026",
+    "name": "ADIBA ALAM",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "4",
+    "monthlyFees": 2500.0,
+    "admissionDate": "December 3, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-186-2026",
+    "name": "AFIFA SULTANA",
+    "branchId": "girls",
+    "classId": "VI",
+    "rollNo": "8",
+    "monthlyFees": 2200.0,
+    "admissionDate": "December 27, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-17-2026",
+    "name": "AFIYA SIDDIKA",
+    "branchId": "girls",
+    "classId": "VII",
+    "rollNo": "14",
+    "monthlyFees": 3000.0,
+    "admissionDate": "December 31, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-216-2026",
+    "name": "AFROJA KHATUN",
+    "branchId": "girls",
+    "classId": "V",
+    "rollNo": "17",
+    "monthlyFees": 2800.0,
+    "admissionDate": "December 30, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-18-2026",
+    "name": "AFSANA KHATUN",
+    "branchId": "girls",
+    "classId": "VII",
+    "rollNo": "16",
+    "monthlyFees": 3000.0,
+    "admissionDate": "December 30, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-345-2026",
+    "name": "AFSANA PARVIN",
+    "branchId": "girls",
+    "classId": "IX",
+    "rollNo": "18",
+    "monthlyFees": 4000.0,
+    "admissionDate": "February 19, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-34-2026",
+    "name": "AHAMED HASAN IMRAN",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "17",
+    "monthlyFees": 1000.0,
+    "admissionDate": "December 31, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-332-2026",
+    "name": "AHMMED MUSHA",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "47",
+    "monthlyFees": 2000.0,
+    "admissionDate": "February 2, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-169-2026",
+    "name": "AJIFA YEASMIN",
+    "branchId": "girls",
+    "classId": "VIII",
+    "rollNo": "7",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-339-2026",
+    "name": "AJIJA KHATUN",
+    "branchId": "girls",
+    "classId": "VI",
+    "rollNo": "31",
+    "monthlyFees": 2700.0,
+    "admissionDate": "February 8, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-2-2026",
+    "name": "AKIL ALI",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "24",
+    "monthlyFees": 2200.0,
+    "admissionDate": "December 28, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-130-2026",
+    "name": "AL EMRAN",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "43",
+    "monthlyFees": 2500.0,
+    "admissionDate": "December 31, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-52-2026",
+    "name": "AL MAHIR ANSARI",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "10",
+    "monthlyFees": 2800.0,
+    "admissionDate": "December 25, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-88-2026",
+    "name": "AL SADIK HOSSAIN",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "35",
+    "monthlyFees": 1800.0,
+    "admissionDate": "January 6, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-127-2026",
+    "name": "ALAMIN ISLAM",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "33",
+    "monthlyFees": 2800.0,
+    "admissionDate": "December 28, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-265-2026",
+    "name": "ALAMIN SK",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "10",
+    "monthlyFees": 1800.0,
+    "admissionDate": "January 17, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-316-2026",
+    "name": "ALAMIN SK",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "41",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 29, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-337-2026",
+    "name": "ALI EMRAN",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "45",
+    "monthlyFees": 2500.0,
+    "admissionDate": "December 31, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-268-2026",
+    "name": "ALISHA BEGUM",
+    "branchId": "girls",
+    "classId": "VI",
+    "rollNo": "23",
+    "monthlyFees": 2900.0,
+    "admissionDate": "January 3, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-313-2026",
+    "name": "ALIZA HOSSAIN",
+    "branchId": "girls",
+    "classId": "V",
+    "rollNo": "22",
+    "monthlyFees": 1300.0,
+    "admissionDate": "January 28, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-292-2026",
+    "name": "AMIN SK",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "17",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 3, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-336-2026",
+    "name": "AMIR MIA",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "34",
+    "monthlyFees": 3200.0,
+    "admissionDate": "January 25, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-230-2026",
+    "name": "AMIR SHEKH",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "4",
+    "monthlyFees": 2500.0,
+    "admissionDate": "November 26, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-324-2026",
+    "name": "ANIKA TAHASIN",
+    "branchId": "girls",
+    "classId": "VI",
+    "rollNo": "32",
+    "monthlyFees": 1800.0,
+    "admissionDate": "February 2, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-11-2026",
+    "name": "ANISHA KHATUN",
+    "branchId": "girls",
+    "classId": "VII",
+    "rollNo": "7",
+    "monthlyFees": 2100.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-184-2026",
+    "name": "ANISHA SULTANA",
+    "branchId": "girls",
+    "classId": "VI",
+    "rollNo": "6",
+    "monthlyFees": 2000.0,
+    "admissionDate": "December 24, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-76-2026",
+    "name": "ANOWAR HOSSAIN",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "25",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-141-2026",
+    "name": "ARIF HASAN",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "11",
+    "monthlyFees": 3500.0,
+    "admissionDate": "December 21, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-70-2026",
+    "name": "ARIYAN ISLAM",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "18",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 3, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-74-2026",
+    "name": "ARIYAN SK",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "23",
+    "monthlyFees": 3200.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-223-2026",
+    "name": "ASFIYA KHATUN",
+    "branchId": "girls",
+    "classId": "VI",
+    "rollNo": "34",
+    "monthlyFees": 2750.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-58-2026",
+    "name": "ASHFAK AHMED",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "6",
+    "monthlyFees": 3000.0,
+    "admissionDate": "December 26, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-237-2026",
+    "name": "ASHIF EQBAL",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "13",
+    "monthlyFees": 2500.0,
+    "admissionDate": "December 27, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-232-2026",
+    "name": "ASHIK IKBAL",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "6",
+    "monthlyFees": 2000.0,
+    "admissionDate": "November 23, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-148-2026",
+    "name": "ASHIQ IKBAL",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "23",
+    "monthlyFees": 3000.0,
+    "admissionDate": "November 24, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-95-2026",
+    "name": "ASIF SK",
+    "branchId": "boys",
+    "classId": "X",
+    "rollNo": "2",
+    "monthlyFees": 2500.0,
+    "admissionDate": "December 19, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-262-2026",
+    "name": "ASIM SK",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "43",
+    "monthlyFees": 2600.0,
+    "admissionDate": "January 11, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-7-2026",
+    "name": "ASIYA SARMIN",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "3",
+    "monthlyFees": 2800.0,
+    "admissionDate": "December 22, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-149-2026",
+    "name": "ASLAM SK",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "24",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-344-2026",
+    "name": "ASMA PARVIN",
+    "branchId": "girls",
+    "classId": "VI",
+    "rollNo": "9",
+    "monthlyFees": 1600.0,
+    "admissionDate": "February 13, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-323-2026",
+    "name": "ASMAUL SK",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "44",
+    "monthlyFees": 2800.0,
+    "admissionDate": "February 2, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-297-2026",
+    "name": "ASMIN KHATUN",
+    "branchId": "girls",
+    "classId": "V",
+    "rollNo": "20",
+    "monthlyFees": 2900.0,
+    "admissionDate": "January 16, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-27-2026",
+    "name": "ASTAG ALI",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "9",
+    "monthlyFees": 3000.0,
+    "admissionDate": "December 21, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-33-2026",
+    "name": "ATIF ASLAM",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "16",
+    "monthlyFees": 3000.0,
+    "admissionDate": "December 28, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-144-2026",
+    "name": "ATIKUZZAMAN",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "18",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-245-2026",
+    "name": "AWAL AKTAR",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "21",
+    "monthlyFees": 1500.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-171-2026",
+    "name": "AYESA KHATUN",
+    "branchId": "girls",
+    "classId": "VIII",
+    "rollNo": "9",
+    "monthlyFees": 2800.0,
+    "admissionDate": "January 3, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-267-2026",
+    "name": "AYESHA  KHATUN",
+    "branchId": "girls",
+    "classId": "VI",
+    "rollNo": "30",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 17, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-82-2026",
+    "name": "AYESHA SULTANA",
+    "branchId": "girls",
+    "classId": "V",
+    "rollNo": "2",
+    "monthlyFees": 2000.0,
+    "admissionDate": "November 22, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-45-2026",
+    "name": "BANI ISRAIL SK",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "35",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 10, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-299-2026",
+    "name": "EBRAHIM SK",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "43",
+    "monthlyFees": 1900.0,
+    "admissionDate": "January 21, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-236-2026",
+    "name": "FAHIM AKTAR",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "12",
+    "monthlyFees": 2500.0,
+    "admissionDate": "December 28, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-164-2026",
+    "name": "FAHIMA SHIFA",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "14",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 3, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-165-2026",
+    "name": "FALAK PARVEEN",
+    "branchId": "girls",
+    "classId": "IX",
+    "rollNo": "15",
+    "monthlyFees": 2400.0,
+    "admissionDate": "December 29, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-43-2026",
+    "name": "FARHAD AHMED",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "31",
+    "monthlyFees": 2100.0,
+    "admissionDate": "January 6, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-117-2026",
+    "name": "FARHAN AKTAR",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "22",
+    "monthlyFees": 2750.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-241-2026",
+    "name": "FARHAN AKTAR",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "17",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-329-2026",
+    "name": "FARHAN ALI",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "42",
+    "monthlyFees": 2700.0,
+    "admissionDate": "February 3, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-1-2026",
+    "name": "FARHAN HOSSAIN",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "25",
+    "monthlyFees": 1500.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-228-2026",
+    "name": "FARHAN RAHAMAN",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "2",
+    "monthlyFees": 2700.0,
+    "admissionDate": "November 18, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-251-2026",
+    "name": "FARHAN SK",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "29",
+    "monthlyFees": 2900.0,
+    "admissionDate": "January 8, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-222-2026",
+    "name": "FARHANAH ISLAM",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "11",
+    "monthlyFees": 2000.0,
+    "admissionDate": "November 23, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-90-2026",
+    "name": "FARIJUL ISLAM",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "37",
+    "monthlyFees": 2700.0,
+    "admissionDate": "January 9, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-174-2026",
+    "name": "FARMIN JAHAN",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "12",
+    "monthlyFees": 2600.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-19-2026",
+    "name": "FARZANA MASUD NILA",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "17",
+    "monthlyFees": 1500.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-240-2026",
+    "name": "GALIB HASAN",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "16",
+    "monthlyFees": 2600.0,
+    "admissionDate": "December 31, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-349-2026",
+    "name": "GINNATUN NESA",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "27",
+    "monthlyFees": 2700.0,
+    "admissionDate": "February 15, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-301-2026",
+    "name": "GOLAM  MORTOZA SK",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "33",
+    "monthlyFees": 3500.0,
+    "admissionDate": "January 22, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-273-2026",
+    "name": "HABIB AHAMED",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "1",
+    "monthlyFees": 2600.0,
+    "admissionDate": "January 8, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-91-2026",
+    "name": "HABIBUR RAHAMAN",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "41",
+    "monthlyFees": 2600.0,
+    "admissionDate": "January 2, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-211-2026",
+    "name": "HALIMA KHATUN",
+    "branchId": "girls",
+    "classId": "V",
+    "rollNo": "12",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-104-2026",
+    "name": "HAMIDUR RAHAMAN",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "8",
+    "monthlyFees": 3000.0,
+    "admissionDate": "December 11, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-341-2026",
+    "name": "HAMJALA SK",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "49",
+    "monthlyFees": 2800.0,
+    "admissionDate": "February 8, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-63-2026",
+    "name": "HASANUZZAMAN",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "11",
+    "monthlyFees": 2800.0,
+    "admissionDate": "December 26, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-42-2026",
+    "name": "HASEM SK",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "30",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 6, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-261-2026",
+    "name": "HASIB SK",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "36",
+    "monthlyFees": 2700.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-320-2026",
+    "name": "HASIB SK 2",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "20",
+    "monthlyFees": 2600.0,
+    "admissionDate": "January 31, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-347-2026",
+    "name": "HASIMNUR JAMAN",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "44",
+    "monthlyFees": 2800.0,
+    "admissionDate": "February 25, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-286-2026",
+    "name": "HASINA KHATUN",
+    "branchId": "girls",
+    "classId": "VIII",
+    "rollNo": "21",
+    "monthlyFees": 3500.0,
+    "admissionDate": "January 11, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-97-2026",
+    "name": "IASIN ARAFAT",
+    "branchId": "boys",
+    "classId": "X",
+    "rollNo": "4",
+    "monthlyFees": 3000.0,
+    "admissionDate": "December 31, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-248-2026",
+    "name": "IASUB ARAFAT",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "24",
+    "monthlyFees": 2000.0,
+    "admissionDate": "December 31, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-224-2026",
+    "name": "IBNAT JAHAN",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "25",
+    "monthlyFees": 2600.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-271-2026",
+    "name": "IKBAL SK",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "36",
+    "monthlyFees": 2200.0,
+    "admissionDate": "January 11, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-29-2026",
+    "name": "IMRAN HOSSAIN",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "12",
+    "monthlyFees": 2900.0,
+    "admissionDate": "December 25, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-239-2026",
+    "name": "IMRAN HOSSAIN",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "15",
+    "monthlyFees": 1000.0,
+    "admissionDate": "December 24, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-62-2026",
+    "name": "IMRAN SK",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "10",
+    "monthlyFees": 3000.0,
+    "admissionDate": "December 29, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-147-2026",
+    "name": "IMRAN SK 22",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "22",
+    "monthlyFees": 1500.0,
+    "admissionDate": "January 7, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-290-2026",
+    "name": "IMRAN SK 28",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "31",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 14, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-68-2026",
+    "name": "IMTIAZ SK",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "16",
+    "monthlyFees": 2800.0,
+    "admissionDate": "January 2, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-57-2026",
+    "name": "IMTIYAJ BARI",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "5",
+    "monthlyFees": 3000.0,
+    "admissionDate": "December 26, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-263-2026",
+    "name": "IMTIYAZ ALAM",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "40",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-139-2026",
+    "name": "ISAN AHMED",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "9",
+    "monthlyFees": 3000.0,
+    "admissionDate": "December 12, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-333-2026",
+    "name": "ISMAM HASAN",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "4",
+    "monthlyFees": 3000.0,
+    "admissionDate": "February 5, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-227-2026",
+    "name": "ISTAK AHMED",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "1",
+    "monthlyFees": 2500.0,
+    "admissionDate": "November 16, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-173-2026",
+    "name": "JAHIDA KHATUN",
+    "branchId": "girls",
+    "classId": "VIII",
+    "rollNo": "11",
+    "monthlyFees": 2900.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-198-2026",
+    "name": "JARIN ALAM",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "22",
+    "monthlyFees": 3100.0,
+    "admissionDate": "December 14, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-183-2026",
+    "name": "JASMINE KHATUN",
+    "branchId": "girls",
+    "classId": "VI",
+    "rollNo": "5",
+    "monthlyFees": 3000.0,
+    "admissionDate": "December 10, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-300-2026",
+    "name": "JAVED AKTAR",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "38",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 21, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-83-2026",
+    "name": "JEBA YEASMIN",
+    "branchId": "girls",
+    "classId": "V",
+    "rollNo": "3",
+    "monthlyFees": 2500.0,
+    "admissionDate": "December 14, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-175-2026",
+    "name": "JEBAUN NESHA",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "13",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-9-2026",
+    "name": "JINNATUN",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "5",
+    "monthlyFees": 3400.0,
+    "admissionDate": "December 11, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-179-2026",
+    "name": "JINNATUN NESHA",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "19",
+    "monthlyFees": 0.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-252-2026",
+    "name": "JISHAN AKTAR",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "30",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 8, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-295-2026",
+    "name": "JOLY YAESMIN",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "18",
+    "monthlyFees": 2800.0,
+    "admissionDate": "January 7, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-8-2026",
+    "name": "JOLY YEASMIN",
+    "branchId": "girls",
+    "classId": "VII",
+    "rollNo": "4",
+    "monthlyFees": 2800.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-35-2026",
+    "name": "JONY EBRAHIM",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "19",
+    "monthlyFees": 2800.0,
+    "admissionDate": "January 2, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-206-2026",
+    "name": "JULEKHA KHATUN",
+    "branchId": "girls",
+    "classId": "V",
+    "rollNo": "7",
+    "monthlyFees": 1300.0,
+    "admissionDate": "January 3, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-304-2026",
+    "name": "JUNAISA PARVIN",
+    "branchId": "girls",
+    "classId": "VII",
+    "rollNo": "15",
+    "monthlyFees": 2600.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-325-2026",
+    "name": "KAJEM SK",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "42",
+    "monthlyFees": 2100.0,
+    "admissionDate": "February 2, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-132-2026",
+    "name": "KAMALUDDIN",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "2",
+    "monthlyFees": 3000.0,
+    "admissionDate": "November 24, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-270-2026",
+    "name": "KHADIJA KHATUN",
+    "branchId": "girls",
+    "classId": "VII",
+    "rollNo": "11",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 11, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-178-2026",
+    "name": "MABIYA KHATUN",
+    "branchId": "girls",
+    "classId": "VIII",
+    "rollNo": "15",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-199-2026",
+    "name": "MAFRUJA KHATUN",
+    "branchId": "girls",
+    "classId": "VI",
+    "rollNo": "21",
+    "monthlyFees": 1800.0,
+    "admissionDate": "December 27, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-319-2026",
+    "name": "MAHARUP HOSSAIN",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "41",
+    "monthlyFees": 2400.0,
+    "admissionDate": "January 31, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-10-2026",
+    "name": "MAISUN ALI KHATUN",
+    "branchId": "girls",
+    "classId": "VII",
+    "rollNo": "6",
+    "monthlyFees": 1500.0,
+    "admissionDate": "December 4, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-229-2026",
+    "name": "MAKSUD ALOM",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "3",
+    "monthlyFees": 2900.0,
+    "admissionDate": "November 22, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-69-2026",
+    "name": "MAMUN HOQUE",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "17",
+    "monthlyFees": 2800.0,
+    "admissionDate": "January 2, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-66-2026",
+    "name": "MAMUN SK",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "14",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-113-2026",
+    "name": "MANIRUJJAMAN ISLAM",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "18",
+    "monthlyFees": 3300.0,
+    "admissionDate": "January 3, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-137-2026",
+    "name": "MARUF AHMAD",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "7",
+    "monthlyFees": 2700.0,
+    "admissionDate": "December 11, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-283-2026",
+    "name": "MARUFA NAJMIN",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "2",
+    "monthlyFees": 2200.0,
+    "admissionDate": "January 12, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-72-2026",
+    "name": "MASHUR SK",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "20",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 3, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-154-2026",
+    "name": "MASUMA KHATUN",
+    "branchId": "girls",
+    "classId": "IX",
+    "rollNo": "3",
+    "monthlyFees": 2000.0,
+    "admissionDate": "December 5, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-172-2026",
+    "name": "MASUMA KHATUN",
+    "branchId": "girls",
+    "classId": "VIII",
+    "rollNo": "10",
+    "monthlyFees": 3100.0,
+    "admissionDate": "January 10, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-112-2026",
+    "name": "MD ABDULLA HOSSAIN",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "17",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 2, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-234-2026",
+    "name": "MD AKIL",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "8",
+    "monthlyFees": 1500.0,
+    "admissionDate": "December 8, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-143-2026",
+    "name": "MD AMAN SK",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "38",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-61-2026",
+    "name": "MD ANISUZZAMAN",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "9",
+    "monthlyFees": 3000.0,
+    "admissionDate": "December 29, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-85-2026",
+    "name": "MD ARIYAN SK",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "32",
+    "monthlyFees": 3200.0,
+    "admissionDate": "January 8, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-277-2026",
+    "name": "MD ARIYAN SK -2",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "43",
+    "monthlyFees": 2600.0,
+    "admissionDate": "January 12, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-340-2026",
+    "name": "MD ASAD",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "28",
+    "monthlyFees": 3700.0,
+    "admissionDate": "February 9, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-219-2026",
+    "name": "MD ASHFAQULLAH",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "18",
+    "monthlyFees": 1900.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-233-2026",
+    "name": "MD AYUB SK",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "7",
+    "monthlyFees": 2900.0,
+    "admissionDate": "December 7, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-327-2026",
+    "name": "MD EFTEKAB",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "39",
+    "monthlyFees": 3600.0,
+    "admissionDate": "February 2, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-103-2026",
+    "name": "MD EKBAL HOSSAIN",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "7",
+    "monthlyFees": 3000.0,
+    "admissionDate": "December 8, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-106-2026",
+    "name": "MD FARHAD AHAMMAD",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "10",
+    "monthlyFees": 3500.0,
+    "admissionDate": "December 21, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-87-2026",
+    "name": "MD FARHAN AKTAR",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "34",
+    "monthlyFees": 2300.0,
+    "admissionDate": "December 27, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-142-2026",
+    "name": "MD IFRAJ AHMED",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "15",
+    "monthlyFees": 3000.0,
+    "admissionDate": "December 31, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-94-2026",
+    "name": "MD IZAJ AHAMMED",
+    "branchId": "boys",
+    "classId": "X",
+    "rollNo": "1",
+    "monthlyFees": 1900.0,
+    "admissionDate": "December 8, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-4-2026",
+    "name": "MD JISAN",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "22",
+    "monthlyFees": 2500.0,
+    "admissionDate": "December 27, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-123-2026",
+    "name": "MD JISAN",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "40",
+    "monthlyFees": 1500.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-343-2026",
+    "name": "MD MODASSER SK",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "11",
+    "monthlyFees": 1400.0,
+    "admissionDate": "February 13, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-203-2026",
+    "name": "MD MUBASSER ANSARI",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "14",
+    "monthlyFees": 3500.0,
+    "admissionDate": "December 26, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-274-2026",
+    "name": "MD NAZIB SULTAN",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "40",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-114-2026",
+    "name": "MD NIYAJ SK",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "19",
+    "monthlyFees": 3200.0,
+    "admissionDate": "January 3, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-272-2026",
+    "name": "MD ROHAN RANA",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "38",
+    "monthlyFees": 2800.0,
+    "admissionDate": "January 18, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-31-2026",
+    "name": "MD SAHNWAZ BARI",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "14",
+    "monthlyFees": 2800.0,
+    "admissionDate": "December 24, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-79-2026",
+    "name": "MD SAIF NAOWAJ",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "30",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-56-2026",
+    "name": "MD SALIM-UL-BARI",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "4",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-60-2026",
+    "name": "MD SAMIUL SK",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "8",
+    "monthlyFees": 2800.0,
+    "admissionDate": "December 28, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-287-2026",
+    "name": "MD SAROWAR ALAM",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "32",
+    "monthlyFees": 3600.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-49-2026",
+    "name": "MD TANBIR ALAM",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "40",
+    "monthlyFees": 2900.0,
+    "admissionDate": "January 8, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-102-2026",
+    "name": "MD TOUSIF SK",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "6",
+    "monthlyFees": 3500.0,
+    "admissionDate": "December 7, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-36-2026",
+    "name": "MD USMAN GANI",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "20",
+    "monthlyFees": 2700.0,
+    "admissionDate": "January 2, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-303-2026",
+    "name": "MEHEBUB HOSSAIN",
+    "branchId": "boys",
+    "classId": "X",
+    "rollNo": "5",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 23, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-108-2026",
+    "name": "MEHEBUB SEKH",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "13",
+    "monthlyFees": 2700.0,
+    "admissionDate": "December 23, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-122-2026",
+    "name": "MEHETAB AHMED",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "27",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-110-2026",
+    "name": "MEHIDI HASAN",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "15",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-217-2026",
+    "name": "MEMNAJ PARVIN",
+    "branchId": "girls",
+    "classId": "V",
+    "rollNo": "16",
+    "monthlyFees": 2300.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-220-2026",
+    "name": "MIJANUR RAHAMAN",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "33",
+    "monthlyFees": 2000.0,
+    "admissionDate": "December 24, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-310-2026",
+    "name": "MIJANUR RAHAMAN",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "38",
+    "monthlyFees": 3000.0,
+    "admissionDate": "February 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-89-2026",
+    "name": "MIKHDADUR RAHAMAN",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "36",
+    "monthlyFees": 3000.0,
+    "admissionDate": "December 28, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-160-2026",
+    "name": "MIM SADIYA NOUSIN",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "9",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 6, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-328-2026",
+    "name": "MINAHAJ SHAIKH",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "41",
+    "monthlyFees": 1200.0,
+    "admissionDate": "February 2, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-86-2026",
+    "name": "MINHAJ HOQUE",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "33",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 6, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-65-2026",
+    "name": "MINHAJ MOMIN",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "13",
+    "monthlyFees": 3200.0,
+    "admissionDate": "December 30, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-124-2026",
+    "name": "MIR SAHIL ALI",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "30",
+    "monthlyFees": 1900.0,
+    "admissionDate": "January 6, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-54-2026",
+    "name": "MISBAHUL ANSARI",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "2",
+    "monthlyFees": 2000.0,
+    "admissionDate": "November 28, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-331-2026",
+    "name": "MOHAMMAD YOUSUF",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "48",
+    "monthlyFees": 2200.0,
+    "admissionDate": "February 4, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-284-2026",
+    "name": "MORFINA KHATUN",
+    "branchId": "girls",
+    "classId": "VIII",
+    "rollNo": "4",
+    "monthlyFees": 3550.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-111-2026",
+    "name": "MOSARAF SK",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "16",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-289-2026",
+    "name": "MOSARAF SK",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "28",
+    "monthlyFees": 1500.0,
+    "admissionDate": "January 11, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-204-2026",
+    "name": "MOST MARIAM KHATUN",
+    "branchId": "girls",
+    "classId": "V",
+    "rollNo": "5",
+    "monthlyFees": 1500.0,
+    "admissionDate": "January 8, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-24-2026",
+    "name": "MUIZ BILLAH",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "6",
+    "monthlyFees": 2900.0,
+    "admissionDate": "December 19, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-26-2026",
+    "name": "MUJTAHID ANAM..",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "8",
+    "monthlyFees": 3000.0,
+    "admissionDate": "December 21, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-187-2026",
+    "name": "MUNIFA NOUSHIN",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "9",
+    "monthlyFees": 3100.0,
+    "admissionDate": "January 3, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-201-2026",
+    "name": "MURSHIDUL ISLAM",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "13",
+    "monthlyFees": 3500.0,
+    "admissionDate": "December 26, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-210-2026",
+    "name": "MUSFIKA KHATUN",
+    "branchId": "girls",
+    "classId": "V",
+    "rollNo": "11",
+    "monthlyFees": 1700.0,
+    "admissionDate": "December 24, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-14-2026",
+    "name": "MUSKAN SUHANA",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "10",
+    "monthlyFees": 1700.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-195-2026",
+    "name": "NABEEHA BISWAS",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "18",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-214-2026",
+    "name": "NABIYA SULTANA",
+    "branchId": "girls",
+    "classId": "V",
+    "rollNo": "25",
+    "monthlyFees": 2900.0,
+    "admissionDate": "January 9, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-84-2026",
+    "name": "NAFISA SULTANA",
+    "branchId": "girls",
+    "classId": "V",
+    "rollNo": "4",
+    "monthlyFees": 1900.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-193-2026",
+    "name": "NAJIA SULTANA",
+    "branchId": "girls",
+    "classId": "VI",
+    "rollNo": "24",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-20-2026",
+    "name": "NAJMUL SEKH",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "2",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-308-2026",
+    "name": "NASIB ALI",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "35",
+    "monthlyFees": 3250.0,
+    "admissionDate": "January 27, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-126-2026",
+    "name": "NIHAD PARVEZ ALI",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "32",
+    "monthlyFees": 3700.0,
+    "admissionDate": "September 7, 2012",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-100-2026",
+    "name": "NISAN SK",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "4",
+    "monthlyFees": 3500.0,
+    "admissionDate": "November 27, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-180-2026",
+    "name": "NISAT PARVIN",
+    "branchId": "girls",
+    "classId": "VI",
+    "rollNo": "2",
+    "monthlyFees": 2400.0,
+    "admissionDate": "January 2, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-197-2026",
+    "name": "NOUSIN JAHAN",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "20",
+    "monthlyFees": 2500.0,
+    "admissionDate": "November 26, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-314-2026",
+    "name": "NURJAHAN BEGUM",
+    "branchId": "girls",
+    "classId": "VI",
+    "rollNo": "27",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 19, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-250-2026",
+    "name": "NURMAHAMMAD SK",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "28",
+    "monthlyFees": 2200.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-167-2026",
+    "name": "NUSRAT JAHAN",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "3",
+    "monthlyFees": 2200.0,
+    "admissionDate": "January 3, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-208-2026",
+    "name": "NUSRAT KHATUN",
+    "branchId": "girls",
+    "classId": "V",
+    "rollNo": "9",
+    "monthlyFees": 2700.0,
+    "admissionDate": "January 9, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-181-2026",
+    "name": "NUSRAT SIDDIKA",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "3",
+    "monthlyFees": 1800.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-317-2026",
+    "name": "NUSRAT ZAHAN",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "28",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 30, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-246-2026",
+    "name": "ORIED ANSARI",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "22",
+    "monthlyFees": 2900.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-158-2026",
+    "name": "PAPIYA KHATUN",
+    "branchId": "girls",
+    "classId": "IX",
+    "rollNo": "7",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 2, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-81-2026",
+    "name": "RABIYA KHATUN",
+    "branchId": "girls",
+    "classId": "V",
+    "rollNo": "1",
+    "monthlyFees": 1500.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-12-2026",
+    "name": "RABIYA SULTANA",
+    "branchId": "girls",
+    "classId": "VII",
+    "rollNo": "8",
+    "monthlyFees": 2500.0,
+    "admissionDate": "November 17, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-50-2026",
+    "name": "RAHAMAT SK",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "32",
+    "monthlyFees": 3100.0,
+    "admissionDate": "January 8, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-39-2026",
+    "name": "RAHAT ALI",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "27",
+    "monthlyFees": 2600.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-136-2026",
+    "name": "RAHIKUL ISLAM",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "6",
+    "monthlyFees": 3000.0,
+    "admissionDate": "December 11, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-71-2026",
+    "name": "RAIHAN RAHAMAN",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "19",
+    "monthlyFees": 2100.0,
+    "admissionDate": "January 3, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-73-2026",
+    "name": "RAIHAN SHAIKH",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "22",
+    "monthlyFees": 2700.0,
+    "admissionDate": "January 3, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-107-2026",
+    "name": "RAIHAN SK",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "12",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-260-2026",
+    "name": "RAIYAN KAZI",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "26",
+    "monthlyFees": 0.0,
+    "admissionDate": "January 11, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-46-2026",
+    "name": "RAJBUL SK",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "27",
+    "monthlyFees": 2700.0,
+    "admissionDate": "January 8, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-188-2026",
+    "name": "RAJIA  SULTANA",
+    "branchId": "girls",
+    "classId": "VI",
+    "rollNo": "10",
+    "monthlyFees": 2000.0,
+    "admissionDate": "December 31, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-259-2026",
+    "name": "RAJIYA SULTANA",
+    "branchId": "girls",
+    "classId": "V",
+    "rollNo": "24",
+    "monthlyFees": 2900.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-28-2026",
+    "name": "RANBIR ALAM",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "10",
+    "monthlyFees": 3100.0,
+    "admissionDate": "December 21, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-342-2026",
+    "name": "RASEDA KHATUN",
+    "branchId": "girls",
+    "classId": "VI",
+    "rollNo": "33",
+    "monthlyFees": 1000.0,
+    "admissionDate": "February 9, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-93-2026",
+    "name": "REHAN SEIKH",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "49",
+    "monthlyFees": 2000.0,
+    "admissionDate": "December 19, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-278-2026",
+    "name": "REJUAN SK",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "37",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 10, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-145-2026",
+    "name": "REJUYAN SK",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "19",
+    "monthlyFees": 1500.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-312-2026",
+    "name": "RESMA KHATUN",
+    "branchId": "girls",
+    "classId": "IX",
+    "rollNo": "16",
+    "monthlyFees": 4000.0,
+    "admissionDate": "January 28, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-302-2026",
+    "name": "RIDHWANUR RAHAMAN",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "44",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 21, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-218-2026",
+    "name": "RIJIA SULTANA",
+    "branchId": "girls",
+    "classId": "V",
+    "rollNo": "13",
+    "monthlyFees": 1500.0,
+    "admissionDate": "November 29, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-40-2026",
+    "name": "RIZUANUR RAHAMAN",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "28",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-96-2026",
+    "name": "RIZWAN SK",
+    "branchId": "boys",
+    "classId": "X",
+    "rollNo": "3",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-128-2026",
+    "name": "ROHIT SK",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "34",
+    "monthlyFees": 2600.0,
+    "admissionDate": "January 2, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-51-2026",
+    "name": "ROMAN HOSSAIN",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "41",
+    "monthlyFees": 3200.0,
+    "admissionDate": "January 9, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-38-2026",
+    "name": "ROSHAN ALI",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "26",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-298-2026",
+    "name": "RUHANA KHATUN",
+    "branchId": "girls",
+    "classId": "V",
+    "rollNo": "23",
+    "monthlyFees": 1600.0,
+    "admissionDate": "January 21, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-194-2026",
+    "name": "RUKSHA KHATUN",
+    "branchId": "girls",
+    "classId": "VI",
+    "rollNo": "17",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-177-2026",
+    "name": "RUSHDA AFRIN",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "16",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-275-2026",
+    "name": "sabil ahamed",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "38",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-161-2026",
+    "name": "SABNUR KHATUN",
+    "branchId": "girls",
+    "classId": "IX",
+    "rollNo": "10",
+    "monthlyFees": 3500.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-258-2026",
+    "name": "SADIA SULTANA",
+    "branchId": "girls",
+    "classId": "IX",
+    "rollNo": "16",
+    "monthlyFees": 2200.0,
+    "admissionDate": "January 3, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-116-2026",
+    "name": "SADIKUL HOSSAIN",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "21",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-226-2026",
+    "name": "SADIYA SULTANA",
+    "branchId": "girls",
+    "classId": "VI",
+    "rollNo": "35",
+    "monthlyFees": 3100.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-190-2026",
+    "name": "SAFIA SULTANA",
+    "branchId": "girls",
+    "classId": "VI",
+    "rollNo": "13",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-55-2026",
+    "name": "SAHEED ALAM",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "3",
+    "monthlyFees": 3000.0,
+    "admissionDate": "December 24, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-318-2026",
+    "name": "SAHIL HOSSAIN",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "41",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 30, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-118-2026",
+    "name": "SAHIL RANA",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "23",
+    "monthlyFees": 3500.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-75-2026",
+    "name": "SAHIL SK",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "24",
+    "monthlyFees": 2600.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-150-2026",
+    "name": "SAHIL SK",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "25",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 10, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-244-2026",
+    "name": "SAHIN AKTAR",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "20",
+    "monthlyFees": 1500.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-64-2026",
+    "name": "SAHIN ALAM",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "12",
+    "monthlyFees": 2800.0,
+    "admissionDate": "December 30, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-16-2026",
+    "name": "SAHINA PARVIN",
+    "branchId": "girls",
+    "classId": "VII",
+    "rollNo": "13",
+    "monthlyFees": 2700.0,
+    "admissionDate": "January 7, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-168-2026",
+    "name": "SAHINA PARVIN",
+    "branchId": "girls",
+    "classId": "VIII",
+    "rollNo": "4",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-280-2026",
+    "name": "SAHUD ALAM",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "39",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 18, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-257-2026",
+    "name": "SAIM AKTAR",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "35",
+    "monthlyFees": 2700.0,
+    "admissionDate": "January 6, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-170-2026",
+    "name": "SAIMA KHATUN",
+    "branchId": "girls",
+    "classId": "VIII",
+    "rollNo": "8",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 7, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-192-2026",
+    "name": "SAINA MAMUD",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "15",
+    "monthlyFees": 2000.0,
+    "admissionDate": "November 28, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-296-2026",
+    "name": "SAIP IQBAL",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "32",
+    "monthlyFees": 1900.0,
+    "admissionDate": "January 26, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-98-2026",
+    "name": "SAJED SHEKH",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "2",
+    "monthlyFees": 1500.0,
+    "admissionDate": "November 26, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-121-2026",
+    "name": "SAJIB SK",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "26",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-202-2026",
+    "name": "SAKIB AL HASAN",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "12",
+    "monthlyFees": 3500.0,
+    "admissionDate": "December 24, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-307-2026",
+    "name": "SAKIB ALI",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "42",
+    "monthlyFees": 3250.0,
+    "admissionDate": "January 27, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-253-2026",
+    "name": "SAKIB HOSSAIN",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "31",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 8, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-48-2026",
+    "name": "SAKIBUL AHMED",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "39",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 8, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-25-2026",
+    "name": "SAKIBUL HASAN",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "7",
+    "monthlyFees": 3000.0,
+    "admissionDate": "December 20, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-243-2026",
+    "name": "SAKIBUL HASAN",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "19",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-120-2026",
+    "name": "SAKIBUL HASSAN",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "25",
+    "monthlyFees": 3000.0,
+    "admissionDate": "December 26, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-247-2026",
+    "name": "SAKIBUL HOSSAIN",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "23",
+    "monthlyFees": 1900.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-309-2026",
+    "name": "SAKIBUR RAHAMAN `",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "36",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 28, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-305-2026",
+    "name": "SAKIL HAIDER",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "40",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 24, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-276-2026",
+    "name": "SALMAN FARSHI",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "27",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 2, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-140-2026",
+    "name": "SAMAUL RAHAMAN",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "10",
+    "monthlyFees": 3000.0,
+    "admissionDate": "December 21, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-115-2026",
+    "name": "SAMIM HOSSAIN",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "20",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 3, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-129-2026",
+    "name": "SAMIUL ALAM",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "35",
+    "monthlyFees": 3100.0,
+    "admissionDate": "January 8, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-205-2026",
+    "name": "SAMIYA PARVIN",
+    "branchId": "girls",
+    "classId": "V",
+    "rollNo": "6",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-294-2026",
+    "name": "SAMRAT SK",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "11",
+    "monthlyFees": 1600.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-209-2026",
+    "name": "SAMREEN BARI",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "10",
+    "monthlyFees": 1200.0,
+    "admissionDate": "December 24, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-15-2026",
+    "name": "SAMSUN NAHAR KHATUN",
+    "branchId": "girls",
+    "classId": "VII",
+    "rollNo": "12",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-5-2026",
+    "name": "SANIA PARVIN",
+    "branchId": "girls",
+    "classId": "VII",
+    "rollNo": "1",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-215-2026",
+    "name": "SANIYA REZA",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "20",
+    "monthlyFees": 2900.0,
+    "admissionDate": "December 30, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-23-2026",
+    "name": "SARFARAJ AHAMED",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "5",
+    "monthlyFees": 2000.0,
+    "admissionDate": "November 28, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-135-2026",
+    "name": "SARFARAJ ALAM",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "5",
+    "monthlyFees": 2800.0,
+    "admissionDate": "December 22, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-138-2026",
+    "name": "SARFARAZ ALI",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "8",
+    "monthlyFees": 3500.0,
+    "admissionDate": "December 13, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-44-2026",
+    "name": "SARIFUL MIA",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "34",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 9, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-152-2026",
+    "name": "SAYBA PARVIN",
+    "branchId": "girls",
+    "classId": "IX",
+    "rollNo": "1",
+    "monthlyFees": 3200.0,
+    "admissionDate": "December 28, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-207-2026",
+    "name": "SEHENAJ PERVIN",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "8",
+    "monthlyFees": 2200.0,
+    "admissionDate": "January 7, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-163-2026",
+    "name": "SELINA KHATUN",
+    "branchId": "girls",
+    "classId": "IX",
+    "rollNo": "12",
+    "monthlyFees": 3500.0,
+    "admissionDate": "January 10, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-185-2026",
+    "name": "SHAIBA SULTANA",
+    "branchId": "girls",
+    "classId": "VI",
+    "rollNo": "7",
+    "monthlyFees": 2700.0,
+    "admissionDate": "January 6, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-162-2026",
+    "name": "SIMRAN SULTANA KHATUN",
+    "branchId": "girls",
+    "classId": "IX",
+    "rollNo": "11",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-77-2026",
+    "name": "SIRAJ AHMAD",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "28",
+    "monthlyFees": 2200.0,
+    "admissionDate": "December 16, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-330-2026",
+    "name": "SIRIN FARHA",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "26",
+    "monthlyFees": 2700.0,
+    "admissionDate": "February 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-306-2026",
+    "name": "SOBNAJ SULTANA",
+    "branchId": "girls",
+    "classId": "V",
+    "rollNo": "21",
+    "monthlyFees": 1200.0,
+    "admissionDate": "January 24, 2026",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-59-2026",
+    "name": "SOHON SK",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "7",
+    "monthlyFees": 2800.0,
+    "admissionDate": "December 27, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-212-2026",
+    "name": "SONAM KHATUN",
+    "branchId": "girls",
+    "classId": "V",
+    "rollNo": "15",
+    "monthlyFees": 2900.0,
+    "admissionDate": "December 18, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-213-2026",
+    "name": "SONIYA KHATUN",
+    "branchId": "girls",
+    "classId": "V",
+    "rollNo": "14",
+    "monthlyFees": 2300.0,
+    "admissionDate": "November 24, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-21-2026",
+    "name": "SORIFUDDIN SAIKH",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "3",
+    "monthlyFees": 2500.0,
+    "admissionDate": "November 17, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-47-2026",
+    "name": "SOYEB HOSSAIN",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "37",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 8, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-231-2026",
+    "name": "SOYEL SALAFI",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "5",
+    "monthlyFees": 2000.0,
+    "admissionDate": "November 22, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-6-2026",
+    "name": "SUHANA KHATUN",
+    "branchId": "girls",
+    "classId": "VII",
+    "rollNo": "2",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 7, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-156-2026",
+    "name": "SUHANA PARVIN",
+    "branchId": "girls",
+    "classId": "IX",
+    "rollNo": "5",
+    "monthlyFees": 3500.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-196-2026",
+    "name": "SUHANA PARVIN",
+    "branchId": "girls",
+    "classId": "VI",
+    "rollNo": "19",
+    "monthlyFees": 1800.0,
+    "admissionDate": "December 24, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-285-2026",
+    "name": "SUHANA PARVIN",
+    "branchId": "girls",
+    "classId": "VIII",
+    "rollNo": "20",
+    "monthlyFees": 3500.0,
+    "admissionDate": "January 11, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-159-2026",
+    "name": "SUMAIYA PARVIN",
+    "branchId": "girls",
+    "classId": "IX",
+    "rollNo": "8",
+    "monthlyFees": 3500.0,
+    "admissionDate": "December 25, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-153-2026",
+    "name": "SUNAINA SULTANA",
+    "branchId": "girls",
+    "classId": "IX",
+    "rollNo": "2",
+    "monthlyFees": 3000.0,
+    "admissionDate": "December 20, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-157-2026",
+    "name": "SURAIYA PARVIN",
+    "branchId": "girls",
+    "classId": "IX",
+    "rollNo": "6",
+    "monthlyFees": 2800.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-269-2026",
+    "name": "SWEETY NEWAL",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "1",
+    "monthlyFees": 2600.0,
+    "admissionDate": "January 11, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-282-2026",
+    "name": "TABASSUM NESHA",
+    "branchId": "girls",
+    "classId": "VIII",
+    "rollNo": "18",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 11, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-191-2026",
+    "name": "TAHASEEN FARIHA",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "14",
+    "monthlyFees": 3100.0,
+    "admissionDate": "January 6, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-67-2026",
+    "name": "TAHASIN RAJA",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "15",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-101-2026",
+    "name": "TAHSIN MAMUN",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "5",
+    "monthlyFees": 2600.0,
+    "admissionDate": "November 23, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-131-2026",
+    "name": "TAIF AHAMED",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "1",
+    "monthlyFees": 2500.0,
+    "admissionDate": "November 22, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-133-2026",
+    "name": "TAMIM AKTAR",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "3",
+    "monthlyFees": 3200.0,
+    "admissionDate": "November 3, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-32-2026",
+    "name": "TAMIM IKBAL",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "15",
+    "monthlyFees": 2500.0,
+    "admissionDate": "December 28, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-256-2026",
+    "name": "TAMIM IKBAL",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "34",
+    "monthlyFees": 2700.0,
+    "admissionDate": "December 9, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-291-2026",
+    "name": "TAMIM IKBAL",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "0",
+    "monthlyFees": 0.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-293-2026",
+    "name": "TAMIM IKBAL",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "26",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-348-2026",
+    "name": "TAMIM IQBAL",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "49",
+    "monthlyFees": 3300.0,
+    "admissionDate": "February 15, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-281-2026",
+    "name": "TANVIR AL HASAN",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "40",
+    "monthlyFees": 2800.0,
+    "admissionDate": "January 12, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-109-2026",
+    "name": "TANVIR RAHAMAN",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "14",
+    "monthlyFees": 2000.0,
+    "admissionDate": "December 18, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-105-2026",
+    "name": "TANWIR ALAM",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "9",
+    "monthlyFees": 3500.0,
+    "admissionDate": "December 21, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-78-2026",
+    "name": "TASMIN ALI",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "29",
+    "monthlyFees": 3000.0,
+    "admissionDate": "November 26, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-235-2026",
+    "name": "TOFAIL AHAMED",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "9",
+    "monthlyFees": 2700.0,
+    "admissionDate": "December 22, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-134-2026",
+    "name": "TOHIDUL ISLAM",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "4",
+    "monthlyFees": 2800.0,
+    "admissionDate": "December 22, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-37-2026",
+    "name": "TOUSIF HASAN",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "21",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 3, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-279-2026",
+    "name": "TOUSIK AHAMED",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "1",
+    "monthlyFees": 3000.0,
+    "admissionDate": "January 8, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-288-2026",
+    "name": "TUHIN SK",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "29",
+    "monthlyFees": 3200.0,
+    "admissionDate": "January 14, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-225-2026",
+    "name": "UJLEFA KHATUN",
+    "branchId": "girls",
+    "classId": "VI",
+    "rollNo": "26",
+    "monthlyFees": 2200.0,
+    "admissionDate": "December 26, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-176-2026",
+    "name": "UJLEFA PARVIN",
+    "branchId": "girls",
+    "classId": "VIII",
+    "rollNo": "15",
+    "monthlyFees": 3500.0,
+    "admissionDate": "January 8, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-311-2026",
+    "name": "UMAR FARUK",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "37",
+    "monthlyFees": 3000.0,
+    "admissionDate": "February 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-166-2026",
+    "name": "UMMAY FARIHA",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "1",
+    "monthlyFees": 2600.0,
+    "admissionDate": "January 6, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-334-2026",
+    "name": "UMME KULSOM",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "22",
+    "monthlyFees": 3250.0,
+    "admissionDate": "February 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-182-2026",
+    "name": "UMME RUKSA KHATUN",
+    "branchId": "girls",
+    "classId": "VI",
+    "rollNo": "4",
+    "monthlyFees": 2500.0,
+    "admissionDate": "January 6, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-321-2026",
+    "name": "UNAISA KHATUN",
+    "branchId": "girls",
+    "classId": "VI",
+    "rollNo": "29",
+    "monthlyFees": 3100.0,
+    "admissionDate": "February 1, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-242-2026",
+    "name": "WAHID HASAN",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "18",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 4, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-335-2026",
+    "name": "WAJIFA SULTANA",
+    "branchId": "girls",
+    "classId": "VIII",
+    "rollNo": "14",
+    "monthlyFees": 2500.0,
+    "admissionDate": "December 29, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-92-2026",
+    "name": "WASIF RAMIN",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "40",
+    "monthlyFees": 3400.0,
+    "admissionDate": "December 17, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-22-2026",
+    "name": "YEAMIN SK",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "4",
+    "monthlyFees": 2500.0,
+    "admissionDate": "November 17, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-221-2026",
+    "name": "YEASIN HOSSAIN",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "11",
+    "monthlyFees": 2900.0,
+    "admissionDate": "December 25, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-80-2026",
+    "name": "YEASIR ARAFAT",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "31",
+    "monthlyFees": 2500.0,
+    "admissionDate": "December 24, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-238-2026",
+    "name": "ZAHID ALAM",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "14",
+    "monthlyFees": 2750.0,
+    "admissionDate": "December 29, 2025",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-189-2026",
+    "name": "ZAKIA TASNIM",
+    "branchId": "boys",
+    "classId": "VI",
+    "rollNo": "12",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 5, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-13-2026",
+    "name": "ZARA RAHAMAN",
+    "branchId": "boys",
+    "classId": "VII",
+    "rollNo": "9",
+    "monthlyFees": 1700.0,
+    "admissionDate": "November 27, 2025",
+    "studentType": "non_resident"
+  },
+  {
+    "studentId": "NRA-151-2026",
+    "name": "ZINIA ISLAM",
+    "branchId": "boys",
+    "classId": "IX",
+    "rollNo": "13",
+    "monthlyFees": 3500.0,
+    "admissionDate": "January 8, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-254-2026",
+    "name": "ZINNAT ISLAM",
+    "branchId": "boys",
+    "classId": "V",
+    "rollNo": "32",
+    "monthlyFees": 1500.0,
+    "admissionDate": "January 8, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "NRA-125-2026",
+    "name": "ZUYEL RANA",
+    "branchId": "boys",
+    "classId": "VIII",
+    "rollNo": "31",
+    "monthlyFees": 2000.0,
+    "admissionDate": "January 8, 2026",
+    "studentType": "resident"
+  },
+  {
+    "studentId": "Reg.Id",
+    "name": "StudentName",
+    "branchId": "boys",
+    "classId": "CLASS",
+    "rollNo": "Roll No.",
+    "monthlyFees": 0.0,
+    "admissionDate": "DOA",
+    "studentType": "non_resident"
+  }
+]

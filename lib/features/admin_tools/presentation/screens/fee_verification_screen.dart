@@ -4,6 +4,8 @@ import "../../../../shared/widgets/async_value_view.dart";
 import "../../../../shared/widgets/app_surface.dart";
 import "../../../../shared/widgets/receipt_view.dart";
 import "../../../students/presentation/controllers/student_controller.dart";
+import "package:nova_rise_app/core/models/fee_payment.dart";
+import "package:nova_rise_app/core/providers/school_providers.dart";
 import "../controllers/admin_tools_controller.dart";
 
 class FeeVerificationScreen extends ConsumerWidget {
@@ -18,7 +20,7 @@ class FeeVerificationScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(title: const Text("Verify Fee Receipts")),
-      body: AsyncValueView(
+      body: AsyncValueView<List<FeePayment>>(
         value: pendingPayments,
         data: (items) {
           if (items.isEmpty) {

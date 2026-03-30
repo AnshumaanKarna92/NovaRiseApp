@@ -1,8 +1,9 @@
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-import "../../../../core/models/transport_route.dart";
+import "package:nova_rise_app/core/models/transport_route.dart";
 import "../../../auth/presentation/controllers/session_controller.dart";
+import "../../../../core/providers/school_providers.dart";
 
 final transportServiceProvider = Provider<TransportService>((ref) {
   return TransportService(ref.watch(firebaseFirestoreProvider));

@@ -1,9 +1,10 @@
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-import "../../../../core/models/notice_item.dart";
-import "../../../auth/presentation/controllers/session_controller.dart";
-import "../../../students/presentation/controllers/student_controller.dart";
-import "../../data/notice_submission_service.dart";
+import "package:nova_rise_app/core/models/notice_item.dart";
+import "package:nova_rise_app/features/auth/presentation/controllers/session_controller.dart";
+import "package:nova_rise_app/features/students/presentation/controllers/student_controller.dart";
+import "package:nova_rise_app/core/providers/school_providers.dart";
+import "package:nova_rise_app/features/notices/data/notice_submission_service.dart";
 
 final noticesProvider = StreamProvider<List<NoticeItem>>((ref) {
   final user = ref.watch(userProfileProvider).valueOrNull;

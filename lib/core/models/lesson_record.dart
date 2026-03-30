@@ -1,4 +1,4 @@
-import "package:cloud_firestore/cloud_firestore.dart";
+import "package:cloud_firestore/cloud_firestore.dart" show Timestamp, FieldValue;
 
 class LessonRecord {
   const LessonRecord({
@@ -6,6 +6,8 @@ class LessonRecord {
     required this.schoolId,
     required this.classId,
     required this.subject,
+    this.period = "1st",
+    this.chapter = "",
     required this.teacherId,
     required this.teacherName,
     required this.topic,
@@ -22,6 +24,8 @@ class LessonRecord {
       schoolId: data["schoolId"] as String? ?? "",
       classId: data["classId"] as String? ?? "",
       subject: data["subject"] as String? ?? "",
+      period: data["period"] as String? ?? "1st",
+      chapter: data["chapter"] as String? ?? "",
       teacherId: data["teacherId"] as String? ?? "",
       teacherName: data["teacherName"] as String? ?? "",
       topic: data["topic"] as String? ?? "",
@@ -37,6 +41,8 @@ class LessonRecord {
   final String schoolId;
   final String classId;
   final String subject;
+  final String period;
+  final String chapter;
   final String teacherId;
   final String teacherName;
   final String topic;
@@ -51,6 +57,8 @@ class LessonRecord {
       "schoolId": schoolId,
       "classId": classId,
       "subject": subject,
+      "period": period,
+      "chapter": chapter,
       "teacherId": teacherId,
       "teacherName": teacherName,
       "topic": topic,

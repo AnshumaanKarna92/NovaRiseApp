@@ -1,66 +1,13 @@
-import "package:cloud_firestore/cloud_firestore.dart";
-import "package:cloud_functions/cloud_functions.dart";
+import "package:flutter/foundation.dart";
 import "package:firebase_auth/firebase_auth.dart";
-import "package:firebase_messaging/firebase_messaging.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-import "../../../../core/models/app_user.dart";
-import "../../../../core/services/auth_service.dart";
-import "../../../../core/services/notification_service.dart";
+import "package:nova_rise_app/core/models/app_user.dart";
+import "package:nova_rise_app/core/providers/school_providers.dart";
+import "package:nova_rise_app/core/services/auth_service.dart";
+import "package:nova_rise_app/core/services/notification_service.dart";
 
-// Demo logic removed for final version
-
-final firebaseAuthProvider = Provider<FirebaseAuth>((ref) {
-  return FirebaseAuth.instance;
-});
-
-final firebaseFirestoreProvider = Provider<FirebaseFirestore>((ref) {
-  return FirebaseFirestore.instance;
-});
-
-final firebaseFunctionsProvider = Provider<FirebaseFunctions>((ref) {
-  return FirebaseFunctions.instance;
-});
-
-final firebaseMessagingProvider = Provider<FirebaseMessaging>((ref) {
-  return FirebaseMessaging.instance;
-});
-
-final notificationServiceProvider = Provider<NotificationService>((ref) {
-  return NotificationService(ref.watch(firebaseMessagingProvider));
-});
-
-final authServiceProvider = Provider<AuthService>((ref) {
-  return AuthService(
-    ref.watch(firebaseAuthProvider),
-    ref.watch(firebaseFunctionsProvider),
-    ref.watch(firebaseFirestoreProvider),
-  );
-});
-
-final authStateProvider = StreamProvider<User?>((ref) {
-  final authService = ref.watch(authServiceProvider);
-  
-  // Side effect: initialize notifications when auth state changes (or on app start)
-  ref.read(notificationServiceProvider).initialize();
-  
-  return authService.authStateChanges();
-});
-
-final userProfileProvider = StreamProvider<AppUser?>((ref) {
-  final user = ref.watch(authStateProvider).valueOrNull;
-  if (user == null) {
-    return Stream<AppUser?>.value(null);
-  }
-
-  final firestore = ref.watch(firebaseFirestoreProvider);
-  return firestore.collection("users").doc(user.uid).snapshots().map((snapshot) {
-    if (!snapshot.exists || snapshot.data() == null) {
-      return null; // Force bootstrap flow if profile missing
-    }
-    return AppUser.fromMap(snapshot.id, snapshot.data()!);
-  });
-});
+// Core Providers moved to lib/core/providers/school_providers.dart
 
 
 class LoginState {
@@ -102,11 +49,88 @@ class LoginController extends StateNotifier<LoginState> {
 
     state = state.copyWith(isSubmitting: true, error: null);
     try {
-      final email = identifier.contains("@") ? identifier : "$identifier@novarise.com";
-      await _authService.signInWithEmail(email: email, password: password);
+      String identifierClean = identifier.trim();
+      List<String> attempts = [];
+      
+      // 1. If it's a 10-digit phone number, treat as Teacher ID
+      final phoneRegex = RegExp(r"^[0-9]{10}$");
+      if (phoneRegex.hasMatch(identifierClean)) {
+        // Seeder created teachers with .boys, .girls, and .overall
+        // Try overall first, then others
+        attempts.add("${identifierClean}.overall@novarise.com");
+        attempts.add("${identifierClean}.boys@novarise.com");
+        attempts.add("${identifierClean}.girls@novarise.com");
+      } 
+      // 2. If it's a registration ID (startsWith NRA), map to school email (case-insensitive)
+      else if (!identifierClean.contains("@")) {
+        // Flatten everything, then re-insert standard J prefix if NRA is found
+        String flat = identifierClean.toLowerCase().replaceAll(' ', '').replaceAll('-', '');
+        if (flat.startsWith("nra") && !flat.startsWith("nraj")) {
+          flat = flat.replaceFirst("nra", "nraj");
+        }
+        
+        // Now 'flat' is something like 'nraj12026'
+        // But the seeder used 'NRAJ-X-2026'
+        // So we should try to reconstruct it or just try the flat version if it was seeded flat?
+        // Wait! The seeder used s.studentId from JSON. The JSON has 'NRAJ-14-2026'.
+        // So we SHOULD use the dashes. 
+        // If the user enters NRA-1-2026, we should just ensure we try both.
+        
+        String normalized = identifierClean.toLowerCase().replaceAll(' ', '');
+        // Ensure NRAJ prefix
+        if (normalized.startsWith("nra") && !normalized.startsWith("nraj")) {
+           normalized = normalized.replaceFirst("nra", "nraj");
+           // If they didn't have a dash after NRA, normalize it to NRAJ-
+           if (normalized.length > 4 && normalized[4] != '-') {
+              normalized = normalized.replaceFirst("nraj", "nraj-");
+           }
+        } else if (normalized.startsWith("nra-") && !normalized.startsWith("nraj-")) {
+           normalized = normalized.replaceFirst("nra-", "nraj-");
+        }
+        
+        // Seeder created students with .boys and .girls
+        attempts.add("${normalized}.boys@novarise.com");
+        attempts.add("${normalized}.girls@novarise.com");
+        attempts.add("${normalized}@novarise.com");
+        // Also try flat version if normalized has dashes
+        if (normalized.contains("-")) {
+          String flatId = normalized.replaceAll("-", "");
+          attempts.add("${flatId}.boys@novarise.com");
+          attempts.add("${flatId}.girls@novarise.com");
+          attempts.add("${flatId}@novarise.com");
+        }
+      } else {
+        // 3. Regular email
+        attempts.add(identifierClean.toLowerCase());
+      }
+      
+      String? lastError;
+      bool success = false;
+      
+      for (final email in attempts) {
+        try {
+          debugPrint("LOGIN_CONTROLLER: Attempting sign in with: $email");
+          await _authService.signInWithEmail(email: email, password: password);
+          success = true;
+          break;
+        } catch (e) {
+          lastError = _formatError(e);
+          // If the error is 'wrong password', we should probably stop (unless it was the wrong suffix)
+          if (e is FirebaseAuthException && e.code == 'wrong-password') {
+             break; 
+          }
+          continue;
+        }
+      }
+      
+      if (!success) {
+        state = state.copyWith(isSubmitting: false, error: lastError ?? "Invalid credentials.");
+        return;
+      }
       
       final fcmToken = await ref.read(notificationServiceProvider).getToken();
-      await _authService.ensureUserProfile(fcmToken: fcmToken);
+      // We don't await this to avoid blocking login if the cloud function fails or times out
+      _authService.ensureUserProfile(fcmToken: fcmToken);
       state = const LoginState();
     } catch (error) {
       state = state.copyWith(isSubmitting: false, error: _formatError(error));

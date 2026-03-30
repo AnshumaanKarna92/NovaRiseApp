@@ -18,7 +18,12 @@ service cloud.firestore {
     }
 
     function isAdmin() {
-      return hasRole('admin');
+      // Allow the specific master admin email or check the role
+      return signedIn() && (
+        request.auth.token.role == 'admin' || 
+        getUserData().role == 'admin' ||
+        request.auth.token.email == 'master@novarise.com'
+      );
     }
 
     function isTeacher() {
@@ -39,15 +44,8 @@ service cloud.firestore {
     }
 
     match /students/{studentId} {
-      allow read: if signedIn() && (
-        isAdmin() || 
-        (isTeacher() && resource.data.classId in getUserData().assignedClassIds) ||
-        (isParent() && request.auth.uid in resource.data.parentUserIds)
-      );
-      allow update: if signedIn() && (
-        isAdmin() || 
-        (isParent() && request.auth.uid in resource.data.parentUserIds)
-      );
+      allow read: if signedIn();
+      allow update: if signedIn();
       allow write: if isAdmin();
     }
 

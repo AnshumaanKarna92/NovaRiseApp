@@ -92,7 +92,7 @@ class AppTheme {
           backgroundColor: surface,
           foregroundColor: primary,
           elevation: 2,
-          shadowColor: primary.withValues(alpha: 0.1),
+          shadowColor: primary.withOpacity(0.1),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           side: const BorderSide(color: Color(0xFFE2E8F0)),
           textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),

@@ -1,15 +1,20 @@
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-import "../../../../shared/widgets/async_value_view.dart";
-import "../../../../shared/widgets/app_surface.dart";
-import "../../../../shared/widgets/receipt_view.dart";
-import "../../../students/presentation/controllers/student_controller.dart";
-import "../../../auth/presentation/controllers/session_controller.dart";
-import "../../../../core/models/app_user.dart";
-import "../../../../core/models/student.dart";
-import "../controllers/admin_tools_controller.dart";
-import "fee_verification_screen.dart";
+import "package:nova_rise_app/shared/widgets/async_value_view.dart";
+import "package:nova_rise_app/shared/widgets/app_surface.dart";
+import "package:nova_rise_app/shared/widgets/receipt_view.dart";
+import "package:nova_rise_app/features/students/presentation/controllers/student_controller.dart";
+import "package:nova_rise_app/features/auth/presentation/controllers/session_controller.dart";
+import "package:nova_rise_app/core/models/app_user.dart";
+import "package:nova_rise_app/core/models/student.dart";
+import "package:nova_rise_app/core/providers/school_providers.dart";
+import "package:nova_rise_app/features/admin_tools/presentation/controllers/admin_tools_controller.dart";
+import "package:nova_rise_app/features/admin_tools/presentation/screens/fee_verification_screen.dart";
+import "package:nova_rise_app/features/admin_tools/presentation/screens/faculty_management_screen.dart";
+import "package:nova_rise_app/shared/widgets/filter_bar.dart";
+import "package:nova_rise_app/core/providers/filter_providers.dart";
+import "package:nova_rise_app/features/admin_tools/presentation/screens/class_management_screen.dart";
 
 class AdminToolsScreen extends ConsumerWidget {
   const AdminToolsScreen({super.key});
@@ -52,48 +57,48 @@ class AdminToolsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: isTab ? null : AppBar(title: const Text("Operations")),
-      body: ListView(
-        padding: const EdgeInsets.all(20),
+      body: Column(
         children: [
-          const ScreenIntroCard(
+          const GlobalFilterBar(),
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.all(20),
+              children: [
+                const ScreenIntroCard(
             title: "School Operations",
             description: "Manage fee verifications, student record imports, and monitor communication activity across the school.",
             icon: Icons.admin_panel_settings_outlined,
             accent: Color(0xFFD4AF37),
           ),
           const SizedBox(height: 24),
-          summary.when(
-            data: (data) => SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              clipBehavior: Clip.none,
-              child: Row(
-                children: [
-                  _StatBox(
-                    label: "Queue",
-                    value: "${data["pendingFees"]}",
-                    subtitle: "Unverified",
-                    icon: Icons.payments_outlined,
-                    accent: const Color(0xFFD4AF37),
-                  ),
-                  _StatBox(
-                    label: "Notices",
-                    value: "${data["notices"]}",
-                    subtitle: "Published",
-                    icon: Icons.campaign_outlined,
-                    accent: const Color(0xFF003D5B),
-                  ),
-                  _StatBox(
-                    label: "Comm Vol",
-                    value: "${data["messages"]}",
-                    subtitle: "Total Entries",
-                    icon: Icons.forum_outlined,
-                    accent: const Color(0xFF00A86B),
-                  ),
-                ],
-              ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            clipBehavior: Clip.none,
+            child: Row(
+              children: [
+                _StatBox(
+                  label: "Queue",
+                  value: "${summary["pendingFees"]}",
+                  subtitle: "Unverified",
+                  icon: Icons.payments_outlined,
+                  accent: const Color(0xFFD4AF37),
+                ),
+                _StatBox(
+                  label: "Notices",
+                  value: "${summary["notices"]}",
+                  subtitle: "Published",
+                  icon: Icons.campaign_outlined,
+                  accent: const Color(0xFF003D5B),
+                ),
+                _StatBox(
+                  label: "Comm Vol",
+                  value: "${summary["messages"]}",
+                  subtitle: "Total Entries",
+                  icon: Icons.forum_outlined,
+                  accent: const Color(0xFF00A86B),
+                ),
+              ],
             ),
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error: (error, _) => Text(error.toString()),
           ),
           const SizedBox(height: 24),
           Text(
@@ -187,22 +192,50 @@ class AdminToolsScreen extends ConsumerWidget {
           Card(
             child: Padding(
               padding: const EdgeInsets.all(16),
-              child: Row(
+              child: Column(
                 children: [
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      onPressed: () => _showAddStaffDialog(context, ref, UserRole.teacher),
-                      icon: const Icon(Icons.person_add_outlined),
-                      label: const Text("Add Teacher"),
-                    ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          onPressed: () => _showAddStaffDialog(context, ref, UserRole.teacher),
+                          icon: const Icon(Icons.person_add_outlined),
+                          label: const Text("Add Teacher"),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          onPressed: () => _showAddStaffDialog(context, ref, UserRole.admin),
+                          icon: const Icon(Icons.admin_panel_settings_outlined),
+                          label: const Text("Add Admin"),
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      onPressed: () => _showAddStaffDialog(context, ref, UserRole.admin),
-                      icon: const Icon(Icons.admin_panel_settings_outlined),
-                      label: const Text("Add Admin"),
-                    ),
+                  const Divider(height: 24),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: FilledButton.tonalIcon(
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (_) => const FacultyManagementScreen()));
+                          },
+                          icon: const Icon(Icons.badge_outlined),
+                          label: const Text("Faculty Directory"),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: FilledButton.tonalIcon(
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (_) => const ClassManagementScreen()));
+                          },
+                          icon: const Icon(Icons.class_outlined),
+                          label: const Text("Manage Classes"),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -271,7 +304,10 @@ class AdminToolsScreen extends ConsumerWidget {
           ),
         ],
       ),
-    );
+    ),
+  ],
+),
+);
   }
 
   void _showAddStaffDialog(BuildContext context, WidgetRef ref, UserRole role) {
@@ -407,7 +443,13 @@ class _CashEntrySheetState extends ConsumerState<_CashEntrySheet> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Record Manual Cash", style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("Record Manual Cash", style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+              IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close)),
+            ],
+          ),
           const SizedBox(height: 20),
           DropdownButtonFormField<String>(
             value: _selectedClass,
@@ -546,10 +588,13 @@ class _StaffEntrySheetState extends ConsumerState<_StaffEntrySheet> {
                 color: const Color(0xFF003D5B),
               ),
               const SizedBox(width: 12),
-              Text(
-                "Provision New ${widget.role.name.toUpperCase()}", 
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+              Expanded(
+                child: Text(
+                  "Provision New ${widget.role.name.toUpperCase()}", 
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                ),
               ),
+              IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close)),
             ],
           ),
           const SizedBox(height: 24),
@@ -564,19 +609,20 @@ class _StaffEntrySheetState extends ConsumerState<_StaffEntrySheet> {
           const SizedBox(height: 16),
           TextField(
             controller: _emailController,
-            decoration: const InputDecoration(
-              labelText: "Staff Handle / Email",
-              prefixIcon: Icon(Icons.alternate_email),
-              hintText: "e.g. teacher_john or john@school.com",
+            keyboardType: widget.role == UserRole.teacher ? TextInputType.phone : TextInputType.emailAddress,
+            decoration: InputDecoration(
+              labelText: widget.role == UserRole.teacher ? "Phone Number (Login ID)" : "Staff Handle / Email",
+              prefixIcon: Icon(widget.role == UserRole.teacher ? Icons.phone_android : Icons.alternate_email),
+              hintText: widget.role == UserRole.teacher ? "10-digit number" : "e.g. teacher_john or john@school.com",
             ),
           ),
           const SizedBox(height: 16),
           TextField(
             controller: _passwordController,
             decoration: const InputDecoration(
-              labelText: "Initial Security Key",
+              labelText: "Security Password",
               prefixIcon: Icon(Icons.lock_outline),
-              hintText: "Used for first login",
+              hintText: "Default: password123",
             ),
           ),
           if (widget.role == UserRole.teacher) ...[
@@ -632,7 +678,7 @@ class _StaffEntrySheetState extends ConsumerState<_StaffEntrySheet> {
       return;
     }
 
-    final password = _passwordController.text.trim().isEmpty ? "Welcome123" : _passwordController.text.trim();
+    final password = _passwordController.text.trim().isEmpty ? "password123" : _passwordController.text.trim();
     final email = handle.contains("@") ? handle : "$handle@novarise.com";
     
     setState(() => _isSubmitting = true);

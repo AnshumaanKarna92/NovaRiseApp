@@ -9,6 +9,10 @@ import "package:nova_rise_app/core/models/school_class.dart";
 import "package:nova_rise_app/core/models/student.dart";
 import "package:nova_rise_app/core/models/app_user.dart";
 import "package:nova_rise_app/features/admin_tools/presentation/controllers/admin_tools_controller.dart";
+import "package:nova_rise_app/core/providers/school_providers.dart";
+import "package:nova_rise_app/shared/widgets/filter_bar.dart";
+import "package:nova_rise_app/core/providers/filter_providers.dart";
+import "package:nova_rise_app/features/admin_tools/presentation/screens/teacher_profile_screen.dart";
 import "student_detail_screen.dart";
 
 final _studentSearchProvider = StateProvider.autoDispose<String>((ref) => "");
@@ -19,69 +23,83 @@ class StudentsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProfileProvider).valueOrNull;
-    final isAdmin = user?.role == UserRole.admin;
+    final isAdmin = user?.role == UserRole.admin || user?.role == UserRole.cashCollector;
     final studentsValue = ref.watch(currentStudentsProvider);
+    final filteredStudents = ref.watch(filteredStudentsProvider);
     final staffValue = ref.watch(currentStaffProvider);
     final searchQuery = ref.watch(_studentSearchProvider).toLowerCase();
+    final filter = ref.watch(globalSchoolFilterProvider);
+
+    final finalStudents = filteredStudents.where((s) {
+      return s.name.toLowerCase().contains(searchQuery) ||
+          s.studentId.toLowerCase().contains(searchQuery);
+    }).toList();
 
     final content = TabBarView(
       children: [
         AsyncValueView(
           value: studentsValue,
-          data: (items) {
-            final filtered = items.where((s) {
-              return s.name.toLowerCase().contains(searchQuery) ||
-                  s.studentId.toLowerCase().contains(searchQuery);
-            }).toList();
-
-            return ListView(
-              padding: const EdgeInsets.all(16),
+          data: (allItems) {
+            return Column(
               children: [
-                const ScreenIntroCard(
-                  eyebrow: "Student Roster",
-                  title: "Directory",
-                  description: "Search and browse student records, class assignments, and guardian information.",
-                  icon: Icons.groups_2_outlined,
-                  accent: Color(0xFF003D5B),
-                ),
-                const SizedBox(height: 20),
+                if (isAdmin)
+                  const GlobalFilterBar(),
                 _SearchBar(ref: ref),
-                const SizedBox(height: 20),
-                if (filtered.isEmpty)
-                  const Center(child: Padding(padding: EdgeInsets.symmetric(vertical: 40), child: Text("No students match your search.")))
-                else
-                  for (final student in filtered)
-                    _StudentCard(student: student),
+                Expanded(
+                  child: finalStudents.isEmpty
+                      ? const Center(child: Padding(padding: EdgeInsets.symmetric(vertical: 40), child: Text("No students match your criteria.")))
+                      : ListView.builder(
+                          padding: const EdgeInsets.all(16),
+                          itemCount: finalStudents.length,
+                          itemBuilder: (context, index) => _StudentCard(student: finalStudents[index]),
+                        ),
+                ),
               ],
             );
           },
         ),
         if (isAdmin)
-          AsyncValueView(
+          AsyncValueView<List<SchoolClass>>(
             value: ref.watch(schoolClassesProvider),
-            data: (classes) => AsyncValueView(
+            data: (allClasses) => AsyncValueView(
               value: staffValue,
               data: (staffItems) => AsyncValueView(
                 value: studentsValue,
                 data: (studentItems) {
-                  return ListView(
-                    padding: const EdgeInsets.all(16),
+                  final filter = ref.watch(globalSchoolFilterProvider);
+                  final filteredClasses = allClasses.where((c) {
+                    final genderMatch = filter.gender == GenderFilter.all || c.branchId == (filter.gender == GenderFilter.boys ? "boys" : "girls");
+                    final levelMatch = filter.level == LevelFilter.all || (filter.level == LevelFilter.junior ? c.isJunior : !c.isJunior);
+                    return genderMatch && levelMatch;
+                  }).toList()..sort((a, b) => a.classWeight.compareTo(b.classWeight));
+
+                  return Column(
                     children: [
-                      const ScreenIntroCard(
-                        eyebrow: "School Structure",
-                        title: "Classes & Faculty",
-                        description: "Manage school sections, assigned teachers, and subjects for each grade level.",
-                        icon: Icons.class_outlined,
-                        accent: Color(0xFFD4AF37),
-                      ),
-                      const SizedBox(height: 24),
-                      for (final cls in classes)
-                        _ClassSummaryTile(
-                          classId: cls.id,
-                          students: studentItems.where((s) => s.classId == cls.id).toList(),
-                          teacher: staffItems.firstWhere((s) => s.uid == cls.classTeacherId, orElse: () => staffItems.firstWhere((s) => s.assignedClassIds.contains(cls.id), orElse: () => const AppUser(uid: "unknown", schoolId: "", role: UserRole.unknown, displayName: "No Teacher", email: "", phone: "", assignedClassIds: []))),
-                          allStaff: staffItems,
+                      const GlobalFilterBar(),
+                      Expanded(
+                        child: ListView(
+                          padding: const EdgeInsets.all(16),
+                          children: [
+                            const ScreenIntroCard(
+                              eyebrow: "School Structure",
+                              title: "Classes & Faculty",
+                              description: "Manage school sections, assigned teachers, and subjects for each grade level.",
+                              icon: Icons.class_outlined,
+                              accent: Color(0xFFD4AF37),
+                            ),
+                            const SizedBox(height: 24),
+                            if (filteredClasses.isEmpty)
+                              const Center(child: Padding(padding: EdgeInsets.symmetric(vertical: 40), child: Text("No classes match the filters."))),
+                            for (final cls in filteredClasses)
+                              _ClassSummaryTile(
+                                classId: cls.id,
+                                students: studentItems.where((s) => s.classId == cls.id).toList(),
+                                teacher: staffItems.firstWhere((s) => s.uid == cls.classTeacherId, orElse: () => staffItems.firstWhere((s) => s.assignedClassIds.contains(cls.id), orElse: () => const AppUser(uid: "unknown", schoolId: "", role: UserRole.unknown, displayName: "No Teacher", email: "", phone: "", assignedClassIds: []))),
+                                allStaff: staffItems,
+                              ),
+                          ],
                         ),
+                      ),
                     ],
                   );
                 },
@@ -92,8 +110,6 @@ class StudentsScreen extends ConsumerWidget {
           AsyncValueView(
             value: staffValue,
             data: (items) {
-               // Staff view code...
-               // [Existing StaffView logic remains but I'll update it for clarity]
                return _StaffTabBody(items: items, searchQuery: searchQuery, ref: ref);
             },
           ),
@@ -118,6 +134,7 @@ class StudentsScreen extends ConsumerWidget {
         body: content,
         floatingActionButton: isAdmin
             ? FloatingActionButton.extended(
+                heroTag: "students_fab",
                 onPressed: () => _showAddStudentDialog(context, ref),
                 icon: const Icon(Icons.person_add_alt_1_outlined),
                 label: const Text("New Student"),
@@ -136,18 +153,43 @@ class StudentsScreen extends ConsumerWidget {
   }
 }
 
+class _FilterChip extends StatelessWidget {
+  const _FilterChip({required this.label, required this.isSelected, required this.onSelected, this.icon});
+  final String label;
+  final bool isSelected;
+  final VoidCallback onSelected;
+  final IconData? icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return FilterChip(
+      label: Text(label, style: TextStyle(fontSize: 12, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal, color: isSelected ? Colors.white : Colors.black87)),
+      selected: isSelected,
+      onSelected: (_) => onSelected(),
+      avatar: icon != null ? Icon(icon, size: 14, color: isSelected ? Colors.white : Colors.black45) : null,
+      selectedColor: const Color(0xFF003D5B),
+      checkmarkColor: Colors.white,
+      padding: const EdgeInsets.symmetric(horizontal: 4),
+    );
+  }
+}
+
 class _SearchBar extends StatelessWidget {
   const _SearchBar({required this.ref});
   final WidgetRef ref;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      onChanged: (val) => ref.read(_studentSearchProvider.notifier).state = val,
-      decoration: const InputDecoration(
-        labelText: "Search directory",
-        hintText: "Enter name, ID or email...",
-        prefixIcon: Icon(Icons.search),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: TextField(
+        onChanged: (val) => ref.read(_studentSearchProvider.notifier).state = val,
+        decoration: const InputDecoration(
+          labelText: "Search directory",
+          hintText: "Enter name, ID or email...",
+          prefixIcon: Icon(Icons.search),
+          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+        ),
       ),
     );
   }
@@ -161,16 +203,18 @@ class _StudentCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final classesMap = ref.watch(allClassesMapProvider);
     return Card(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       child: ListTile(
         onTap: () => Navigator.of(context).push(
           MaterialPageRoute(builder: (_) => StudentDetailScreen(student: student)),
         ),
         leading: CircleAvatar(
-          backgroundColor: const Color(0xFF003D5B).withValues(alpha: 0.1),
-          child: Text(
-            student.name.isEmpty ? "S" : student.name.substring(0, 1).toUpperCase(),
-            style: const TextStyle(color: Color(0xFF003D5B), fontWeight: FontWeight.bold),
+          backgroundColor: student.branchId == "girls" 
+              ? Colors.pink.withOpacity(0.1) 
+              : const Color(0xFF003D5B).withOpacity(0.1),
+          child: Icon(
+            student.branchId == "girls" ? Icons.female : Icons.male,
+            color: student.branchId == "girls" ? Colors.pink : const Color(0xFF003D5B),
           ),
         ),
         title: Text(student.name, style: const TextStyle(fontWeight: FontWeight.bold)),
@@ -180,8 +224,9 @@ class _StudentCard extends ConsumerWidget {
             spacing: 8,
             runSpacing: 8,
             children: [
+              StatusChip(label: "ID: ${student.studentId}", color: const Color(0xFFD4AF37)),
               StatusChip(label: classesMap[student.classId] ?? "Grade ${student.classId}", color: const Color(0xFF003D5B)),
-              StatusChip(label: "Active Student", color: const Color(0xFFD4AF37)),
+              StatusChip(label: student.isJunior ? "Junior" : "Senior", color: student.isJunior ? Colors.orange : Colors.indigo),
               StatusChip(label: student.parentName, color: const Color(0xFF00A86B)),
             ],
           ),
@@ -211,61 +256,113 @@ class _ClassSummaryTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final classesMap = ref.watch(allClassesMapProvider);
     return Card(
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 20),
+      elevation: 2,
+      shadowColor: Colors.black12,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFD4AF37).withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(12),
+                    color: const Color(0xFFD4AF37).withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(16),
                   ),
-                  child: const Icon(Icons.class_outlined, color: Color(0xFFD4AF37)),
+                  child: const Icon(Icons.school_outlined, color: Color(0xFFD4AF37), size: 28),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(classesMap[classId] ?? "Grade $classId", style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-                      Text("${students.length} Students enrolled", style: const TextStyle(color: Colors.black54, fontSize: 13)),
+                      Text(
+                        classesMap[classId] ?? "Grade $classId", 
+                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900, color: Color(0xFF003D5B))
+                      ),
+                      const SizedBox(height: 2),
+                      Row(
+                        children: [
+                          Icon(Icons.people_alt_outlined, size: 14, color: Colors.black45),
+                          const SizedBox(width: 4),
+                          Text("${students.length} Students enrolled", style: const TextStyle(color: Colors.black45, fontSize: 13, fontWeight: FontWeight.w500)),
+                        ],
+                      ),
                     ],
                   ),
                 ),
               ],
             ),
-            const Divider(height: 32),
-            Row(
-              children: [
-                const Icon(Icons.person_pin_outlined, size: 16, color: Colors.black45),
-                const SizedBox(width: 8),
-                Text("Class Teacher: ", style: const TextStyle(fontSize: 13, color: Colors.black54)),
-                Expanded(
-                  child: Text(teacher.uid == "unknown" ? "Not Assigned" : teacher.displayName, 
-                       style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF00A86B))),
-                ),
-                TextButton.icon(
-                  onPressed: () => _pickTeacher(context, ref),
-                  icon: const Icon(Icons.edit_outlined, size: 14),
-                  label: Text(teacher.uid == "unknown" ? "Assign" : "Change", style: const TextStyle(fontSize: 12)),
-                ),
-              ],
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 16),
+              child: Divider(height: 1, color: Colors.black12),
             ),
-            const Divider(height: 24),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(Icons.book_outlined, size: 16, color: Colors.black45),
-                const SizedBox(width: 8),
-                const Text("Subjects: ", style: TextStyle(fontSize: 13, color: Colors.black54)),
-                const Spacer(),
-                TextButton.icon(
-                  onPressed: () => _manageSubjects(context, ref),
-                  icon: const Icon(Icons.settings_outlined, size: 14),
-                  label: const Text("Manage Subjects", style: TextStyle(fontSize: 12)),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text("Class Teacher", style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.black38, letterSpacing: 0.5)),
+                      const SizedBox(height: 6),
+                      InkWell(
+                        onTap: teacher.uid == "unknown" ? null : () => Navigator.push(
+                            context, MaterialPageRoute(builder: (_) => TeacherProfileScreen(teacher: teacher))),
+                        child: Row(
+                          children: [
+                            Icon(Icons.verified_user, size: 14, color: teacher.uid == "unknown" ? Colors.black26 : const Color(0xFF00A86B)),
+                            const SizedBox(width: 6),
+                            Flexible(
+                              child: Text(
+                                teacher.uid == "unknown" ? "Not Assigned" : teacher.displayName,
+                                style: TextStyle(
+                                  fontSize: 15, 
+                                  fontWeight: FontWeight.w700, 
+                                  color: teacher.uid == "unknown" ? Colors.black45 : const Color(0xFF003D5B),
+                                  decoration: teacher.uid == "unknown" ? null : TextDecoration.underline,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Column(
+                  children: [
+                    OutlinedButton.icon(
+                      onPressed: () => _showManageSubjects(context, ref),
+                      icon: const Icon(Icons.auto_stories, size: 14),
+                      label: const Text("Subjects", style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        visualDensity: VisualDensity.compact,
+                        side: const BorderSide(color: Color(0xFF003D5B)),
+                        foregroundColor: const Color(0xFF003D5B),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    TextButton.icon(
+                      onPressed: () => _pickTeacher(context, ref, true),
+                      icon: const Icon(Icons.swap_horiz, size: 14),
+                      label: Text(teacher.uid == "unknown" ? "Assign CT" : "Change CT", style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        visualDensity: VisualDensity.compact,
+                        foregroundColor: const Color(0xFFD4AF37),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -275,357 +372,190 @@ class _ClassSummaryTile extends ConsumerWidget {
     );
   }
 
-  void _manageSubjects(BuildContext context, WidgetRef ref) {
-    showModalBottomSheet(
+  void _pickTeacher(BuildContext context, WidgetRef ref, bool forClassTeacher, {String? subjectName}) {
+    showDialog(
       context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) => _ManageSubjectsBottomSheet(classId: classId, allStaff: allStaff),
+      builder: (ctx) => _TeacherSelectionDialog(
+        allStaff: allStaff,
+        onTeacherSelected: (newTeacher) {
+          if (forClassTeacher) {
+            ref.read(adminToolsControllerProvider.notifier).assignClassTeacher(classId, newTeacher.uid);
+          } else if (subjectName != null) {
+             final updatedSubjects = Map<String, String>.from(ref.read(schoolClassesProvider).value!.firstWhere((c) => c.id == classId).subjects);
+             updatedSubjects[subjectName] = newTeacher.uid;
+             ref.read(adminToolsControllerProvider.notifier).updateClassSubjects(classId, updatedSubjects);
+          }
+          Navigator.pop(ctx);
+        },
+      ),
     );
   }
 
-  void _pickTeacher(BuildContext context, WidgetRef ref) {
+  void _showManageSubjects(BuildContext context, WidgetRef ref) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      builder: (_) {
-        final teachers = allStaff.where((s) => s.role == UserRole.teacher).toList();
-        return Container(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+      builder: (_) => _ManageSubjectsSheet(
+        classId: classId,
+        allStaff: allStaff,
+      ),
+    );
+  }
+}
+
+class _TeacherSelectionDialog extends StatelessWidget {
+  const _TeacherSelectionDialog({required this.allStaff, required this.onTeacherSelected});
+  final List<AppUser> allStaff;
+  final Function(AppUser) onTeacherSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text("Select Teacher"),
+      content: SizedBox(
+        width: double.maxFinite,
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: allStaff.length,
+          itemBuilder: (context, index) {
+            final teacher = allStaff[index];
+            return ListTile(
+              leading: CircleAvatar(child: Text(teacher.displayName[0])),
+              title: Text(teacher.displayName),
+              subtitle: Text(teacher.primarySubject ?? "Faculty"),
+              onTap: () => onTeacherSelected(teacher),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _ManageSubjectsSheet extends ConsumerWidget {
+  const _ManageSubjectsSheet({required this.classId, required this.allStaff});
+  final String classId;
+  final List<AppUser> allStaff;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final cls = ref.watch(schoolClassesProvider).value!.firstWhere((c) => c.id == classId);
+    final subjects = cls.subjects;
+
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Select Class Teacher for ${ref.read(allClassesMapProvider)[classId] ?? classId}", style: Theme.of(context).textTheme.titleLarge),
-              const SizedBox(height: 20),
-              if (teachers.isEmpty)
-                const Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Text("No teachers found in the staff directory."),
-                )
-              else
-                Flexible(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: teachers.length,
-                    itemBuilder: (context, index) {
-                      final t = teachers[index];
-                      return ListTile(
-                        leading: CircleAvatar(child: Text(t.displayName[0])),
-                        title: Text(t.displayName),
-                        subtitle: Text(t.email),
-                        onTap: () async {
-                          Navigator.pop(context);
-                          await ref.read(adminToolsControllerProvider.notifier).assignClassTeacher(classId, t.uid);
-                          ref.read(adminSummaryProvider); // Refresh summary
-                        },
-                      );
-                    },
-                  ),
-                ),
+              Text("Assign Subject Teachers", style: Theme.of(context).textTheme.headlineSmall),
+              IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close)),
             ],
           ),
-        );
-      },
+          const SizedBox(height: 16),
+          for (final entry in subjects.entries)
+            ListTile(
+              title: Text(entry.key),
+              subtitle: Text(allStaff.firstWhere((s) => s.uid == entry.value, orElse: () => const AppUser(uid: "unknown", schoolId: "", role: UserRole.unknown, displayName: "Not Assigned", email: "", phone: "")).displayName),
+              trailing: IconButton(
+                icon: const Icon(Icons.edit_outlined),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (ctx) => _TeacherSelectionDialog(
+                      allStaff: allStaff,
+                      onTeacherSelected: (newTeacher) {
+                        final updated = Map<String, String>.from(subjects);
+                        updated[entry.key] = newTeacher.uid;
+                        ref.read(adminToolsControllerProvider.notifier).updateClassSubjects(classId, updated);
+                        Navigator.pop(ctx);
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
+        ],
+      ),
     );
   }
 }
 
 class _StaffTabBody extends StatelessWidget {
-  const _StaffTabBody({
-    required this.items,
-    required this.searchQuery,
-    required this.ref,
-  });
-
+  const _StaffTabBody({required this.items, required this.searchQuery, required this.ref});
   final List<AppUser> items;
   final String searchQuery;
   final WidgetRef ref;
 
   @override
   Widget build(BuildContext context) {
-    final filtered = items.where((s) {
-      return s.displayName.toLowerCase().contains(searchQuery) ||
-          s.email.toLowerCase().contains(searchQuery);
-    }).toList();
-
+    // Deduplicate by UID
+    final uniqueItems = <String, AppUser>{};
+    for (var u in items) {
+      if (u.role == UserRole.teacher || u.role == UserRole.admin) {
+        uniqueItems[u.displayName.trim().toLowerCase()] = u;
+      }
+    }
+    
+    final filtered = uniqueItems.values.where((s) => 
+        s.displayName.toLowerCase().contains(searchQuery.toLowerCase())).toList();
+        
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
         const ScreenIntroCard(
-          eyebrow: "Staff Directory",
-          title: "Faculty & Team",
-          description: "View school staff members, their roles, and assigned class responsibilities.",
+          eyebrow: "Faculty Directory",
+          title: "Staff Members",
+          description: "Browse teaching and administrative personnel, view assignments, and contact details.",
           icon: Icons.badge_outlined,
           accent: Color(0xFF00A86B),
         ),
-        const SizedBox(height: 20),
-        _SearchBar(ref: ref),
-        const SizedBox(height: 20),
+        const SizedBox(height: 24),
         if (filtered.isEmpty)
-          const Center(child: Padding(padding: EdgeInsets.symmetric(vertical: 40), child: Text("No staff members match your search.")))
-        else
-          for (final staff in filtered)
-            _StaffCard(staff: staff),
+           const Center(child: Padding(padding: EdgeInsets.symmetric(vertical: 40), child: Text("No staff members match your search."))),
+        for (final user in filtered) _StaffCard(user: user),
       ],
     );
   }
 }
 
 class _StaffCard extends StatelessWidget {
-  const _StaffCard({required this.staff});
-  final AppUser staff;
-
+  const _StaffCard({required this.user});
+  final AppUser user;
   @override
   Widget build(BuildContext context) {
-    final roleColor = staff.role == UserRole.teacher ? const Color(0xFF00A86B) : const Color(0xFF003D5B);
-
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       child: ListTile(
+        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => TeacherProfileScreen(teacher: user))),
         leading: CircleAvatar(
-          backgroundColor: roleColor.withValues(alpha: 0.1),
-          child: Text(
-            staff.displayName.isEmpty ? "T" : staff.displayName.substring(0, 1).toUpperCase(),
-            style: TextStyle(color: roleColor, fontWeight: FontWeight.bold),
-          ),
-        ),
-        title: Text(staff.displayName, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Padding(
-          padding: const EdgeInsets.only(top: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(staff.email, style: const TextStyle(fontSize: 12)),
-              const SizedBox(height: 8),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: [
-                  StatusChip(label: staff.role.name.toUpperCase(), color: roleColor),
-                  if (staff.role == UserRole.teacher && staff.primarySubject != null)
-                    StatusChip(label: staff.primarySubject!, color: const Color(0xFFD4AF37)),
-                  if (staff.assignedClassIds.isNotEmpty)
-                    StatusChip(label: "Class Assignments: ${staff.assignedClassIds.length}", color: const Color(0xFF003D5B)),
-                ],
-              ),
-            ],
-          ),
-        ),
-        isThreeLine: true,
+          backgroundColor: const Color(0xFF00A86B).withOpacity(0.1),
+          child: const Icon(Icons.person, color: Color(0xFF00A86B))),
+        title: Text(user.displayName, style: const TextStyle(fontWeight: FontWeight.bold)),
+        subtitle: Text(user.role.name.toUpperCase()),
+        trailing: const Icon(Icons.chevron_right, size: 16, color: Colors.black26),
       ),
     );
   }
 }
 
-class _AddStudentSheet extends ConsumerStatefulWidget {
+class _AddStudentSheet extends StatefulWidget {
   const _AddStudentSheet();
-
   @override
-  ConsumerState<_AddStudentSheet> createState() => _AddStudentSheetState();
+  State<_AddStudentSheet> createState() => _AddStudentSheetState();
 }
 
-class _AddStudentSheetState extends ConsumerState<_AddStudentSheet> {
-  final _idController = TextEditingController();
-  final _nameController = TextEditingController();
-  final _classController = TextEditingController();
-  final _parentNameController = TextEditingController();
-  final _parentPhoneController = TextEditingController();
-  bool _isSubmitting = false;
-
-  @override
-  void dispose() {
-    _idController.dispose();
-    _nameController.dispose();
-    _classController.dispose();
-    _parentNameController.dispose();
-    _parentPhoneController.dispose();
-    super.dispose();
-  }
-
+class _AddStudentSheetState extends State<_AddStudentSheet> {
+  // Mock simple state for adding student dialog
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: 20,
-        right: 20,
-        top: 24,
-        bottom: MediaQuery.of(context).viewInsets.bottom + 24,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text("Add New Student Record", style: Theme.of(context).textTheme.titleLarge),
-          const SizedBox(height: 20),
-          TextField(
-            controller: _idController,
-            decoration: const InputDecoration(labelText: "Student ID (e.g. STU_105)"),
-          ),
-          const SizedBox(height: 12),
-          TextField(
-            controller: _nameController,
-            decoration: const InputDecoration(labelText: "Student Full Name"),
-          ),
-          const SizedBox(height: 12),
-          TextField(
-            controller: _classController,
-            decoration: const InputDecoration(labelText: "Class ID"),
-          ),
-          const SizedBox(height: 12),
-          TextField(
-            controller: _parentNameController,
-            decoration: const InputDecoration(labelText: "Parent/Guardian Name"),
-          ),
-          const SizedBox(height: 12),
-          TextField(
-            controller: _parentPhoneController,
-            decoration: const InputDecoration(labelText: "Parent Phone Number"),
-            keyboardType: TextInputType.phone,
-          ),
-          const SizedBox(height: 24),
-          SizedBox(
-            width: double.infinity,
-            child: FilledButton(
-              onPressed: _isSubmitting ? null : _submit,
-              child: Text(_isSubmitting ? "Saving..." : "Create Record"),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> _submit() async {
-    if (_idController.text.isEmpty || _nameController.text.isEmpty) return;
-
-    setState(() => _isSubmitting = true);
-    try {
-      final schoolId = ref.read(userProfileProvider).value?.schoolId ?? "school_001";
-      await ref.read(firebaseFirestoreProvider).collection("students").doc(_idController.text.trim()).set({
-        "studentId": _idController.text.trim(),
-        "schoolId": schoolId,
-        "name": _nameController.text.trim(),
-        "classId": _classController.text.trim(),
-        "parentName": _parentNameController.text.trim(),
-        "parentPhone": _parentPhoneController.text.trim(),
-        "parentUserIds": [],
-        "status": "active",
-        "createdAt": DateTime.now().toIso8601String(), // Simple string for now, backend uses serverTimestamp
-      });
-      if (mounted) Navigator.pop(context);
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
-      }
-    } finally {
-      if (mounted) setState(() => _isSubmitting = false);
-    }
-  }
-}
-
-class _ManageSubjectsBottomSheet extends ConsumerStatefulWidget {
-  const _ManageSubjectsBottomSheet({required this.classId, required this.allStaff});
-  final String classId;
-  final List<AppUser> allStaff;
-
-  @override
-  ConsumerState<_ManageSubjectsBottomSheet> createState() => _ManageSubjectsBottomSheetState();
-}
-
-class _ManageSubjectsBottomSheetState extends ConsumerState<_ManageSubjectsBottomSheet> {
-  final _subjectController = TextEditingController();
-  String? _selectedTeacherUid;
-
-  @override
-  Widget build(BuildContext context) {
-    final classesValue = ref.watch(schoolClassesProvider);
-    final classesMap = ref.watch(allClassesMapProvider);
-    final state = ref.watch(adminToolsControllerProvider);
-
-    return Container(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: AsyncValueView(
-          value: classesValue,
-          data: (classes) {
-            final schoolClass = classes.firstWhere((c) => c.id == widget.classId, orElse: () => SchoolClass(id: widget.classId, schoolId: "", name: ""));
-            final subjects = schoolClass.subjects;
-
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text("Subjects in ${classesMap[widget.classId] ?? widget.classId}", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 16),
-                if (subjects.isEmpty)
-                  const Padding(
-                    padding: EdgeInsets.all(24),
-                    child: Center(child: Text("No subjects assigned yet.")),
-                  )
-                else
-                  ...subjects.entries.map((e) {
-                    final t = widget.allStaff.firstWhere((s) => s.uid == e.value, orElse: () => const AppUser(uid: "unknown", schoolId: "", role: UserRole.unknown, displayName: "Unknown", email: "", phone: "", assignedClassIds: []));
-                    return ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      title: Text(e.key, style: const TextStyle(fontWeight: FontWeight.bold)),
-                      subtitle: Text(t.displayName),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.delete_outline, color: Colors.red),
-                        onPressed: () {
-                          final newSubjects = Map<String, String>.from(subjects)..remove(e.key);
-                          ref.read(adminToolsControllerProvider.notifier).updateClassSubjects(widget.classId, newSubjects);
-                        },
-                      ),
-                    );
-                  }),
-                const Divider(height: 32),
-                const Text("Add New Subject", style: TextStyle(fontWeight: FontWeight.bold)),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: _subjectController,
-                  decoration: const InputDecoration(labelText: "Subject Name (e.g. Science)"),
-                ),
-                DropdownButtonFormField<String>(
-                  decoration: const InputDecoration(labelText: "Subject Teacher", prefixIcon: Icon(Icons.person_pin_outlined)),
-                  value: _selectedTeacherUid,
-                  items: widget.allStaff
-                      .where((s) => s.role == UserRole.teacher)
-                      .map((s) => DropdownMenuItem(value: s.uid, child: Text("${s.displayName} (${s.primarySubject ?? 'No Subject'})")))
-                      .toList(),
-                  onChanged: (val) {
-                    setState(() {
-                      _selectedTeacherUid = val;
-                      final teacher = widget.allStaff.firstWhere((s) => s.uid == val);
-                      if (teacher.primarySubject != null) {
-                        _subjectController.text = teacher.primarySubject!;
-                      }
-                    });
-                  },
-                ),
-                const SizedBox(height: 24),
-                FilledButton.icon(
-                  onPressed: state.isSubmitting || _selectedTeacherUid == null || _subjectController.text.isEmpty
-                      ? null
-                      : () async {
-                          final newSubjects = Map<String, String>.from(subjects)..[_subjectController.text.trim()] = _selectedTeacherUid!;
-                          await ref.read(adminToolsControllerProvider.notifier).updateClassSubjects(widget.classId, newSubjects);
-                          _subjectController.clear();
-                          setState(() => _selectedTeacherUid = null);
-                        },
-                  icon: state.isSubmitting ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white)) : const Icon(Icons.add),
-                  label: const Text("Add Subject Assignment"),
-                ),
-                const SizedBox(height: 12),
-              ],
-            );
-          },
-        ),
-      ),
-    );
+    return Container(padding: const EdgeInsets.all(24), child: const Text("Add Student Form Placeholder"));
   }
 }

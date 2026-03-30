@@ -1,7 +1,7 @@
 name: nova_rise_app
 description: "SchoolApp MVP mobile client."
 publish_to: "none"
-version: 1.0.0+1
+version: 1.2.1+26
 
 environment:
   sdk: ^3.8.1
@@ -21,13 +21,32 @@ dependencies:
   cached_network_image: ^3.4.1
   firebase_messaging: ^15.2.10
   intl: ^0.20.2
+  flutter_image_compress: ^2.4.0
+  path_provider: ^2.1.5
+  image_picker: ^1.1.2
+  image_cropper: ^8.0.2
+  shared_preferences: ^2.5.3
+  excel: ^4.0.6
+  csv: ^6.0.0
+  pdf: ^3.10.10
+  printing: ^5.11.1
 
 dev_dependencies:
   flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.14.3
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/logo.png"
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/images/logo.png"
 
 flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/data/
+    - assets/fonts/

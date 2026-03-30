@@ -1,10 +1,11 @@
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-import "../../../../core/models/app_user.dart";
+import "package:nova_rise_app/core/models/app_user.dart";
 import "../../../../shared/widgets/async_value_view.dart";
 import "package:nova_rise_app/features/students/presentation/controllers/student_controller.dart";
 import "../../../../shared/widgets/app_surface.dart";
+import "package:nova_rise_app/core/providers/school_providers.dart";
 import "../../../auth/presentation/controllers/session_controller.dart";
 import "../controllers/messages_controller.dart";
 
@@ -33,6 +34,7 @@ class MessagesScreen extends ConsumerWidget {
       appBar: isTab ? null : AppBar(title: const Text("Updates")),
       floatingActionButton: canPost
           ? FloatingActionButton.extended(
+              heroTag: "messages_fab",
               onPressed: () => _showComposeDialog(context, ref, user!),
               label: const Text("Compose"),
               icon: const Icon(Icons.edit_note),

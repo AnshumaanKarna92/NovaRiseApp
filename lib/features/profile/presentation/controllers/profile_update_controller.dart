@@ -2,8 +2,9 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../auth/presentation/controllers/session_controller.dart';
+import "package:flutter_riverpod/flutter_riverpod.dart";
+import "../../../auth/presentation/controllers/session_controller.dart";
+import "../../../../core/providers/school_providers.dart";
 
 class ProfileUpdateState {
   const ProfileUpdateState({this.isUploading = false, this.error});
@@ -14,7 +15,7 @@ class ProfileUpdateState {
 final profileUpdateControllerProvider = StateNotifierProvider<ProfileUpdateController, ProfileUpdateState>((ref) {
   return ProfileUpdateController(
     ref.watch(firebaseFirestoreProvider),
-    FirebaseStorage.instance,
+    ref.watch(firebaseStorageProvider),
     ref,
   );
 });
@@ -111,6 +112,8 @@ class ProfileUpdateController extends StateNotifier<ProfileUpdateState> {
     String? parentName,
     String? parentPhone,
     String? marksData,
+    String? rollNo,
+    double? monthlyFees,
   }) async {
     try {
       final Map<String, dynamic> updates = {};
@@ -119,11 +122,38 @@ class ProfileUpdateController extends StateNotifier<ProfileUpdateState> {
       if (parentName != null) updates['parentName'] = parentName;
       if (parentPhone != null) updates['parentPhone'] = parentPhone;
       if (marksData != null) updates['marksData'] = marksData;
+      if (rollNo != null) updates['rollNo'] = rollNo;
+      if (monthlyFees != null) updates['monthlyFees'] = monthlyFees;
       
       if (updates.isEmpty) return;
       updates['updatedAt'] = FieldValue.serverTimestamp();
 
       await _firestore.collection('students').doc(studentId).update(updates);
+    } catch (e) {
+      state = ProfileUpdateState(error: e.toString());
+    }
+  }
+
+  Future<void> updateStaffProfile({
+    required String uid,
+    String? displayName,
+    String? phone,
+    String? bloodGroup,
+    String? primarySubject,
+    List<String>? assignedClassIds,
+  }) async {
+    try {
+      final Map<String, dynamic> updates = {};
+      if (displayName != null) updates['displayName'] = displayName;
+      if (phone != null) updates['phone'] = phone;
+      if (bloodGroup != null) updates['bloodGroup'] = bloodGroup;
+      if (primarySubject != null) updates['primarySubject'] = primarySubject;
+      if (assignedClassIds != null) updates['assignedClassIds'] = assignedClassIds;
+      
+      if (updates.isEmpty) return;
+      updates['updatedAt'] = FieldValue.serverTimestamp();
+
+      await _firestore.collection('users').doc(uid).update(updates);
     } catch (e) {
       state = ProfileUpdateState(error: e.toString());
     }

@@ -1,12 +1,13 @@
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-import "../../../../core/models/app_user.dart";
-import "../../../../core/models/attendance_document.dart";
-import "../../../../core/models/attendance_summary.dart";
-import "../../../auth/presentation/controllers/session_controller.dart";
-import "../../../students/presentation/controllers/student_controller.dart";
-import "../../../admin_tools/presentation/controllers/admin_tools_controller.dart";
-import "../../data/attendance_submission_service.dart";
+import "package:nova_rise_app/core/models/app_user.dart";
+import "package:nova_rise_app/core/providers/school_providers.dart";
+import "package:nova_rise_app/core/models/attendance_document.dart";
+import "package:nova_rise_app/core/models/attendance_summary.dart";
+import "package:nova_rise_app/features/auth/presentation/controllers/session_controller.dart";
+import "package:nova_rise_app/features/students/presentation/controllers/student_controller.dart";
+import "package:nova_rise_app/features/admin_tools/presentation/controllers/admin_tools_controller.dart";
+import "package:nova_rise_app/features/attendance/data/attendance_submission_service.dart";
 
 // ── Role helpers ────────────────────────────────────────────────────────────
 

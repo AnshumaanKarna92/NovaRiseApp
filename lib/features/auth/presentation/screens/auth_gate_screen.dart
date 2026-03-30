@@ -2,26 +2,26 @@ import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
 
-import "../../../../core/models/app_user.dart";
-import "../../../../core/models/school_class.dart";
-import "../../../../shared/widgets/app_surface.dart";
-import "../../../../shared/widgets/feature_card.dart";
-import "../../../admin_tools/presentation/controllers/admin_tools_controller.dart";
-import "../../../admin_tools/presentation/screens/admin_tools_screen.dart";
-import "../../../attendance/presentation/controllers/attendance_controller.dart";
-import "../../../attendance/presentation/screens/attendance_screen.dart";
-import "../../../diary/presentation/screens/diary_screen.dart";
-import "../../../fees/presentation/controllers/fees_controller.dart";
-import "../../../fees/presentation/screens/fees_screen.dart";
-import "../../../messages/presentation/controllers/messages_controller.dart";
-import "../../../messages/presentation/screens/messages_screen.dart";
-import "../../../notices/presentation/controllers/notices_controller.dart";
-import "../../../notices/presentation/screens/notices_screen.dart";
-import "../../../profile/presentation/screens/profile_screen.dart";
-import "../../../students/presentation/controllers/student_controller.dart";
-import "../../../students/presentation/screens/students_screen.dart";
-
-import "../controllers/session_controller.dart";
+import "package:nova_rise_app/core/models/app_user.dart";
+import "package:nova_rise_app/core/models/school_class.dart";
+import "package:nova_rise_app/shared/widgets/app_surface.dart";
+import "package:nova_rise_app/shared/widgets/feature_card.dart";
+import "package:nova_rise_app/features/admin_tools/presentation/controllers/admin_tools_controller.dart";
+import "package:nova_rise_app/features/admin_tools/presentation/screens/admin_tools_screen.dart";
+import "package:nova_rise_app/features/attendance/presentation/controllers/attendance_controller.dart";
+import "package:nova_rise_app/features/attendance/presentation/screens/attendance_screen.dart";
+import "package:nova_rise_app/features/diary/presentation/screens/diary_screen.dart";
+import "package:nova_rise_app/features/fees/presentation/controllers/fees_controller.dart";
+import "package:nova_rise_app/features/fees/presentation/screens/fees_screen.dart";
+import "package:nova_rise_app/features/messages/presentation/controllers/messages_controller.dart";
+import "package:nova_rise_app/features/messages/presentation/screens/messages_screen.dart";
+import "package:nova_rise_app/features/notices/presentation/controllers/notices_controller.dart";
+import "package:nova_rise_app/features/notices/presentation/screens/notices_screen.dart";
+import "package:nova_rise_app/features/profile/presentation/screens/profile_screen.dart";
+import "package:nova_rise_app/features/students/presentation/controllers/student_controller.dart";
+import "package:nova_rise_app/features/students/presentation/screens/students_screen.dart";
+import "package:nova_rise_app/features/auth/presentation/controllers/session_controller.dart";
+import "package:nova_rise_app/core/providers/school_providers.dart";
 import "sign_in_screen.dart";
 
 class AuthGateScreen extends ConsumerStatefulWidget {
@@ -46,19 +46,28 @@ class _AuthGateScreenState extends ConsumerState<AuthGateScreen> {
       _bootstrapError = null;
     });
 
+    debugPrint("AUTH_GATE: Starting bootstrap for UID: ${ref.read(authStateProvider).valueOrNull?.uid}");
     try {
-      final fcmToken = await ref.read(notificationServiceProvider).getToken();
-      await ref.read(authServiceProvider).ensureUserProfile(fcmToken: fcmToken);
-      if (!mounted) {
-        return;
+      String? fcmToken;
+      try {
+        debugPrint("AUTH_GATE: Fetching FCM token...");
+        fcmToken = await ref.read(notificationServiceProvider).getToken().timeout(const Duration(seconds: 10));
+        debugPrint("AUTH_GATE: FCM token fetched: ${fcmToken?.substring(0, 10)}...");
+      } catch (e) {
+        debugPrint("AUTH_GATE: FCM Token fetch failed/timed out: $e. Proceeding.");
       }
+      
+      debugPrint("AUTH_GATE: Calling ensureUserProfile...");
+      await ref.read(authServiceProvider).ensureUserProfile(fcmToken: fcmToken);
+      debugPrint("AUTH_GATE: ensureUserProfile completed.");
+      
+      if (!mounted) return;
       setState(() {
         _bootstrapInProgress = false;
       });
     } catch (error) {
-      if (!mounted) {
-        return;
-      }
+      debugPrint("AUTH_GATE: Bootstrap FATAL ERROR: $error");
+      if (!mounted) return;
       setState(() {
         _bootstrapInProgress = false;
         _bootstrapError = error.toString();
@@ -70,9 +79,16 @@ class _AuthGateScreenState extends ConsumerState<AuthGateScreen> {
   Widget build(BuildContext context) {
     final authState = ref.watch(authStateProvider);
     final profileState = ref.watch(userProfileProvider);
+    
+    debugPrint("AUTH_GATE: Build triggered. Auth: ${authState.isLoading ? 'Loading' : authState.valueOrNull?.uid}, Profile: ${profileState.isLoading ? 'Loading' : profileState.valueOrNull?.displayName}");
 
     if (authState.isLoading || profileState.isLoading) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
+    if (profileState.hasError) {
+       debugPrint("AUTH_GATE: Profile Sync Error: ${profileState.error}");
+       // Fall through to bootstrap or show error
     }
 
     final firebaseUser = authState.valueOrNull;
@@ -181,7 +197,7 @@ class _AuthenticatedLayoutState extends ConsumerState<_AuthenticatedLayout> {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.5),
+              color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.5),
               borderRadius: BorderRadius.circular(16),
             ),
             child: Row(
@@ -434,7 +450,7 @@ class _DashboardView extends ConsumerWidget {
     final notices = ref.watch(noticesProvider).valueOrNull ?? const [];
     final messages = ref.watch(messagesProvider).valueOrNull ?? const [];
     final attendance = ref.watch(attendanceSummariesProvider).valueOrNull ?? const [];
-    final adminSummary = ref.watch(adminSummaryProvider).valueOrNull;
+    final adminSummary = ref.watch(adminSummaryProvider);
     final stats = _getStatsForRole(profile, students, fees, notices, messages, attendance, adminSummary, ref);
 
     final teacherClasses = profile.role == UserRole.teacher 
@@ -463,7 +479,7 @@ class _DashboardView extends ConsumerWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                         decoration: BoxDecoration(
-                          color: _accentForRole(profile.role).withValues(alpha: 0.1),
+                          color: _accentForRole(profile.role).withOpacity(0.1),
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: Text(
@@ -490,7 +506,7 @@ class _DashboardView extends ConsumerWidget {
               ),
               child: CircleAvatar(
                 radius: 20,
-                backgroundColor: _accentForRole(profile.role).withValues(alpha: 0.08),
+                backgroundColor: _accentForRole(profile.role).withOpacity(0.08),
                 child: Icon(_iconForRole(profile.role), color: _accentForRole(profile.role), size: 20),
               ),
             ),
@@ -589,6 +605,40 @@ class _DashboardView extends ConsumerWidget {
   }
 }
 
+class _BreakdownCard extends StatelessWidget {
+  const _BreakdownCard({required this.label, required this.value, required this.icon, required this.color});
+  final String label;
+  final String value;
+  final IconData icon;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.08),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: color.withOpacity(0.1)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, size: 16, color: color),
+              const SizedBox(width: 8),
+              Text(label, style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w900, letterSpacing: 0.5)),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(value, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w900)),
+        ],
+      ),
+    );
+  }
+}
+
 class _SchoolOverviewGrid extends StatelessWidget {
   const _SchoolOverviewGrid({this.adminSummary});
   final Map<String, int>? adminSummary;
@@ -599,15 +649,59 @@ class _SchoolOverviewGrid extends StatelessWidget {
       children: [
         _OverviewItem(
           title: "Student Roster",
-          value: "${adminSummary?["students"] ?? 0} active",
+          value: "${adminSummary?["students"] ?? 0} total students",
           icon: Icons.groups_3_outlined,
           color: const Color(0xFF003D5B),
           onTap: () => context.push("/students"),
         ),
+        const SizedBox(height: 16),
+        Row(
+          children: [
+            Expanded(
+              child: _BreakdownCard(
+                label: "BOYS",
+                value: "${adminSummary?["boys"] ?? 0}",
+                icon: Icons.male,
+                color: Colors.blue,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _BreakdownCard(
+                label: "GIRLS",
+                value: "${adminSummary?["girls"] ?? 0}",
+                icon: Icons.female,
+                color: Colors.pink,
+              ),
+            ),
+          ],
+        ),
         const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: _BreakdownCard(
+                label: "JUNIOR",
+                value: "${adminSummary?["juniors"] ?? 0}",
+                icon: Icons.child_care,
+                color: Colors.orange,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _BreakdownCard(
+                label: "SENIOR",
+                value: "${adminSummary?["seniors"] ?? 0}",
+                icon: Icons.school,
+                color: Colors.indigo,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 20),
         _OverviewItem(
           title: "Class Sections",
-          value: "${adminSummary?["classes"] ?? 0} grades",
+          value: "${adminSummary?["classes"] ?? 0} active grades",
           icon: Icons.class_outlined,
           color: const Color(0xFFD4AF37),
           onTap: () => context.push("/students"),
@@ -659,7 +753,7 @@ class _OverviewItem extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.08),
+                  color: color.withOpacity(0.08),
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: Icon(icon, color: color, size: 24),
@@ -810,7 +904,7 @@ class _AssignmentCard extends ConsumerWidget {
         leading: Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: (isClassTeacher ? const Color(0xFF10B981) : const Color(0xFF3B82F6)).withValues(alpha: 0.1),
+            color: (isClassTeacher ? const Color(0xFF10B981) : const Color(0xFF3B82F6)).withOpacity(0.1),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(
@@ -863,7 +957,7 @@ class _SmartBanner extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: accent.withValues(alpha: 0.25),
+            color: accent.withOpacity(0.25),
             blurRadius: 16,
             offset: const Offset(0, 8),
           ),
@@ -873,7 +967,7 @@ class _SmartBanner extends StatelessWidget {
           end: Alignment.bottomRight,
           colors: [
             accent,
-            accent.withValues(alpha: 0.8),
+            accent.withOpacity(0.8),
           ],
         ),
       ),
@@ -886,7 +980,7 @@ class _SmartBanner extends StatelessWidget {
               Text(
                 "SYSTEM OVERVIEW",
                 style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.7),
+                  color: Colors.white.withOpacity(0.7),
                   fontSize: 10,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 1.5,
@@ -962,11 +1056,11 @@ class _StatusItem extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(icon, color: Colors.white.withValues(alpha: 0.6), size: 14),
+                Icon(icon, color: Colors.white.withOpacity(0.6), size: 14),
                 const SizedBox(width: 6),
                 Text(
                   label.toUpperCase(),
-                  style: TextStyle(color: Colors.white.withValues(alpha: 0.6), fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 0.5),
+                  style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 0.5),
                 ),
               ],
             ),
@@ -981,7 +1075,7 @@ class _StatusItem extends StatelessWidget {
                 ),
                 if (onTap != null) ...[
                   const SizedBox(width: 4),
-                  Icon(Icons.chevron_right, color: Colors.white.withValues(alpha: 0.3), size: 16),
+                  Icon(Icons.chevron_right, color: Colors.white.withOpacity(0.3), size: 16),
                 ],
               ],
             ),
@@ -1011,7 +1105,7 @@ class _HelpSection extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF1E293B).withValues(alpha: 0.05),
+                  color: Color(0xFF1E293B).withOpacity(0.05),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(Icons.help_center_outlined, color: Color(0xFF64748B), size: 20),

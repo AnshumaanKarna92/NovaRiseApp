@@ -842,3 +842,69 @@ export const processImportJob = onDocumentCreated("import_jobs/{jobId}", async (
     });
   }
 });
+export const bulkCreateStudents = onCallV2({invoker: "public"}, async (requestCall) => {
+  const context = {auth: requestCall.auth} as any;
+  const request = await getRequestContext(context);
+  requireRole(request.role, ["admin"]);
+
+  // We read from the 'students' collection instead of a JSON file to be in-sync
+  const studentsQuery = await db.collection("students").where("schoolId", "==", request.schoolId).get();
+  const students = studentsQuery.docs.map(doc => doc.data());
+
+  const results = {
+    total: students.length,
+    success: 0,
+    failed: 0,
+    errors: [] as string[]
+  };
+
+  const DEFAULT_PASS = "password123";
+
+  for (const s of students) {
+    const email = `${s.studentId}.${s.branchId}@novarise.com`.toLowerCase();
+    try {
+      // 1. Create Auth User if not exists
+      let userRecord;
+      try {
+        userRecord = await admin.auth().getUserByEmail(email);
+      } catch (e: any) {
+        if (e.code === "auth/user-not-found") {
+          userRecord = await admin.auth().createUser({
+            email,
+            password: DEFAULT_PASS,
+            displayName: s.name,
+          });
+        } else {
+          throw e;
+        }
+      }
+
+      const uid = userRecord.uid;
+
+      // 2. Ensure User Profile exists with 'parent' role (to match current structure)
+      const profileRef = db.collection("users").doc(uid);
+      const profileSnap = await profileRef.get();
+      
+      if (!profileSnap.exists) {
+        await profileRef.set({
+          uid,
+          email,
+          role: "parent", // Students/Parents log in as 'parent' role in this app to see data
+          displayName: s.name,
+          schoolId: request.schoolId,
+          linkedStudentIds: [s.studentId],
+          status: "active",
+          createdAt: admin.firestore.FieldValue.serverTimestamp(),
+          updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+      }
+      
+      results.success++;
+    } catch (err: any) {
+      results.failed++;
+      results.errors.push(`${email}: ${err.message}`);
+    }
+  }
+
+  return results;
+});

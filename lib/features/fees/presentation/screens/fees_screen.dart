@@ -2,15 +2,18 @@ import "package:file_picker/file_picker.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-import "../../../../core/models/app_user.dart";
-import "../../../../core/models/fee_invoice.dart";
-import "../../../../core/models/student.dart";
-import "../../../../shared/widgets/async_value_view.dart";
-import "../../../../shared/widgets/app_surface.dart";
-import "../../../auth/presentation/controllers/session_controller.dart";
-import "../../../students/presentation/controllers/student_controller.dart";
-import "../controllers/fee_submission_controller.dart";
-import "../controllers/fees_controller.dart";
+import "package:nova_rise_app/core/models/app_user.dart";
+import "package:nova_rise_app/core/models/fee_invoice.dart";
+import "package:nova_rise_app/core/models/student.dart";
+import "package:nova_rise_app/shared/widgets/async_value_view.dart";
+import "package:nova_rise_app/shared/widgets/app_surface.dart";
+import "package:nova_rise_app/features/auth/presentation/controllers/session_controller.dart";
+import "package:nova_rise_app/features/students/presentation/controllers/student_controller.dart";
+import "package:nova_rise_app/core/providers/school_providers.dart";
+import "package:nova_rise_app/core/providers/filter_providers.dart";
+import "package:nova_rise_app/shared/widgets/filter_bar.dart";
+import "package:nova_rise_app/features/fees/presentation/controllers/fee_submission_controller.dart";
+import "package:nova_rise_app/features/fees/presentation/controllers/fees_controller.dart";
 
 class FeesScreen extends ConsumerWidget {
   const FeesScreen({super.key});
@@ -305,9 +308,9 @@ class _FeeUploadSheetState extends ConsumerState<_FeeUploadSheet> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: const Color(0xFF003D5B).withValues(alpha: 0.05),
+              color: Color(0xFF003D5B).withOpacity(0.05),
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: const Color(0xFF003D5B).withValues(alpha: 0.1)),
+              border: Border.all(color: Color(0xFF003D5B).withOpacity(0.1)),
             ),
             child: Row(
               children: [
@@ -317,7 +320,7 @@ class _FeeUploadSheetState extends ConsumerState<_FeeUploadSheet> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
-                      BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10)
+                      BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10)
                     ],
                   ),
                   child: const Icon(Icons.qr_code_2, size: 60, color: Color(0xFF003D5B)),
@@ -424,8 +427,8 @@ class _FileSelector extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2)),
-          color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.05),
+          border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.2)),
+          color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
         ),
         child: Row(
           children: [
@@ -490,8 +493,9 @@ class _AdminFeesViewState extends ConsumerState<_AdminFeesView> {
 
     return Column(
       children: [
+        const GlobalFilterBar(),
         Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           child: Column(
             children: [
               const ScreenIntroCard(
@@ -544,43 +548,62 @@ class _AdminFeesViewState extends ConsumerState<_AdminFeesView> {
           ),
         ),
         Expanded(
-          child: filtered.isEmpty
-              ? const Center(child: Text("No records match the selected filters."))
-              : ListView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                  itemCount: filtered.length,
-                  itemBuilder: (context, index) {
-                    final invoice = filtered[index];
-                    final student = mappedStudents.firstWhere((s) => s.studentId == invoice.studentId, orElse: () => null);
-                    
-                    bool isPaid = invoice.paymentStatus.contains('paid') || invoice.paymentStatus.contains('verified');
-                    bool isPending = invoice.paymentStatus.contains('pending');
-                    
-                    Color statusColor = isPaid ? const Color(0xFF00A86B) : (isPending ? const Color(0xFFD4AF37) : const Color(0xFFB34747));
-                    String statusText = isPaid ? "VERIFIED" : (isPending ? "PENDING REVIEW" : "UNPAID");
-                    
-                    return Card(
-                      margin: const EdgeInsets.only(bottom: 12),
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          backgroundColor: statusColor.withValues(alpha: 0.1),
-                          child: Icon(isPaid ? Icons.check : (isPending ? Icons.hourglass_top : Icons.warning_amber), color: statusColor, size: 20),
-                        ),
-                        title: Text(widget.studentNames[invoice.studentId] ?? invoice.studentId, style: const TextStyle(fontWeight: FontWeight.bold)),
-                        subtitle: Text("${invoice.title} • ${classesMap[student?.classId] ?? (student?.classId ?? '-')}\nDue: ${invoice.dueDate}"),
-                        trailing: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text("₹${invoice.amount.toStringAsFixed(0)}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                            Text(statusText, style: TextStyle(color: statusColor, fontSize: 10, fontWeight: FontWeight.bold)),
-                          ],
-                        ),
-                        isThreeLine: true,
+          child: Builder(
+            builder: (context) {
+              final studentList = widget.students.cast<Student>();
+              final filter = ref.watch(globalSchoolFilterProvider);
+              
+              final finalFiltered = filtered.where((inv) {
+                final student = studentList.firstWhere((s) => s.studentId == inv.studentId, orElse: () => Student.empty());
+                if (student.studentId.isEmpty) return false;
+                
+                final genderMatch = filter.gender == GenderFilter.all || student.branchId == (filter.gender == GenderFilter.boys ? "boys" : "girls");
+                final levelMatch = filter.level == LevelFilter.all || (filter.level == LevelFilter.junior ? student.isJunior : !student.isJunior);
+                
+                return genderMatch && levelMatch;
+              }).toList();
+
+              if (finalFiltered.isEmpty) {
+                return const Center(child: Text("No records match the selected filters."));
+              }
+
+              return ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                itemCount: finalFiltered.length,
+                itemBuilder: (context, index) {
+                  final invoice = finalFiltered[index];
+                  final student = studentList.firstWhere((s) => s.studentId == invoice.studentId, orElse: () => Student.empty());
+                  
+                  bool isPaid = invoice.paymentStatus.contains('paid') || invoice.paymentStatus.contains('verified');
+                  bool isPending = invoice.paymentStatus.contains('pending');
+                  
+                  Color statusColor = isPaid ? const Color(0xFF00A86B) : (isPending ? const Color(0xFFD4AF37) : const Color(0xFFB34747));
+                  String statusText = isPaid ? "VERIFIED" : (isPending ? "PENDING REVIEW" : "UNPAID");
+                  
+                  return Card(
+                    margin: const EdgeInsets.only(bottom: 12),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: statusColor.withOpacity(0.1),
+                        child: Icon(isPaid ? Icons.check : (isPending ? Icons.hourglass_top : Icons.warning_amber), color: statusColor, size: 20),
                       ),
-                    );
-                  },
-                ),
+                      title: Text(widget.studentNames[invoice.studentId] ?? invoice.studentId, style: const TextStyle(fontWeight: FontWeight.bold)),
+                      subtitle: Text("${invoice.title} • ${classesMap[student.classId] ?? (student.classId.isEmpty ? '-' : student.classId)}\nDue: ${invoice.dueDate}"),
+                      trailing: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text("₹${invoice.amount.toStringAsFixed(0)}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                          Text(statusText, style: TextStyle(color: statusColor, fontSize: 10, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                      isThreeLine: true,
+                    ),
+                  );
+                },
+              );
+            },
+          ),
         ),
       ],
     );

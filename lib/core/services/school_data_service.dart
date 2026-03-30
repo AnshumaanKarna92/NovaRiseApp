@@ -1,16 +1,16 @@
 import "package:cloud_firestore/cloud_firestore.dart";
 
-import "../models/app_user.dart";
-import "../models/attendance_document.dart";
-import "../models/attendance_summary.dart";
-import "../models/fee_invoice.dart";
-import "../models/fee_payment.dart";
-import "../models/import_job.dart";
-import "../models/lesson_record.dart";
-import "../models/message_item.dart";
-import "../models/notice_item.dart";
-import "../models/school_class.dart";
-import "../models/student.dart";
+import "package:nova_rise_app/core/models/app_user.dart";
+import "package:nova_rise_app/core/models/attendance_document.dart";
+import "package:nova_rise_app/core/models/attendance_summary.dart";
+import "package:nova_rise_app/core/models/fee_invoice.dart";
+import "package:nova_rise_app/core/models/fee_payment.dart";
+import "package:nova_rise_app/core/models/import_job.dart";
+import "package:nova_rise_app/core/models/lesson_record.dart";
+import "package:nova_rise_app/core/models/message_item.dart";
+import "package:nova_rise_app/core/models/notice_item.dart";
+import "package:nova_rise_app/core/models/school_class.dart";
+import "package:nova_rise_app/core/models/student.dart";
 
 class SchoolDataService {
   SchoolDataService(this._firestore);
@@ -48,7 +48,7 @@ class SchoolDataService {
     return _firestore
         .collection("students")
         .where("schoolId", isEqualTo: user.schoolId)
-        .limit(100)
+        .limit(1000)
         .snapshots()
         .map((snapshot) => snapshot.docs
             .map((doc) => Student.fromMap(doc.id, doc.data()))
@@ -120,7 +120,7 @@ class SchoolDataService {
     }
     return _firestore
         .collection("attendance")
-        .where("classId", whereIn: classIds.take(10).toList())
+        .where("classId", whereIn: classIds.take(30).toList())
         .limit(200)
         .snapshots()
         .map((snapshot) => snapshot.docs
@@ -172,10 +172,13 @@ class SchoolDataService {
         .where("schoolId", isEqualTo: schoolId)
         .where("role", whereIn: ["teacher", "cashCollector"])
         .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => AppUser.fromMap(doc.id, doc.data()))
-            .toList()
-          ..sort((a, b) => a.displayName.compareTo(b.displayName)));
+        .map((snapshot) {
+          final users = snapshot.docs.map((doc) => AppUser.fromMap(doc.id, doc.data())).toList();
+          // De-duplicate by displayName to catch cross-branch duplicates
+          final uniqueMap = {for (final u in users) u.displayName.trim().toLowerCase(): u};
+          final uniqueList = uniqueMap.values.toList();
+          return uniqueList..sort((a, b) => a.displayName.compareTo(b.displayName));
+        });
   }
 
   Stream<List<SchoolClass>> watchClassesForSchool(String schoolId) {
@@ -210,5 +213,89 @@ class SchoolDataService {
         .map((doc) => LessonRecord.fromMap(doc.id, doc.data() as Map<String, dynamic>))
         .toList()
       ..sort((a, b) => b.createdAt.compareTo(a.createdAt)));
+  }
+
+  Future<void> updateClassTeacher(String classId, String teacherUid) async {
+    await _firestore.collection("classes").doc(classId).update({
+      "classTeacherId": teacherUid,
+      "updatedAt": FieldValue.serverTimestamp(),
+    });
+  }
+
+  Future<void> updateClassSubjects(String classId, Map<String, String> subjects) async {
+    await _firestore.collection("classes").doc(classId).update({
+      "subjects": subjects,
+      "updatedAt": FieldValue.serverTimestamp(),
+    });
+  }
+
+  Future<void> verifyFeePayment(String paymentId, String decision, String notes) async {
+    await _firestore.collection("fee_payments").doc(paymentId).update({
+      "status": decision,
+      "verificationNotes": notes,
+      "verifiedAt": FieldValue.serverTimestamp(),
+    });
+  }
+
+  Future<void> recordManualPayment({
+    required String studentId,
+    required String invoiceId,
+    required double amount,
+    required String collectorName,
+    required String schoolId,
+  }) async {
+    final paymentId = "PAY_${DateTime.now().millisecondsSinceEpoch}";
+    await _firestore.collection("fee_payments").doc(paymentId).set({
+      "paymentId": paymentId,
+      "studentId": studentId,
+      "invoiceId": invoiceId,
+      "schoolId": schoolId,
+      "amount": amount,
+      "method": "cash",
+      "status": "verified",
+      "collectorName": collectorName,
+      "paidAt": FieldValue.serverTimestamp(),
+      "createdAt": FieldValue.serverTimestamp(),
+    });
+  }
+
+  Future<void> generateMonthlyFees({
+    required String schoolId,
+    required double defaultAmount,
+    required String monthYearValue,
+  }) async {
+    // This probably should be a cloud function but we'll do simple bulk write
+    final studentsSnapshot = await _firestore.collection("students").where("schoolId", isEqualTo: schoolId).get();
+    final batch = _firestore.batch();
+    for (var doc in studentsSnapshot.docs) {
+      final studentId = doc.id;
+      final data = doc.data();
+      final studentFee = (data["monthlyFees"] as num?)?.toDouble() ?? defaultAmount;
+      
+      final invoiceId = "INV_${studentId}_${monthYearValue.replaceAll("-", "")}";
+      batch.set(_firestore.collection("fee_invoices").doc(invoiceId), {
+        "invoiceId": invoiceId,
+        "studentId": studentId,
+        "schoolId": schoolId,
+        "amount": studentFee,
+        "monthYearLabel": monthYearValue,
+        "status": "pending",
+        "dueDate": DateTime.now().add(const Duration(days: 30)).toIso8601String(),
+        "createdAt": FieldValue.serverTimestamp(),
+      });
+    }
+    await batch.commit();
+  }
+
+  Future<void> saveLessonRecord(LessonRecord record) async {
+    await _firestore.collection("lesson_records").doc(record.recordId).set(record.toMap());
+  }
+
+  Future<void> updateLessonRecord({required String recordId, required Map<String, dynamic> updates}) async {
+    await _firestore.collection("lesson_records").doc(recordId).update(updates);
+  }
+
+  Future<void> deleteLessonRecord(String recordId) async {
+    await _firestore.collection("lesson_records").doc(recordId).delete();
   }
 }

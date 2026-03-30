@@ -1,9 +1,10 @@
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-import "../../../../core/models/app_user.dart";
-import "../../../../core/models/fee_invoice.dart";
-import "../../../auth/presentation/controllers/session_controller.dart";
-import "../../../students/presentation/controllers/student_controller.dart";
+import "package:nova_rise_app/core/models/app_user.dart";
+import "package:nova_rise_app/core/models/fee_invoice.dart";
+import "package:nova_rise_app/features/auth/presentation/controllers/session_controller.dart";
+import "package:nova_rise_app/features/students/presentation/controllers/student_controller.dart";
+import "package:nova_rise_app/core/providers/school_providers.dart";
 
 final feeInvoicesProvider = StreamProvider<List<FeeInvoice>>((ref) {
   final user = ref.watch(userProfileProvider).valueOrNull;

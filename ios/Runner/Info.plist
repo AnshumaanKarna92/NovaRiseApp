@@ -45,5 +45,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Nova Rise Academy needs camera access to take profile photos and scan documents.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Nova Rise Academy needs gallery access to upload profile photos and fee receipts.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Nova Rise Academy needs microphone access for video capture if needed.</string>
 </dict>
 </plist>

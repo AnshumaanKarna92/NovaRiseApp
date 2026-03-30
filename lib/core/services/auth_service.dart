@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -68,18 +69,24 @@ class AuthService {
     final user = _auth.currentUser;
     if (user == null) return;
 
-    // Refresh token to get latest claims
-    await user.getIdToken(true);
+    debugPrint("AUTH_SERVICE: ensureUserProfile starting for ${user.uid}");
+    // Refresh token to get latest claims with timeout
+    try {
+      await user.getIdToken(true).timeout(const Duration(seconds: 10));
+      debugPrint("AUTH_SERVICE: ID Token refreshed.");
+    } catch (e) {
+      debugPrint("AUTH_SERVICE: ID Token refresh failed/timed out: $e. Using current token.");
+    }
 
     final callable = _functions.httpsCallable('ensureUserProfile');
     try {
+      debugPrint("AUTH_SERVICE: Calling Cloud Function...");
       await callable.call({
         if (fcmToken != null) 'fcmToken': fcmToken,
-      });
+      }).timeout(const Duration(seconds: 20));
+      debugPrint("AUTH_SERVICE: Cloud Function call returned.");
     } catch (e) {
-      // If the function fails (e.g., cold start or deployment delay), 
-      // we've already created a local profile in createUser as a fallback.
-      print('ensureUserProfile failed: $e');
+      debugPrint("AUTH_SERVICE: ensureUserProfile failed/timed out: $e");
     }
   }
 
@@ -87,5 +94,21 @@ class AuthService {
     final user = _auth.currentUser;
     if (user == null) return;
     await user.updatePassword(newPassword);
+  }
+
+  Future<void> updateTeacherProfile({
+    required String uid,
+    required String displayName,
+    required String phone,
+    String? primarySubject,
+    String? bloodGroup,
+  }) async {
+    await _firestore.collection('users').doc(uid).update({
+      'displayName': displayName,
+      'phone': phone,
+      if (primarySubject != null) 'primarySubject': primarySubject,
+      if (bloodGroup != null) 'bloodGroup': bloodGroup,
+      'updatedAt': FieldValue.serverTimestamp(),
+    });
   }
 }
