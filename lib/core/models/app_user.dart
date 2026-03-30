@@ -14,6 +14,7 @@ class AppUser {
     this.profileImageUrl = "",
     this.bloodGroup,
     this.primarySubject,
+    this.subjects = const [],
   });
 
   factory AppUser.fromMap(String uid, Map<String, dynamic> data) {
@@ -30,6 +31,7 @@ class AppUser {
       profileImageUrl: data["profileImageUrl"] as String? ?? "",
       bloodGroup: data["bloodGroup"] as String?,
       primarySubject: data["primarySubject"] as String?,
+      subjects: List<String>.from(data["subjects"] as List? ?? const []),
     );
   }
 
@@ -45,6 +47,7 @@ class AppUser {
   final String profileImageUrl;
   final String? bloodGroup;
   final String? primarySubject;
+  final List<String> subjects;
 }
 
 UserRole parseUserRole(String? value) {

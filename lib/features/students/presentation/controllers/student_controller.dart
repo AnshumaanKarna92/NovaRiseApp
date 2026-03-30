@@ -15,7 +15,11 @@ final filteredStudentsProvider = Provider<List<Student>>((ref) {
   final students = ref.watch(currentStudentsProvider).valueOrNull ?? [];
   final filter = ref.watch(globalSchoolFilterProvider);
 
+  final classFilter = ref.watch(studentClassFilterProvider);
+
   return students.where((s) {
+    if (classFilter != null && s.classId != classFilter) return false;
+
     final matchesGender = filter.gender == GenderFilter.all || 
         (filter.gender == GenderFilter.boys && s.branchId == "boys") ||
         (filter.gender == GenderFilter.girls && s.branchId == "girls");
@@ -36,9 +40,4 @@ final currentStaffProvider = StreamProvider<List<AppUser>>((ref) {
   return ref.watch(schoolDataServiceProvider).watchStaff(user.schoolId);
 });
 
-// currentClassIdsProvider moved to lib/core/providers/school_providers.dart
-
-final allClassesMapProvider = Provider<Map<String, String>>((ref) {
-  final classes = ref.watch(schoolClassesProvider).valueOrNull ?? const [];
-  return {for (final c in classes) c.id: c.displayName};
-});
+// allStaffProvider/allClassesMapProvider moved to lib/core/providers/school_providers.dart

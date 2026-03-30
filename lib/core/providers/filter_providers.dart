@@ -26,3 +26,5 @@ class GlobalSchoolFilter {
 final globalSchoolFilterProvider = StateProvider<GlobalSchoolFilter>((ref) {
   return const GlobalSchoolFilter();
 });
+
+final studentClassFilterProvider = StateProvider<String?>((ref) => null);

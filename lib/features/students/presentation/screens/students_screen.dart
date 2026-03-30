@@ -42,6 +42,7 @@ class StudentsScreen extends ConsumerWidget {
           data: (allItems) {
             return Column(
               children: [
+                const _ActiveFiltersRow(),
                 if (isAdmin)
                   const GlobalFilterBar(),
                 _SearchBar(ref: ref),
@@ -132,14 +133,7 @@ class StudentsScreen extends ConsumerWidget {
               : null,
         ),
         body: content,
-        floatingActionButton: isAdmin
-            ? FloatingActionButton.extended(
-                heroTag: "students_fab",
-                onPressed: () => _showAddStudentDialog(context, ref),
-                icon: const Icon(Icons.person_add_alt_1_outlined),
-                label: const Text("New Student"),
-              )
-            : null,
+        floatingActionButton: null,
       ),
     );
   }
@@ -260,114 +254,151 @@ class _ClassSummaryTile extends ConsumerWidget {
       elevation: 2,
       shadowColor: Colors.black12,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      child: ExpansionTile(
+        title: Row(
           children: [
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFD4AF37).withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(16),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: const Color(0xFFD4AF37).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: const Icon(Icons.school_outlined, color: Color(0xFFD4AF37), size: 28),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    classesMap[classId] ?? "Grade $classId", 
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: Color(0xFF003D5B))
                   ),
-                  child: const Icon(Icons.school_outlined, color: Color(0xFFD4AF37), size: 28),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Row(
                     children: [
-                      Text(
-                        classesMap[classId] ?? "Grade $classId", 
-                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900, color: Color(0xFF003D5B))
-                      ),
-                      const SizedBox(height: 2),
-                      Row(
-                        children: [
-                          Icon(Icons.people_alt_outlined, size: 14, color: Colors.black45),
-                          const SizedBox(width: 4),
-                          Text("${students.length} Students enrolled", style: const TextStyle(color: Colors.black45, fontSize: 13, fontWeight: FontWeight.w500)),
-                        ],
-                      ),
+                      Icon(Icons.people_alt_outlined, size: 14, color: Colors.black45),
+                      const SizedBox(width: 4),
+                      Text("${students.length} Students", style: const TextStyle(color: Colors.black45, fontSize: 13, fontWeight: FontWeight.w500)),
                     ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 16),
-              child: Divider(height: 1, color: Colors.black12),
-            ),
-            Row(
+          ],
+        ),
+        tilePadding: const EdgeInsets.all(12),
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text("Class Teacher", style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.black38, letterSpacing: 0.5)),
-                      const SizedBox(height: 6),
-                      InkWell(
-                        onTap: teacher.uid == "unknown" ? null : () => Navigator.push(
-                            context, MaterialPageRoute(builder: (_) => TeacherProfileScreen(teacher: teacher))),
-                        child: Row(
-                          children: [
-                            Icon(Icons.verified_user, size: 14, color: teacher.uid == "unknown" ? Colors.black26 : const Color(0xFF00A86B)),
-                            const SizedBox(width: 6),
-                            Flexible(
-                              child: Text(
-                                teacher.uid == "unknown" ? "Not Assigned" : teacher.displayName,
-                                style: TextStyle(
-                                  fontSize: 15, 
-                                  fontWeight: FontWeight.w700, 
-                                  color: teacher.uid == "unknown" ? Colors.black45 : const Color(0xFF003D5B),
-                                  decoration: teacher.uid == "unknown" ? null : TextDecoration.underline,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Column(
+                const Divider(),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    OutlinedButton.icon(
-                      onPressed: () => _showManageSubjects(context, ref),
-                      icon: const Icon(Icons.auto_stories, size: 14),
-                      label: const Text("Subjects", style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
-                      style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        visualDensity: VisualDensity.compact,
-                        side: const BorderSide(color: Color(0xFF003D5B)),
-                        foregroundColor: const Color(0xFF003D5B),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    const Text("Enrolled Students", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF003D5B))),
+                    Text("${students.length} TOTAL", style: const TextStyle(fontSize: 10, color: Colors.black38, fontWeight: FontWeight.w900)),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                SizedBox(
+                  height: students.isEmpty ? 40 : (students.length > 5 ? 200 : null),
+                  child: students.isEmpty 
+                    ? const Center(child: Text("No students enrolled in this section.", style: TextStyle(fontSize: 12, color: Colors.black45)))
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        physics: students.length > 5 ? const ScrollPhysics() : const NeverScrollableScrollPhysics(),
+                        itemCount: students.length,
+                        itemBuilder: (context, index) {
+                          final s = students[index];
+                          return ListTile(
+                            dense: true,
+                            contentPadding: EdgeInsets.zero,
+                            leading: CircleAvatar(
+                              radius: 14,
+                              backgroundColor: const Color(0xFF003D5B).withOpacity(0.1),
+                              child: Text(s.name[0], style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Color(0xFF003D5B))),
+                            ),
+                            title: Text(s.name, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
+                            subtitle: Text("ID: ${s.studentId}", style: const TextStyle(fontSize: 11, color: Colors.black45)),
+                            trailing: const Icon(Icons.chevron_right, size: 14, color: Colors.black12),
+                            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => StudentDetailScreen(student: s))),
+                          );
+                        },
+                      ),
+                ),
+                const Divider(height: 32),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text("Class Teacher", style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.black38, letterSpacing: 0.5)),
+                          const SizedBox(height: 6),
+                          InkWell(
+                            onTap: teacher.uid == "unknown" ? null : () => Navigator.push(
+                                context, MaterialPageRoute(builder: (_) => TeacherProfileScreen(teacher: teacher))),
+                            child: Row(
+                              children: [
+                                Icon(Icons.verified_user, size: 14, color: teacher.uid == "unknown" ? Colors.black26 : const Color(0xFF00A86B)),
+                                const SizedBox(width: 6),
+                                Flexible(
+                                  child: Text(
+                                    teacher.uid == "unknown" ? "Not Assigned" : teacher.displayName,
+                                    style: TextStyle(
+                                      fontSize: 14, 
+                                      fontWeight: FontWeight.w700, 
+                                      color: teacher.uid == "unknown" ? Colors.black45 : const Color(0xFF003D5B),
+                                      decoration: teacher.uid == "unknown" ? null : TextDecoration.underline,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    TextButton.icon(
-                      onPressed: () => _pickTeacher(context, ref, true),
-                      icon: const Icon(Icons.swap_horiz, size: 14),
-                      label: Text(teacher.uid == "unknown" ? "Assign CT" : "Change CT", style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        visualDensity: VisualDensity.compact,
-                        foregroundColor: const Color(0xFFD4AF37),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                      ),
+                    const SizedBox(width: 12),
+                    Column(
+                      children: [
+                        OutlinedButton.icon(
+                          onPressed: () => _showManageSubjects(context, ref),
+                          icon: const Icon(Icons.auto_stories, size: 14),
+                          label: const Text("Subjects", style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                          style: OutlinedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            visualDensity: VisualDensity.compact,
+                            side: const BorderSide(color: Color(0xFF003D5B)),
+                            foregroundColor: const Color(0xFF003D5B),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        TextButton.icon(
+                          onPressed: () => _pickTeacher(context, ref, true),
+                          icon: const Icon(Icons.swap_horiz, size: 14),
+                          label: Text(teacher.uid == "unknown" ? "Assign CT" : "Change CT", style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            visualDensity: VisualDensity.compact,
+                            foregroundColor: const Color(0xFFD4AF37),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -459,29 +490,78 @@ class _ManageSubjectsSheet extends ConsumerWidget {
               IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close)),
             ],
           ),
-          const SizedBox(height: 16),
-          for (final entry in subjects.entries)
-            ListTile(
-              title: Text(entry.key),
-              subtitle: Text(allStaff.firstWhere((s) => s.uid == entry.value, orElse: () => const AppUser(uid: "unknown", schoolId: "", role: UserRole.unknown, displayName: "Not Assigned", email: "", phone: "")).displayName),
-              trailing: IconButton(
-                icon: const Icon(Icons.edit_outlined),
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (ctx) => _TeacherSelectionDialog(
-                      allStaff: allStaff,
-                      onTeacherSelected: (newTeacher) {
-                        final updated = Map<String, String>.from(subjects);
-                        updated[entry.key] = newTeacher.uid;
-                        ref.read(adminToolsControllerProvider.notifier).updateClassSubjects(classId, updated);
-                        Navigator.pop(ctx);
-                      },
+          Expanded(
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                for (final entry in subjects.entries)
+                  ListTile(
+                    title: Text(entry.key),
+                    subtitle: Text(allStaff.firstWhere((s) => s.uid == entry.value, orElse: () => const AppUser(uid: "unknown", schoolId: "", role: UserRole.unknown, displayName: "Not Assigned", email: "", phone: "")).displayName),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.edit_outlined),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (ctx) => _TeacherSelectionDialog(
+                                allStaff: allStaff,
+                                onTeacherSelected: (newTeacher) {
+                                  final updated = Map<String, String>.from(subjects);
+                                  updated[entry.key] = newTeacher.uid;
+                                  ref.read(adminToolsControllerProvider.notifier).updateClassSubjects(classId, updated);
+                                  Navigator.pop(ctx);
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
+                          onPressed: () {
+                            final updated = Map<String, String>.from(subjects);
+                            updated.remove(entry.key);
+                            ref.read(adminToolsControllerProvider.notifier).updateClassSubjects(classId, updated);
+                          },
+                        ),
+                      ],
                     ),
-                  );
-                },
-              ),
+                  ),
+              ],
             ),
+          ),
+          const SizedBox(height: 16),
+          FilledButton.icon(
+            onPressed: () => _showAddSubjectDialog(context, ref, subjects),
+            icon: const Icon(Icons.add),
+            label: const Text("New Subject"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showAddSubjectDialog(BuildContext context, WidgetRef ref, Map<String, String> subjects) {
+    final controller = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Add New Subject"),
+        content: TextField(controller: controller, decoration: const InputDecoration(labelText: "Subject Name")),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("Cancel")),
+          FilledButton(
+            onPressed: () {
+              if (controller.text.isEmpty) return;
+              final updated = Map<String, String>.from(subjects);
+              updated[controller.text.trim()] = "unknown";
+              ref.read(adminToolsControllerProvider.notifier).updateClassSubjects(classId, updated);
+              Navigator.pop(ctx);
+            },
+            child: const Text("Add"),
+          ),
         ],
       ),
     );
@@ -557,5 +637,48 @@ class _AddStudentSheetState extends State<_AddStudentSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(padding: const EdgeInsets.all(24), child: const Text("Add Student Form Placeholder"));
+  }
+}
+class _ActiveFiltersRow extends ConsumerWidget {
+  const _ActiveFiltersRow({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final classFilterId = ref.watch(studentClassFilterProvider);
+    if (classFilterId == null) return const SizedBox.shrink();
+
+    final classesMap = ref.watch(allClassesMapProvider);
+    final className = classesMap[classFilterId] ?? "Selected Grade";
+
+    return Container(
+      width: double.infinity,
+      color: const Color(0xFF10B981).withOpacity(0.05),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(6),
+            decoration: BoxDecoration(color: const Color(0xFF10B981), borderRadius: BorderRadius.circular(8)),
+            child: const Icon(Icons.filter_list, color: Colors.white, size: 14),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              "Viewing Roster: $className",
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFF065F46)),
+            ),
+          ),
+          TextButton(
+            onPressed: () => ref.read(studentClassFilterProvider.notifier).state = null,
+            style: TextButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              visualDensity: VisualDensity.compact,
+              foregroundColor: const Color(0xFF059669),
+            ),
+            child: const Text("Clear", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          ),
+        ],
+      ),
+    );
   }
 }

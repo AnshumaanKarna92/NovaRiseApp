@@ -71,6 +71,14 @@ final currentStudentsProvider = StreamProvider<List<Student>>((ref) {
   return ref.watch(schoolDataServiceProvider).watchStudentsForUser(user);
 });
 
+final allClassesMapProvider = Provider<Map<String, String>>((ref) {
+  final classes = ref.watch(schoolClassesProvider).value ?? [];
+  return {
+    for (final c in classes) 
+      c.id: "${c.displayName}${c.branchId.isNotEmpty ? ' (${c.branchId.toUpperCase()})' : ''}"
+  };
+});
+
 final currentClassIdsProvider = Provider<List<String>>((ref) {
   final user = ref.watch(userProfileProvider).valueOrNull;
   if (user == null) return const [];
@@ -105,6 +113,6 @@ final allStaffProvider = StreamProvider<List<AppUser>>((ref) {
 final teacherClassesProvider = StreamProvider<List<SchoolClass>>((ref) {
   final user = ref.watch(userProfileProvider).valueOrNull;
   if (user == null) return Stream.value([]);
-  return ref.watch(schoolDataServiceProvider).watchClassesForTeacher(user.uid, user.schoolId);
+  return ref.watch(schoolDataServiceProvider).watchClassesForTeacher(user.uid, user.schoolId, user.assignedClassIds);
 });
 

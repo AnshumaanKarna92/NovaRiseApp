@@ -140,6 +140,7 @@ class ProfileUpdateController extends StateNotifier<ProfileUpdateState> {
     String? phone,
     String? bloodGroup,
     String? primarySubject,
+    List<String>? subjects,
     List<String>? assignedClassIds,
   }) async {
     try {
@@ -148,6 +149,7 @@ class ProfileUpdateController extends StateNotifier<ProfileUpdateState> {
       if (phone != null) updates['phone'] = phone;
       if (bloodGroup != null) updates['bloodGroup'] = bloodGroup;
       if (primarySubject != null) updates['primarySubject'] = primarySubject;
+      if (subjects != null) updates['subjects'] = subjects;
       if (assignedClassIds != null) updates['assignedClassIds'] = assignedClassIds;
       
       if (updates.isEmpty) return;

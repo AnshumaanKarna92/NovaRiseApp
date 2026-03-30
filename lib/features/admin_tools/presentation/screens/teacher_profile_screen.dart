@@ -40,14 +40,14 @@ class TeacherProfileScreen extends ConsumerWidget {
                 children: [
                   _DetailRow(
                     label: "Expertise Hub (Subjects)",
-                    value: teacher.primarySubject ?? "Not assigned",
+                    value: teacher.subjects.isNotEmpty ? teacher.subjects.join(", ") : (teacher.primarySubject ?? "Not assigned"),
                     icon: Icons.book_outlined,
                     customValueWidget: Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Wrap(
                         spacing: 8,
                         runSpacing: 4,
-                        children: (teacher.primarySubject?.split(",") ?? ["Not assigned"])
+                        children: (teacher.subjects.isNotEmpty ? teacher.subjects : (teacher.primarySubject?.split(",") ?? ["Not assigned"]))
                             .map((s) => Chip(
                                   label: Text(s.trim(), style: const TextStyle(fontSize: 11, color: Colors.white)),
                                   backgroundColor: const Color(0xFF003D5B),
@@ -57,7 +57,10 @@ class TeacherProfileScreen extends ConsumerWidget {
                             .toList(),
                       ),
                     ),
-                    onEdit: isAdmin ? () => _showEditInfoSheet(context, ref, "Subjects (comma separated)", teacher.primarySubject, (val) => ref.read(profileUpdateControllerProvider.notifier).updateStaffProfile(uid: teacher.uid, primarySubject: val)) : null,
+                    onEdit: isAdmin ? () => _showEditInfoSheet(context, ref, "Subjects (comma separated)", teacher.subjects.join(", "), (val) {
+                      final list = val.split(",").map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
+                      ref.read(profileUpdateControllerProvider.notifier).updateStaffProfile(uid: teacher.uid, subjects: list, primarySubject: list.isNotEmpty ? list.first : "");
+                    }) : null,
                   ),
                   const Divider(),
                   _DetailRow(
@@ -330,6 +333,7 @@ class _ManageAssignedClassesSheet extends ConsumerStatefulWidget {
 
 class _ManageAssignedClassesSheetState extends ConsumerState<_ManageAssignedClassesSheet> {
   late List<String> _selectedIds;
+  String _branchFilter = "all"; // all, boys, girls
 
   @override
   void initState() {
@@ -347,33 +351,50 @@ class _ManageAssignedClassesSheetState extends ConsumerState<_ManageAssignedClas
         children: [
           const Text("Manage Dashboard Assignments", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const Text("Teachers will see these classes on their home dashboard and attendance screens.", style: TextStyle(fontSize: 12, color: Colors.black45)),
-          const SizedBox(height: 20),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              _FilterChip(label: "All", selected: _branchFilter == "all", onSelected: () => setState(() => _branchFilter = "all")),
+              const SizedBox(width: 8),
+              _FilterChip(label: "Boys", selected: _branchFilter == "boys", onSelected: () => setState(() => _branchFilter = "boys")),
+              const SizedBox(width: 8),
+              _FilterChip(label: "Girls", selected: _branchFilter == "girls", onSelected: () => setState(() => _branchFilter = "girls")),
+            ],
+          ),
+          const SizedBox(height: 16),
           SizedBox(
-            height: 300,
+            height: 350,
             child: widget.allClassesValue.when(
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (e, s) => Center(child: Text("Error: $e")),
-              data: (classes) => ListView.builder(
-                itemCount: classes.length,
-                itemBuilder: (context, index) {
-                  final cls = classes[index];
-                  final isSelected = _selectedIds.contains(cls.id);
-                  return CheckboxListTile(
-                    value: isSelected,
-                    title: Text(cls.displayName),
-                    subtitle: Text(cls.branchId.toUpperCase()),
-                    onChanged: (val) {
-                      setState(() {
-                        if (val == true) {
-                          _selectedIds.add(cls.id);
-                        } else {
-                          _selectedIds.remove(cls.id);
-                        }
-                      });
-                    },
-                  );
-                },
-              ),
+              data: (classes) {
+                final filtered = classes.where((c) {
+                  if (_branchFilter == "all") return true;
+                  return c.branchId == _branchFilter;
+                }).toList();
+
+                return ListView.builder(
+                  itemCount: filtered.length,
+                  itemBuilder: (context, index) {
+                    final cls = filtered[index];
+                    final isSelected = _selectedIds.contains(cls.id);
+                    return CheckboxListTile(
+                      value: isSelected,
+                      title: Text(cls.displayName),
+                      subtitle: Text(cls.branchId.toUpperCase()),
+                      onChanged: (val) {
+                        setState(() {
+                          if (val == true) {
+                            _selectedIds.add(cls.id);
+                          } else {
+                            _selectedIds.remove(cls.id);
+                          }
+                        });
+                      },
+                    );
+                  },
+                );
+              },
             ),
           ),
           const SizedBox(height: 24),
@@ -389,6 +410,24 @@ class _ManageAssignedClassesSheetState extends ConsumerState<_ManageAssignedClas
           ),
         ],
       ),
+    );
+  }
+}
+class _FilterChip extends StatelessWidget {
+  const _FilterChip({required this.label, required this.selected, required this.onSelected});
+  final String label;
+  final bool selected;
+  final VoidCallback onSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return ChoiceChip(
+      label: Text(label, style: TextStyle(color: selected ? Colors.white : Colors.black87, fontSize: 12)),
+      selected: selected,
+      onSelected: (_) => onSelected(),
+      selectedColor: const Color(0xFF003D5B),
+      backgroundColor: Colors.grey.withOpacity(0.1),
+      showCheckmark: false,
     );
   }
 }

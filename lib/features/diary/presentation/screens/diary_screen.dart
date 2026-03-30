@@ -456,14 +456,45 @@ class _AddLessonRecordBottomSheetState extends ConsumerState<_AddLessonRecordBot
         _showBengali = true;
       }
     } else {
-      _selectedSubject = widget.user.primarySubject;
+      _selectedSubject = widget.user.subjects.isNotEmpty ? widget.user.subjects.first : widget.user.primarySubject;
     }
+  }
+
+  bool _initialized = false;
+  void _initDefaults(List<SchoolClass> classes) {
+    if (_initialized || classes.isEmpty || widget.editRecord != null) return;
+    _initialized = true;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final firstClass = classes.first;
+      final allClassSubjects = firstClass.subjects.keys.toList();
+      
+      setState(() {
+        _selectedClassId = firstClass.id;
+        
+        final List<String> allClassCombined = {
+          ...firstClass.subjects.keys,
+          ...widget.user.subjects,
+          if (widget.user.primarySubject != null && widget.user.primarySubject!.isNotEmpty) widget.user.primarySubject!,
+          "General Lesson",
+        }.toList()..sort();
+
+        if (allClassCombined.isNotEmpty) {
+           _selectedSubject = allClassCombined.contains(widget.user.primarySubject) 
+               ? widget.user.primarySubject 
+               : allClassCombined.first;
+        }
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final classes = ref.watch(teacherClassesProvider).value ?? const [];
     final state = ref.watch(adminToolsControllerProvider);
+
+    _initDefaults(classes);
 
     return Container(
       padding: EdgeInsets.only(
@@ -506,21 +537,24 @@ class _AddLessonRecordBottomSheetState extends ConsumerState<_AddLessonRecordBot
               final cls = classes.firstWhere((c) => c.id == val);
               final isClassTeacher = cls.classTeacherId == widget.user.uid;
               
-              final mySubjectsInClass = isClassTeacher
-                  ? cls.subjects.keys.toList()
-                  : cls.subjects.entries
-                      .where((e) => e.value == widget.user.uid)
-                      .map((e) => e.key)
-                      .toList();
+              final allClassSubjects = cls.subjects.keys.toList();
               
               setState(() {
                 _selectedClassId = val;
-                if (mySubjectsInClass.length == 1) {
-                  _selectedSubject = mySubjectsInClass.first;
-                } else if (mySubjectsInClass.contains(widget.user.primarySubject)) {
-                  _selectedSubject = widget.user.primarySubject;
+                
+                // If teacher has profile subjects that match class, pick first one
+                final profileMatches = widget.user.subjects.where((s) => allClassSubjects.contains(s)).toList();
+                
+                if (allClassSubjects.isNotEmpty) {
+                  if (profileMatches.isNotEmpty) {
+                    _selectedSubject = profileMatches.first;
+                  } else if (allClassSubjects.contains(widget.user.primarySubject)) {
+                    _selectedSubject = widget.user.primarySubject;
+                  } else {
+                    _selectedSubject = allClassSubjects.first;
+                  }
                 } else {
-                  _selectedSubject = null;
+                  _selectedSubject = "General Lesson";
                 }
               });
             },
@@ -532,20 +566,27 @@ class _AddLessonRecordBottomSheetState extends ConsumerState<_AddLessonRecordBot
                 final cls = classes.firstWhere((c) => c.id == _selectedClassId);
                 final isClassTeacher = cls.classTeacherId == widget.user.uid;
                 
-                final subjects = isClassTeacher
-                  ? cls.subjects.keys.toList()
-                  : cls.subjects.entries
-                      .where((e) => e.value == widget.user.uid)
-                      .map((e) => e.key)
-                      .toList();
+                // Effective subjects for this teacher in this class
+                final classMappedSubjects = cls.subjects.entries
+                        .where((e) => e.value == widget.user.uid)
+                        .map((e) => e.key)
+                        .toList();
+                
+                final List<String> combinedSubjects = {
+                  ...cls.subjects.keys,
+                  ...widget.user.subjects,
+                  if (widget.user.primarySubject != null && widget.user.primarySubject!.isNotEmpty) widget.user.primarySubject!,
+                  "General Lesson",
+                  "Lesson Review",
+                }.toList()..sort();
 
                 return DropdownButtonFormField<String>(
                   decoration: const InputDecoration(
                     labelText: "Subject",
                     prefixIcon: Icon(Icons.book_outlined),
                   ),
-                  value: subjects.contains(_selectedSubject) ? _selectedSubject : null,
-                  items: subjects.map((s) => DropdownMenuItem(value: s, child: Text(s))).toList(),
+                  value: combinedSubjects.contains(_selectedSubject) ? _selectedSubject : null,
+                  items: combinedSubjects.map((s) => DropdownMenuItem(value: s, child: Text(s))).toList(),
                   onChanged: (val) => setState(() => _selectedSubject = val),
                 );
               }
@@ -580,6 +621,7 @@ class _AddLessonRecordBottomSheetState extends ConsumerState<_AddLessonRecordBot
             controller: _topicController,
             decoration: const InputDecoration(labelText: "Topic Covered (English)", hintText: "What was taught?"),
             maxLines: 2,
+            textInputAction: TextInputAction.next,
             onChanged: (val) => setState(() {}),
           ),
           const SizedBox(height: 16),
@@ -587,6 +629,7 @@ class _AddLessonRecordBottomSheetState extends ConsumerState<_AddLessonRecordBot
             controller: _homeworkController,
             decoration: const InputDecoration(labelText: "Homework Tasks (English)", hintText: "Optional assignments..."),
             maxLines: 2,
+            textInputAction: TextInputAction.done,
             onChanged: (val) => setState(() {}),
           ),
           const SizedBox(height: 16),

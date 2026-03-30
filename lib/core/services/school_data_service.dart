@@ -56,16 +56,16 @@ class SchoolDataService {
           ..sort((a, b) => a.name.compareTo(b.name)));
   }
 
-  Stream<List<SchoolClass>> watchClassesForTeacher(String teacherUid, String schoolId) {
+  Stream<List<SchoolClass>> watchClassesForTeacher(String teacherUid, String schoolId, List<String> assignedClassIds) {
     return _firestore
         .collection("classes")
         .where("schoolId", isEqualTo: schoolId)
         .snapshots()
         .map((snapshot) => snapshot.docs
             .map((doc) => SchoolClass.fromMap(doc.id, doc.data()))
-            .where((c) => c.subjects.containsValue(teacherUid) || c.classTeacherId == teacherUid)
+            .where((c) => assignedClassIds.contains(c.id) || c.subjects.containsValue(teacherUid) || c.classTeacherId == teacherUid)
             .toList()
-          ..sort((a, b) => a.id.compareTo(b.id)));
+            ..sort((a, b) => a.id.compareTo(b.id)));
   }
 
   Stream<List<FeeInvoice>> watchFeeInvoices({List<String>? studentIds, String? schoolId}) {

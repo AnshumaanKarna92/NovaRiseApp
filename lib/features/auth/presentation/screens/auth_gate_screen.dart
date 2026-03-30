@@ -22,6 +22,7 @@ import "package:nova_rise_app/features/students/presentation/controllers/student
 import "package:nova_rise_app/features/students/presentation/screens/students_screen.dart";
 import "package:nova_rise_app/features/auth/presentation/controllers/session_controller.dart";
 import "package:nova_rise_app/core/providers/school_providers.dart";
+import "package:nova_rise_app/core/providers/filter_providers.dart";
 import "sign_in_screen.dart";
 
 class AuthGateScreen extends ConsumerStatefulWidget {
@@ -582,7 +583,12 @@ class _DashboardView extends ConsumerWidget {
               title: card.$1,
               subtitle: card.$2,
               icon: card.$4,
-              onTap: () => context.push(card.$3),
+              onTap: () {
+                if (card.$3 == "/students") {
+                  ref.read(studentClassFilterProvider.notifier).state = null;
+                }
+                context.push(card.$3);
+              },
             );
           }).toList(),
         ),
@@ -639,12 +645,12 @@ class _BreakdownCard extends StatelessWidget {
   }
 }
 
-class _SchoolOverviewGrid extends StatelessWidget {
+class _SchoolOverviewGrid extends ConsumerWidget {
   const _SchoolOverviewGrid({this.adminSummary});
   final Map<String, int>? adminSummary;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
         _OverviewItem(
@@ -652,7 +658,10 @@ class _SchoolOverviewGrid extends StatelessWidget {
           value: "${adminSummary?["students"] ?? 0} total students",
           icon: Icons.groups_3_outlined,
           color: const Color(0xFF003D5B),
-          onTap: () => context.push("/students"),
+          onTap: () {
+            ref.read(studentClassFilterProvider.notifier).state = null;
+            context.push("/students");
+          },
         ),
         const SizedBox(height: 16),
         Row(
@@ -704,7 +713,10 @@ class _SchoolOverviewGrid extends StatelessWidget {
           value: "${adminSummary?["classes"] ?? 0} active grades",
           icon: Icons.class_outlined,
           color: const Color(0xFFD4AF37),
-          onTap: () => context.push("/students"),
+          onTap: () {
+            ref.read(studentClassFilterProvider.notifier).state = null;
+            context.push("/students");
+          },
         ),
         const SizedBox(height: 12),
         _OverviewItem(
@@ -712,7 +724,10 @@ class _SchoolOverviewGrid extends StatelessWidget {
           value: "${adminSummary?["staff"] ?? 0} members",
           icon: Icons.badge_outlined,
           color: const Color(0xFF00A86B),
-          onTap: () => context.push("/students"),
+          onTap: () {
+            ref.read(studentClassFilterProvider.notifier).state = null;
+            context.push("/students");
+          },
         ),
       ],
     );
@@ -926,14 +941,16 @@ class _AssignmentCard extends ConsumerWidget {
         ),
         trailing: const Icon(Icons.arrow_forward_ios, size: 14, color: Color(0xFFCBD5E1)),
         onTap: () {
+          ref.read(studentClassFilterProvider.notifier).state = cls.id;
           ref.read(diaryClassFilterProvider.notifier).state = cls.id;
+          context.push("/students");
         },
       ),
     );
   }
 }
 
-class _SmartBanner extends StatelessWidget {
+class _SmartBanner extends ConsumerWidget {
   const _SmartBanner({
     required this.profile,
     required this.stats,
@@ -945,7 +962,7 @@ class _SmartBanner extends StatelessWidget {
   final List notices;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final accent = stats.first.$5;
     final latestNotice = notices.isEmpty ? null : notices.first;
 
@@ -1001,6 +1018,7 @@ class _SmartBanner extends StatelessWidget {
                   icon: s.$4,
                   onTap: () {
                     if (label == "Students" || label == "Classes" || label == "Staff") {
+                      ref.read(studentClassFilterProvider.notifier).state = null;
                       context.push("/students");
                     } else if (s.$3.startsWith("/")) {
                       context.push(s.$3);
