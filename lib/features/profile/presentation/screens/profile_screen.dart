@@ -95,6 +95,8 @@ class ProfileScreen extends ConsumerWidget {
                   children: [
                     _InfoRow(label: "Academic Role", value: user?.role.name.toUpperCase() ?? "Unknown"),
                     const Divider(height: 24),
+                    _InfoRow(label: "Registration ID", value: user?.email.split('@').first.toUpperCase() ?? "N/A"),
+                    const Divider(height: 24),
                     _InfoRow(label: "Institution", value: "Nova Rise Academy"),
                     const Divider(height: 24),
                     _InfoRow(label: "Registration Status", value: "VERIFIED"),
@@ -117,7 +119,13 @@ class ProfileScreen extends ConsumerWidget {
                       child: Icon(Icons.person, color: Colors.white),
                     ),
                     title: Text(student.name, style: const TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: Text(classesMap[student.classId] ?? "Grade ${student.classId}"),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(classesMap[student.classId] ?? "Grade ${student.classId}"),
+                        Text("Reg ID: ${student.studentId}", style: const TextStyle(fontSize: 10, color: Colors.black45)),
+                      ],
+                    ),
                     trailing: const StatusChip(label: "ACTIVE", color: Color(0xFF00A86B)),
                   ),
                 ),

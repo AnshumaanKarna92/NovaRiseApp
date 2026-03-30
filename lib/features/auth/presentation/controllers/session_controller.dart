@@ -61,45 +61,39 @@ class LoginController extends StateNotifier<LoginState> {
         attempts.add("${identifierClean}.boys@novarise.com");
         attempts.add("${identifierClean}.girls@novarise.com");
       } 
-      // 2. If it's a registration ID (startsWith NRA), map to school email (case-insensitive)
+      // 2. Registration ID Mapping (NRA or NRAJ)
       else if (!identifierClean.contains("@")) {
-        // Flatten everything, then re-insert standard J prefix if NRA is found
-        String flat = identifierClean.toLowerCase().replaceAll(' ', '').replaceAll('-', '');
-        if (flat.startsWith("nra") && !flat.startsWith("nraj")) {
-          flat = flat.replaceFirst("nra", "nraj");
+        // Try the actual identifier provided first
+        final id = identifierClean.toLowerCase().replaceAll(' ', '');
+        attempts.add("${id}.boys@novarise.com");
+        attempts.add("${id}.girls@novarise.com");
+        attempts.add("${id}@novarise.com");
+
+        // Then try with dashes if missing
+        if (id.startsWith("nra") && !id.contains("-") && id.length > 3) {
+           final withDash = id.replaceFirst("nra", "nra-");
+           attempts.add("${withDash}.boys@novarise.com");
+           attempts.add("${withDash}.girls@novarise.com");
+           attempts.add("${withDash}@novarise.com");
         }
-        
-        // Now 'flat' is something like 'nraj12026'
-        // But the seeder used 'NRAJ-X-2026'
-        // So we should try to reconstruct it or just try the flat version if it was seeded flat?
-        // Wait! The seeder used s.studentId from JSON. The JSON has 'NRAJ-14-2026'.
-        // So we SHOULD use the dashes. 
-        // If the user enters NRA-1-2026, we should just ensure we try both.
-        
-        String normalized = identifierClean.toLowerCase().replaceAll(' ', '');
-        // Ensure NRAJ prefix
-        if (normalized.startsWith("nra") && !normalized.startsWith("nraj")) {
-           normalized = normalized.replaceFirst("nra", "nraj");
-           // If they didn't have a dash after NRA, normalize it to NRAJ-
-           if (normalized.length > 4 && normalized[4] != '-') {
-              normalized = normalized.replaceFirst("nraj", "nraj-");
+
+        // Only as a fallback, try enforcing NRAJ if user just said NRA
+        if (id.startsWith("nra") && !id.startsWith("nraj")) {
+           final nraj = id.replaceFirst("nra", "nraj");
+           attempts.add("${nraj}.boys@novarise.com");
+           attempts.add("${nraj}.girls@novarise.com");
+           attempts.add("${nraj}@novarise.com");
+           
+           // And with dash for nraj
+           if (!nraj.contains("-") && nraj.length > 4) {
+              final nrajDash = nraj.replaceFirst("nraj", "nraj-");
+              attempts.add("${nrajDash}.boys@novarise.com");
+              attempts.add("${nrajDash}.girls@novarise.com");
+              attempts.add("${nrajDash}@novarise.com");
            }
-        } else if (normalized.startsWith("nra-") && !normalized.startsWith("nraj-")) {
-           normalized = normalized.replaceFirst("nra-", "nraj-");
         }
-        
-        // Seeder created students with .boys and .girls
-        attempts.add("${normalized}.boys@novarise.com");
-        attempts.add("${normalized}.girls@novarise.com");
-        attempts.add("${normalized}@novarise.com");
-        // Also try flat version if normalized has dashes
-        if (normalized.contains("-")) {
-          String flatId = normalized.replaceAll("-", "");
-          attempts.add("${flatId}.boys@novarise.com");
-          attempts.add("${flatId}.girls@novarise.com");
-          attempts.add("${flatId}@novarise.com");
-        }
-      } else {
+      } 
+else {
         // 3. Regular email
         attempts.add(identifierClean.toLowerCase());
       }

@@ -493,6 +493,17 @@ class _DashboardView extends ConsumerWidget {
                           ),
                         ),
                       ),
+                      if (profile.role == UserRole.parent) ...[
+                        const SizedBox(width: 8),
+                        Text(
+                          "ID: ${profile.email.split('@').first.toUpperCase()}",
+                          style: const TextStyle(
+                            color: Colors.black45,
+                            fontWeight: FontWeight.w800,
+                            fontSize: 10,
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ],

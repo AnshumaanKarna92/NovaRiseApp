@@ -84,8 +84,11 @@ class DiaryScreen extends ConsumerWidget {
                     ? selectedClassIdFromFilter 
                     : (userClassIds.isNotEmpty ? userClassIds.first : null);
                 
-                // If a specific class is selected, check if it's in the filtered list
-                final effectiveClassId = (selectedClassId != null && filteredClassIds.contains(selectedClassId)) ? selectedClassId : null;
+                // For students/parents, we don't apply the global dashboard filter to their own diary
+                final isManagedUser = isAdmin || isTeacher;
+                final effectiveClassId = isManagedUser 
+                    ? (selectedClassId != null && filteredClassIds.contains(selectedClassId) ? selectedClassId : null)
+                    : selectedClassId;
                 
                 return AsyncValueView(
                   value: ref.watch(lessonRecordsProvider((
