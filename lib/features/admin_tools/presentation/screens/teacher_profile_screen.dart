@@ -15,7 +15,7 @@ class TeacherProfileScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProfileProvider).valueOrNull;
-    final isAdmin = user?.role == UserRole.admin;
+    final isAdmin = user?.role == UserRole.admin || user?.role == UserRole.cashCollector;
 
     return Scaffold(
       appBar: AppBar(

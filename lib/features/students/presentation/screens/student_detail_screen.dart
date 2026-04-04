@@ -24,7 +24,7 @@ class StudentDetailScreen extends ConsumerWidget {
     final user = ref.watch(userProfileProvider).valueOrNull;
     
     final isTeacher = user?.role == UserRole.teacher;
-    final isAdmin = user?.role == UserRole.admin;
+    final isAdmin = user?.role == UserRole.admin || user?.role == UserRole.cashCollector;
     final isParentOfStudent = user?.role == UserRole.parent && user!.linkedStudentIds.contains(student.studentId);
     
     final canEdit = isAdmin || isParentOfStudent;
