@@ -94,6 +94,52 @@ class TeacherProfileScreen extends ConsumerWidget {
             icon: Icons.admin_panel_settings,
             accent: const Color(0xFFD4AF37),
           ),
+          if (isAdmin) ...[
+            const SizedBox(height: 32),
+            const Divider(),
+            const SizedBox(height: 16),
+            Text(
+              "Danger Zone",
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.redAccent, fontWeight: FontWeight.bold, letterSpacing: 1.2),
+            ),
+            const SizedBox(height: 12),
+            Card(
+              color: Colors.red.withOpacity(0.02),
+              shape: RoundedRectangleBorder(side: BorderSide(color: Colors.red.withOpacity(0.1)), borderRadius: BorderRadius.circular(12)),
+              child: ListTile(
+                onTap: () => _confirmDeleteStaff(context, ref),
+                leading: const Icon(Icons.delete_forever_outlined, color: Colors.redAccent),
+                title: const Text("Terminate Faculty Account", style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 14)),
+                subtitle: const Text("Remove all access and credentials for this member immediately. This action cannot be undone.", style: TextStyle(fontSize: 11)),
+                trailing: const Icon(Icons.chevron_right, size: 16, color: Colors.redAccent),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  void _confirmDeleteStaff(BuildContext context, WidgetRef ref) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Confirm Termination?"),
+        content: Text("Are you sure you want to permanently delete the profile of ${teacher.displayName}? All system access will be revoked immediately."),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("CANCEL")),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: Colors.redAccent),
+            onPressed: () async {
+              await ref.read(profileUpdateControllerProvider.notifier).deleteStaff(teacher.uid);
+              if (context.mounted) {
+                Navigator.pop(ctx); // Close dialog
+                Navigator.pop(context); // Go back from profile
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Faculty profile terminated successfully.")));
+              }
+            },
+            child: const Text("DELETE ACCOUNT"),
+          ),
         ],
       ),
     );

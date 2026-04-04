@@ -160,4 +160,29 @@ class ProfileUpdateController extends StateNotifier<ProfileUpdateState> {
       state = ProfileUpdateState(error: e.toString());
     }
   }
+
+  Future<void> deleteStudent(String studentId) async {
+    try {
+      await _firestore.collection('students').doc(studentId).delete();
+      // Also check if any parent users are linked to this student and remove them? 
+      // For now, simple delete of the student record
+    } catch (e) {
+      state = ProfileUpdateState(error: e.toString());
+    }
+  }
+
+  Future<void> deleteStaff(String uid) async {
+    try {
+      // 1. Nullify classTeacherId in any classes they manage
+      final classes = await _firestore.collection('classes').where('classTeacherId', isEqualTo: uid).get();
+      for (var doc in classes.docs) {
+        await doc.reference.update({'classTeacherId': 'unknown'});
+      }
+      
+      // 2. Delete the user document
+      await _firestore.collection('users').doc(uid).delete();
+    } catch (e) {
+      state = ProfileUpdateState(error: e.toString());
+    }
+  }
 }

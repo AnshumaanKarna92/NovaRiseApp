@@ -554,6 +554,7 @@ class _StaffEntrySheetState extends ConsumerState<_StaffEntrySheet> {
   final _subjectController = TextEditingController();
   final _passwordController = TextEditingController();
   String? _selectedClassId;
+  String _branch = "boys";
   bool _isSubmitting = false;
 
   @override
@@ -627,6 +628,24 @@ class _StaffEntrySheetState extends ConsumerState<_StaffEntrySheet> {
           ),
           if (widget.role == UserRole.teacher) ...[
             const SizedBox(height: 16),
+            const Text("Institutional Branch", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black45)),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                ChoiceChip(
+                  label: const Text("Boys School"),
+                  selected: _branch == "boys",
+                  onSelected: (val) { if (val) setState(() { _branch = "boys"; _selectedClassId = null; }); },
+                ),
+                const SizedBox(width: 8),
+                ChoiceChip(
+                  label: const Text("Girls School"),
+                  selected: _branch == "girls",
+                  onSelected: (val) { if (val) setState(() { _branch = "girls"; _selectedClassId = null; }); },
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
             TextField(
               controller: _subjectController,
               decoration: const InputDecoration(
@@ -644,7 +663,7 @@ class _StaffEntrySheetState extends ConsumerState<_StaffEntrySheet> {
               ),
               items: [
                 const DropdownMenuItem(value: null, child: Text("Not Assigned (Regular Staff)")),
-                ...classes.map((c) => DropdownMenuItem(value: c.id, child: Text(c.displayName))),
+                ...classes.where((c) => c.branchId == _branch).map((c) => DropdownMenuItem(value: c.id, child: Text(c.displayName))),
               ],
               onChanged: (val) => setState(() => _selectedClassId = val),
             ),
@@ -679,7 +698,8 @@ class _StaffEntrySheetState extends ConsumerState<_StaffEntrySheet> {
     }
 
     final password = _passwordController.text.trim().isEmpty ? "password123" : _passwordController.text.trim();
-    final email = handle.contains("@") ? handle : "$handle@novarise.com";
+    final emailSuffix = _branch == "boys" ? ".boys@novarise.com" : ".girls@novarise.com";
+    final email = handle.contains("@") ? handle : "$handle$emailSuffix";
     
     setState(() => _isSubmitting = true);
     try {
