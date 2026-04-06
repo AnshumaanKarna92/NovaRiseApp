@@ -895,7 +895,7 @@ class _PdfDownloadRow extends StatelessWidget {
               onPressed: () {
                 final cls = allClasses.firstWhere((c) => c.id == effectiveClassId);
                 DiaryPdfGenerator.generateAndPrint(
-                  records: records.where((r) => r.classId == effectiveClassId).toList(),
+                  records: records, // removed redudant filter
                   schoolClass: cls,
                   date: selectedDate,
                 );
@@ -916,14 +916,14 @@ class _PdfDownloadRow extends StatelessWidget {
             child: FilledButton.icon(
               onPressed: () {
                 final cls = allClasses.firstWhere((c) => c.id == effectiveClassId);
-                DiaryPdfGenerator.generateAndShare(
-                  records: records.where((r) => r.classId == effectiveClassId).toList(),
+                DiaryPdfGenerator.generateAndShareImage(
+                  records: records, // removed redudant filter
                   schoolClass: cls,
                   date: selectedDate,
                 );
               },
               icon: const Icon(Icons.share, size: 18),
-              label: const Text("WhatsApp"),
+              label: const Text("Share Image"),
               style: FilledButton.styleFrom(
                 backgroundColor: const Color(0xFF25D366), // WhatsApp Green
                 padding: const EdgeInsets.symmetric(vertical: 12),

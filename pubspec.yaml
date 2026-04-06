@@ -1,7 +1,7 @@
 name: nova_rise_app
 description: "SchoolApp MVP mobile client."
 publish_to: "none"
-version: 1.2.3+28
+version: 1.2.3+31
 
 environment:
   sdk: ^3.8.1
@@ -30,6 +30,7 @@ dependencies:
   csv: ^6.0.0
   pdf: ^3.10.10
   printing: ^5.11.1
+  share_plus: 10.1.4
 
 dev_dependencies:
   flutter_lints: ^5.0.0
