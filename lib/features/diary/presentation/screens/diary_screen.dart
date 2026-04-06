@@ -131,6 +131,7 @@ class DiaryScreen extends ConsumerWidget {
                                 _DiaryTableView(
                                   records: records,
                                   isAdmin: isAdmin,
+                                  currentUserId: user.uid,
                                   onEdit: (r) => _handleEdit(context, ref, r),
                                   onDelete: (r) => _handleDelete(context, ref, r),
                                 )
@@ -138,6 +139,7 @@ class DiaryScreen extends ConsumerWidget {
                                 ...records.map((record) => _LessonRecordCard(
                                       record: record,
                                       isAdmin: isAdmin,
+                                      currentUserId: user.uid,
                                       onEdit: () => _handleEdit(context, ref, record),
                                       onDelete: () => _handleDelete(context, ref, record),
                                     )),
@@ -255,11 +257,13 @@ class _LessonRecordCard extends ConsumerWidget {
   const _LessonRecordCard({
     required this.record,
     required this.isAdmin,
+    required this.currentUserId,
     required this.onEdit,
     required this.onDelete,
   });
   final LessonRecord record;
   final bool isAdmin;
+  final String currentUserId;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
 
@@ -308,18 +312,18 @@ class _LessonRecordCard extends ConsumerWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    if (record.teacherId == ref.watch(userProfileProvider).valueOrNull?.uid) ...[
+                    if (isAdmin || record.teacherId == currentUserId) ...[
                       const SizedBox(width: 8),
                       IconButton(
                         onPressed: onEdit,
-                        icon: const Icon(Icons.edit_outlined, size: 16, color: Color(0xFF64748B)),
+                        icon: const Icon(Icons.edit_outlined, size: 20, color: Color(0xFF64748B)),
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(),
                       ),
-                      const SizedBox(width: 4),
+                      const SizedBox(width: 8),
                       IconButton(
                         onPressed: onDelete,
-                        icon: const Icon(Icons.delete_outline, size: 16, color: Colors.redAccent),
+                        icon: const Icon(Icons.delete_outline, size: 20, color: Colors.redAccent),
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(),
                       ),
@@ -494,7 +498,8 @@ class _AddLessonRecordBottomSheetState extends ConsumerState<_AddLessonRecordBot
 
   @override
   Widget build(BuildContext context) {
-    final classes = ref.watch(teacherClassesProvider).value ?? const [];
+    final isAdmin = widget.user.role == UserRole.admin || widget.user.role == UserRole.cashCollector;
+    final classes = ref.watch(isAdmin ? schoolClassesProvider : teacherClassesProvider).value ?? const [];
     final state = ref.watch(adminToolsControllerProvider);
 
     _initDefaults(classes);
@@ -579,8 +584,12 @@ class _AddLessonRecordBottomSheetState extends ConsumerState<_AddLessonRecordBot
                   ...cls.subjects.keys,
                   ...widget.user.subjects,
                   if (widget.user.primarySubject != null && widget.user.primarySubject!.isNotEmpty) widget.user.primarySubject!,
-                  "General Lesson",
-                  "Lesson Review",
+                  "Bengali", "English", "Math", "Physics", "Arabic", "GK", "Drawing", "Game", 
+                  "Environment Science", "History", "Geography", "Hindi", "Computer", 
+                  "Work Education", "Physical Education", "Life Science", "Physical Science", 
+                  "Chemistry", "Biology", "Social Science", "Physiology", 
+                  "English Rhymes", "Bengali Rhymes",
+                  "General Lesson", "Lesson Review",
                 }.toList()..sort();
 
                 return DropdownButtonFormField<String>(
@@ -773,11 +782,13 @@ class _DiaryTableView extends StatelessWidget {
   const _DiaryTableView({
     required this.records, 
     required this.isAdmin,
+    required this.currentUserId,
     required this.onEdit,
     required this.onDelete,
   });
   final List<LessonRecord> records;
   final bool isAdmin;
+  final String currentUserId;
   final Function(LessonRecord) onEdit;
   final Function(LessonRecord) onDelete;
 
@@ -797,16 +808,27 @@ class _DiaryTableView extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
         columns: const [
+          DataColumn(label: Text("")), 
           DataColumn(label: Text("Period")),
           DataColumn(label: Text("Subject")),
           DataColumn(label: Text("Chapter")),
           DataColumn(label: Text("Activity")),
           DataColumn(label: Text("Homework")),
           DataColumn(label: Text("Sign")),
-          DataColumn(label: Text("")),
         ],
         rows: sorted.map((r) => DataRow(
           cells: [
+            DataCell(
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (isAdmin || r.teacherId == currentUserId) ...[
+                    IconButton(onPressed: () => onEdit(r), icon: const Icon(Icons.edit, size: 18, color: Color(0xFF64748B))),
+                    IconButton(onPressed: () => onDelete(r), icon: const Icon(Icons.delete_outline, size: 18, color: Colors.redAccent)),
+                  ],
+                ],
+              ),
+            ),
             DataCell(Text(r.period, style: const TextStyle(fontWeight: FontWeight.bold))),
             DataCell(Text(r.subject)),
             DataCell(Text(r.chapter)),
@@ -842,15 +864,6 @@ class _DiaryTableView extends StatelessWidget {
                 ],
               ),
             ),
-            DataCell(
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(onPressed: () => onEdit(r), icon: const Icon(Icons.edit, size: 16)),
-                  if (isAdmin) IconButton(onPressed: () => onDelete(r), icon: const Icon(Icons.delete_outline, size: 16, color: Colors.red)),
-                ],
-              ),
-            ),
           ],
         )).toList(),
       ),
@@ -873,11 +886,12 @@ class _PdfDownloadRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: [
           Expanded(
-            child: FilledButton.icon(
+            flex: 2,
+            child: OutlinedButton.icon(
               onPressed: () {
                 final cls = allClasses.firstWhere((c) => c.id == effectiveClassId);
                 DiaryPdfGenerator.generateAndPrint(
@@ -888,9 +902,32 @@ class _PdfDownloadRow extends StatelessWidget {
               },
               icon: const Icon(Icons.picture_as_pdf_outlined),
               label: const Text("Export Daily PDF"),
-              style: FilledButton.styleFrom(
-                backgroundColor: const Color(0xFF003D5B),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: const Color(0xFF003D5B),
+                side: const BorderSide(color: Color(0xFF003D5B)),
                 padding: const EdgeInsets.symmetric(vertical: 12),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            flex: 1,
+            child: FilledButton.icon(
+              onPressed: () {
+                final cls = allClasses.firstWhere((c) => c.id == effectiveClassId);
+                DiaryPdfGenerator.generateAndShare(
+                  records: records.where((r) => r.classId == effectiveClassId).toList(),
+                  schoolClass: cls,
+                  date: selectedDate,
+                );
+              },
+              icon: const Icon(Icons.share, size: 18),
+              label: const Text("WhatsApp"),
+              style: FilledButton.styleFrom(
+                backgroundColor: const Color(0xFF25D366), // WhatsApp Green
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               ),
             ),
           ),

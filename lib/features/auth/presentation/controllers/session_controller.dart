@@ -135,6 +135,7 @@ else {
     required String email,
     required String password,
     required String name,
+    required String phone,
   }) async {
     state = state.copyWith(isSubmitting: true, error: null);
     try {
@@ -143,6 +144,7 @@ else {
         password: password,
         displayName: name,
         role: UserRole.admin,
+        phone: phone,
       );
       state = const LoginState();
     } catch (error) {

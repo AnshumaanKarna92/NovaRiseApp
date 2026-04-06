@@ -12,6 +12,7 @@ class AdminRegistrationScreen extends ConsumerStatefulWidget {
 }
 
 class _AdminRegistrationScreenState extends ConsumerState<AdminRegistrationScreen> {
+  final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
@@ -19,6 +20,7 @@ class _AdminRegistrationScreenState extends ConsumerState<AdminRegistrationScree
 
   @override
   void dispose() {
+    _phoneController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     _nameController.dispose();
@@ -30,6 +32,7 @@ class _AdminRegistrationScreenState extends ConsumerState<AdminRegistrationScree
       email: _emailController.text.trim(),
       password: _passwordController.text.trim(),
       name: _nameController.text.trim(),
+      phone: _phoneController.text.trim(),
     );
     
     // session_controller updates state, if no error, we navigate
@@ -130,6 +133,15 @@ class _AdminRegistrationScreenState extends ConsumerState<AdminRegistrationScree
                               prefixIcon: Icon(Icons.email_outlined),
                             ),
                             keyboardType: TextInputType.emailAddress,
+                          ),
+                          const SizedBox(height: 16),
+                          TextField(
+                            controller: _phoneController,
+                            decoration: const InputDecoration(
+                              labelText: "Mobile Phone Number",
+                              prefixIcon: Icon(Icons.phone_outlined),
+                            ),
+                            keyboardType: TextInputType.phone,
                           ),
                           const SizedBox(height: 16),
                           TextField(

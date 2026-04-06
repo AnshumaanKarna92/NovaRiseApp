@@ -710,6 +710,7 @@ class _StaffEntrySheetState extends ConsumerState<_StaffEntrySheet> {
         password: password,
         displayName: name,
         role: widget.role,
+        phone: handle,
         assignedClassIds: assignedClasses,
         primarySubject: _subjectController.text.trim().isEmpty ? null : _subjectController.text.trim(),
       );

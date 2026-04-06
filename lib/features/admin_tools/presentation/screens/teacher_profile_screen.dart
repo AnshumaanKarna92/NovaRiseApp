@@ -65,9 +65,12 @@ class TeacherProfileScreen extends ConsumerWidget {
                   const Divider(),
                   _DetailRow(
                     label: "Mobile Number",
-                    value: teacher.phone ?? "Not set",
+                    value: (teacher.phone != null && teacher.phone!.length >= 10 && !teacher.phone!.startsWith('R')) 
+                        ? teacher.phone! 
+                        : (teacher.email.split('.').first.length >= 10 
+                            ? teacher.email.split('.').first 
+                            : teacher.uid),
                     icon: Icons.phone_outlined,
-                    onEdit: isAdmin ? () => _showEditInfoSheet(context, ref, "Phone Number", teacher.phone, (val) => ref.read(profileUpdateControllerProvider.notifier).updateStaffProfile(uid: teacher.uid, phone: val)) : null,
                   ),
                   const Divider(),
                   _DetailRow(
