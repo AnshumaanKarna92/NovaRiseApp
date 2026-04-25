@@ -806,6 +806,8 @@ class _DiaryTableView extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: DataTable(
         headingRowHeight: 48,
+        dataRowMinHeight: 48,
+        dataRowMaxHeight: double.infinity,
         columnSpacing: 16,
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black12),
@@ -837,24 +839,22 @@ class _DiaryTableView extends StatelessWidget {
             DataCell(Text(r.subject)),
             DataCell(Text(r.chapter)),
             DataCell(
-              SizedBox(
-                width: 150,
+              Container(
+                width: 200,
+                padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Text(
                   r.topicBn.isNotEmpty ? "${r.topic}\n${r.topicBn}" : r.topic,
-                  style: const TextStyle(fontSize: 12),
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 12, fontFamily: 'NotoSansBengali'),
                 ),
               ),
             ),
             DataCell(
-              SizedBox(
-                width: 120,
+              Container(
+                width: 200,
+                padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Text(
                   r.homeworkBn.isNotEmpty ? "${r.homework}\n${r.homeworkBn}" : r.homework,
-                  style: const TextStyle(fontSize: 12),
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 12, fontFamily: 'NotoSansBengali'),
                 ),
               ),
             ),

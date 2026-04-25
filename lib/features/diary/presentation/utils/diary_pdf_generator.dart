@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:bangla_pdf/bangla_pdf.dart' as bn;
 import 'package:printing/printing.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:path_provider/path_provider.dart';
@@ -213,7 +214,7 @@ class DiaryPdfGenerator {
     return pw.Padding(
       padding: const pw.EdgeInsets.all(8),
       child: pw.Center(
-        child: pw.Text(
+        child: bn.Text(
           text,
           textAlign: pw.TextAlign.center,
           style: pw.TextStyle(font: font, fontSize: 10),
@@ -225,7 +226,7 @@ class DiaryPdfGenerator {
   static pw.Widget _buildCell(String text, pw.Font font, {double fontSize = 10}) {
     return pw.Padding(
       padding: const pw.EdgeInsets.all(8),
-      child: pw.Text(
+      child: bn.Text(
         text,
         style: pw.TextStyle(font: font, fontSize: fontSize),
       ),

@@ -31,6 +31,7 @@ dependencies:
   pdf: ^3.10.10
   printing: ^5.11.1
   share_plus: 7.2.2
+  bangla_pdf: ^1.0.6
 
 dev_dependencies:
   flutter_lints: ^5.0.0
