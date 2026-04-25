@@ -48,4 +48,12 @@ Thumbs.db
 .env
 key.properties
 *.keystore
+*.keystore
 *.jks
+
+# Build artifacts and logs
+*.apk
+build_error.txt
+build_stderr.txt
+build_stdout.txt
+error.txt

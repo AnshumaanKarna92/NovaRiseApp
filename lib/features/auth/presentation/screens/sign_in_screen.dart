@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:shared_preferences/shared_preferences.dart";
 import "package:nova_rise_app/core/providers/school_providers.dart";
 import "../controllers/session_controller.dart";
 
@@ -13,6 +14,31 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
   final _idController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
+  bool _isLoadingSaved = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedCredentials();
+  }
+
+  Future<void> _loadSavedCredentials() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final id = prefs.getString('saved_id');
+      final pass = prefs.getString('saved_password');
+      if (id != null && pass != null && id.isNotEmpty && pass.isNotEmpty) {
+        _idController.text = id;
+        _passwordController.text = pass;
+        if (mounted) {
+          _signIn();
+        }
+      }
+    } catch (_) {}
+    if (mounted) {
+      setState(() => _isLoadingSaved = false);
+    }
+  }
 
   Future<void> _signIn() async {
     await ref.read(loginControllerProvider.notifier).signIn(_idController.text.trim(), _passwordController.text);

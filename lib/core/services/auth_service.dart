@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/app_user.dart';
 
 class AuthService {
@@ -13,7 +14,14 @@ class AuthService {
 
   Stream<User?> authStateChanges() => _auth.authStateChanges();
   
-  Future<void> signOut() => _auth.signOut();
+  Future<void> signOut() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove('saved_id');
+      await prefs.remove('saved_password');
+    } catch (_) {}
+    return _auth.signOut();
+  }
 
   Future<void> signInWithEmail({
     required String email,

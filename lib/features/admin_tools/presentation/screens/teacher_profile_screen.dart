@@ -330,43 +330,30 @@ class _AssignedClassesRow extends ConsumerWidget {
               children: [
                 const Icon(Icons.class_outlined, size: 14, color: Colors.black45),
                 const SizedBox(width: 8),
-                const Text("Assigned Classes (Dashboard)", style: TextStyle(color: Colors.black54, fontWeight: FontWeight.w500, fontSize: 13)),
+                const Text("Academic Access (All Classes)", style: TextStyle(color: Colors.black54, fontWeight: FontWeight.w500, fontSize: 13)),
               ],
             ),
-            if (isAdmin)
-              IconButton(
-                onPressed: () => _showManageClassesSheet(context, ref, allClassesValue),
-                icon: const Icon(Icons.edit_outlined, size: 18, color: Color(0xFFD4AF37)),
-              ),
           ],
         ),
         const SizedBox(height: 8),
-        if (teacher.assignedClassIds.isEmpty)
-          const Text("No classes assigned for dashboard access", style: TextStyle(fontSize: 14, color: Colors.black38))
-        else
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: teacher.assignedClassIds.map((id) => Chip(
-              label: Text(classesMap[id] ?? "Grade $id", style: const TextStyle(fontSize: 11)),
-              backgroundColor: const Color(0xFF003D5B).withOpacity(0.1),
-              side: BorderSide.none,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            )).toList(),
-          ),
+        allClassesValue.when(
+          data: (classes) {
+            if (classes.isEmpty) return const Text("No classes available yet.", style: TextStyle(fontSize: 14, color: Colors.black38));
+            return Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: classes.map((c) => Chip(
+                label: Text(classesMap[c.id] ?? "Grade ${c.id}", style: const TextStyle(fontSize: 11)),
+                backgroundColor: const Color(0xFF003D5B).withOpacity(0.1),
+                side: BorderSide.none,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              )).toList(),
+            );
+          },
+          loading: () => const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2)),
+          error: (_, __) => const Text("Error loading classes"),
+        ),
       ],
-    );
-  }
-
-  void _showManageClassesSheet(BuildContext context, WidgetRef ref, AsyncValue<List<SchoolClass>> allClassesValue) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
-      builder: (context) => _ManageAssignedClassesSheet(
-        teacher: teacher,
-        allClassesValue: allClassesValue,
-      ),
     );
   }
 }

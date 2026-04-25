@@ -1,6 +1,7 @@
 import "package:flutter/foundation.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:shared_preferences/shared_preferences.dart";
 
 import "package:nova_rise_app/core/models/app_user.dart";
 import "package:nova_rise_app/core/providers/school_providers.dart";
@@ -125,6 +126,13 @@ else {
       final fcmToken = await ref.read(notificationServiceProvider).getToken();
       // We don't await this to avoid blocking login if the cloud function fails or times out
       _authService.ensureUserProfile(fcmToken: fcmToken);
+
+      try {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('saved_id', identifierClean);
+        await prefs.setString('saved_password', password);
+      } catch (_) {}
+
       state = const LoginState();
     } catch (error) {
       state = state.copyWith(isSubmitting: false, error: _formatError(error));

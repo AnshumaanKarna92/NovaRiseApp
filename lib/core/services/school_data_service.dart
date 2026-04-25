@@ -63,7 +63,6 @@ class SchoolDataService {
         .snapshots()
         .map((snapshot) => snapshot.docs
             .map((doc) => SchoolClass.fromMap(doc.id, doc.data()))
-            .where((c) => assignedClassIds.contains(c.id) || c.subjects.containsValue(teacherUid) || c.classTeacherId == teacherUid)
             .toList()
             ..sort((a, b) => a.id.compareTo(b.id)));
   }

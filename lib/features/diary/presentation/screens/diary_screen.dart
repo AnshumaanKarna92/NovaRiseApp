@@ -343,6 +343,7 @@ class _LessonRecordCard extends ConsumerWidget {
                           color: const Color(0xFF3B82F6),
                           fontWeight: FontWeight.w600,
                           fontStyle: FontStyle.italic,
+                          fontFamily: 'NotoSansBengali',
                         ),
                   ),
                 ],
@@ -386,6 +387,7 @@ class _LessonRecordCard extends ConsumerWidget {
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                   color: const Color(0xFF3B82F6),
                                   fontWeight: FontWeight.w600,
+                                  fontFamily: 'NotoSansBengali',
                                 ),
                           ),
                         ],
@@ -667,6 +669,7 @@ class _AddLessonRecordBottomSheetState extends ConsumerState<_AddLessonRecordBot
               children: [
                 TextField(
                   controller: _topicBnController,
+                  style: const TextStyle(fontFamily: 'NotoSansBengali'),
                   decoration: const InputDecoration(
                     labelText: "বিষয় (Bengali Topic)",
                     hintText: "আজ কি পড়ানো হলো?",
@@ -676,6 +679,7 @@ class _AddLessonRecordBottomSheetState extends ConsumerState<_AddLessonRecordBot
                 const SizedBox(height: 16),
                 TextField(
                   controller: _homeworkBnController,
+                  style: const TextStyle(fontFamily: 'NotoSansBengali'),
                   decoration: const InputDecoration(
                     labelText: "বাড়ির কাজ (Bengali Homework)",
                     hintText: "শিক্ষার্থীদের জন্য কাজ...",
@@ -890,21 +894,19 @@ class _PdfDownloadRow extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            flex: 2,
-            child: OutlinedButton.icon(
+            child: FilledButton.icon(
               onPressed: () {
                 final cls = allClasses.firstWhere((c) => c.id == effectiveClassId);
-                DiaryPdfGenerator.generateAndPrint(
-                  records: records, // removed redudant filter
+                DiaryPdfGenerator.generateAndShare(
+                  records: records,
                   schoolClass: cls,
                   date: selectedDate,
                 );
               },
-              icon: const Icon(Icons.picture_as_pdf_outlined),
-              label: const Text("Export Daily PDF"),
-              style: OutlinedButton.styleFrom(
-                foregroundColor: const Color(0xFF003D5B),
-                side: const BorderSide(color: Color(0xFF003D5B)),
+              icon: const Icon(Icons.picture_as_pdf, size: 18),
+              label: const Text("Share PDF"),
+              style: FilledButton.styleFrom(
+                backgroundColor: const Color(0xFFE50914), // PDF Red
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               ),
@@ -912,17 +914,16 @@ class _PdfDownloadRow extends StatelessWidget {
           ),
           const SizedBox(width: 12),
           Expanded(
-            flex: 1,
             child: FilledButton.icon(
               onPressed: () {
                 final cls = allClasses.firstWhere((c) => c.id == effectiveClassId);
                 DiaryPdfGenerator.generateAndShareImage(
-                  records: records, // removed redudant filter
+                  records: records,
                   schoolClass: cls,
                   date: selectedDate,
                 );
               },
-              icon: const Icon(Icons.share, size: 18),
+              icon: const Icon(Icons.image, size: 18),
               label: const Text("Share Image"),
               style: FilledButton.styleFrom(
                 backgroundColor: const Color(0xFF25D366), // WhatsApp Green

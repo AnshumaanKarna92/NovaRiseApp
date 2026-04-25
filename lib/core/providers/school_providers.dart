@@ -82,13 +82,8 @@ final allClassesMapProvider = Provider<Map<String, String>>((ref) {
 final currentClassIdsProvider = Provider<List<String>>((ref) {
   final user = ref.watch(userProfileProvider).valueOrNull;
   if (user == null) return const [];
-  if (user.role == UserRole.admin) {
+  if (user.role == UserRole.teacher || user.role == UserRole.admin || user.role == UserRole.cashCollector) {
     return ref.watch(schoolClassesProvider).valueOrNull?.map((c) => c.id).toList() ?? const [];
-  }
-  if (user.role == UserRole.teacher) {
-    final schoolClasses = ref.watch(schoolClassesProvider).valueOrNull ?? [];
-    final ownedClasses = schoolClasses.where((c) => c.classTeacherId == user.uid).map((c) => c.id).toList();
-    return {...user.assignedClassIds, ...ownedClasses}.toList();
   }
   if (user.role == UserRole.parent) {
     final students = ref.watch(currentStudentsProvider).valueOrNull ?? [];
